@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <!-- js -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="../js/fontawesome.min.js"></script>s -->
+    <script src="../js/jquery.min.js"></script>
+    <style>
+        .add-button{
+            border: none;
+        }
+        .img-dress{
+            max-height: 150px;
+            width: 150px;
+        }
+        .customer-detail-table tr td input{
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+                   
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo-container">
+                    <div class="logo-container">
+                        <img class="logo-sidebar" src="assets/img/logo.png" />
+                    </div>
+                    <div class="brand-name-container">
+                        <p class="brand-name">
+                            Collection & Creation<br>
+                            <span class="brand-subname">
+                                TailorManagementSystem
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-body">
+                <ul class="navigation-list">
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="/">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-tachometer"></i>
+                                </div>
+                                <div class="col-10">
+                                    Dashboard
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="employee.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="col-10">
+                                    Employees
+                                </div>
+                                
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item active">
+                        <a class="navigation-link" href="#">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                                <div class="col-10">
+                                    Measurement
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="billing.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                                <div class="col-10">
+                                    Billing
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="customer.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-address-book"></i>
+                                </div>
+                                <div class="col-10">
+                                    Customer
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <hr style="color:rgb(255, 255, 255);margin-top:30px;">
+                <div class="user-title-container">
+                    <p class="user-title" id="username">Username</p>
+                </div>
+                <div class="sidebar-body">
+                    <ul class="navigation-list">
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="notification.html">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        Notification
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="/">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        Message
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="/">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-sign-out"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        Sign-out
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- content -->
+        <div class="content">
+            <div class="navigationBar">
+                <div class="row navBarRow">
+                    <div class="col-8">
+                        <button id="sidebarToggle" class="btn btn-primary sidebarToggle">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </div>
+                    <div class="col-4">
+                        <h2 class="text-right">Welcocme</h2>
+                    </div>
+                </div>
+               
+
+            </div>
+
+
+            <!-- form -->
+            <div class="container-fluid">
+                <form class="needs-validation" novalidate>
+                    <div class="form-row row">
+                      <div class="col-4 mb-3">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Customer name" value="" required>
+                            <div class="valid-feedback">
+                            Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please choose a Username.
+                            </div>
+                      </div>
+                      <div class="col-4 mb-3">
+                            <label for="ph-number">Mobile number</label>
+                            <input type="text" maxlength="10" class="form-control" id="ph-number" placeholder="Phone-number" value="" required>
+                            <div class="valid-feedback">
+                            Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please choose a Phone-number.
+                            </div>
+                      </div>
+                      <div class="col-4 mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Example@xyz.com" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                                </div>
+                            <div class="invalid-feedback">
+                                Please choose a Email.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row row">
+                      <div class="col-6 mb-3">
+                            <label for="Orderdate">Orderdate</label>
+                            <input type="date" class="form-control" id="order-date" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                            Please provide a valid city.
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="Deadline">Deadline</label>
+                            <input type="date" class="form-control" id="Deadline" required>
+                            <div class="invalid-feedback">
+                              Please provide a valid date.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Next form</button>
+                  </form>
+
+                  
+            </div>
+            <!-- Measurement -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="measurement col-3">
+                        <Table class="table table-striped"> 
+                            <thead>
+                                <tr>
+                                    <th class="th">Type</th>
+                                    <th class="th">Detail</th>
+                                    <style>
+                                        .th{
+                                            text-align: center;
+                                        }
+                                    </style>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="Shoulder">SH</label></td>
+                                    <td><input type="number" min="0"></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="Full-length">FL</label></td>
+                                    <td><input type="number"  min="0"></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="chest">Chest</label></td>
+                                    <td><input type="number"  min="0"></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="hip">Hip</label></td>
+                                    <td><input type="number"  min="0"></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="sl">Sl</label></td>
+                                    <td><input type="number"  min="0" name="" id=""></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="m">M</label></td>
+                                    <td><input type="number" min="0" name="" id=""></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="ah">AH</label></td>
+                                    <td><input type="number"  min="0" name="" id=""></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="open">Open</label></td>
+                                    <td><input type="number"  min="0" name="" id=""></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td><label for="fl">FL</label></td>
+                                    <td><input type="number" name="" id=""></td>
+                                </tr> -->
+                                <tr>
+                                    <td><label for="thigh">Thigh</label></td>
+                                    <td><input type="number" name="" min="0" id=""></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="knee">Knee</label></td>
+                                    <td><input type="number" name="" min="0" id=""></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </div>
+
+                    <div class="details col-9">
+                        <div class="row">
+                            <div class="order-detail col-8">
+                                <label for="name"></label>                            
+                            </div>
+                            <div class="col-4 ">
+                                <img src="../image/dress.jpg" class=" rounded mx-auto d-block img-dress" alt="Dress">
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <!-- Buttons for customer-->
+                        <div class="row gx-4 mb-6">
+                            <!-- Save -->
+                            <div class="col-6 ">
+                                <div class="card shadow border-0">
+                                    <button class="btn btn-outline-light">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col"> 
+                                                    <span class="h4 font-semibold text-success text-sm d-block mb-2">Save</span>
+                                                    <!-- <span class="h4 font-bold mb-0">Save</span>  -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Clear -->
+                            <div class="col-6 ">
+                                <div class="card shadow border-0">
+                                    <button class="btn btn-outline-light">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col"> 
+                                                    <span class="h4 font-semibold text-success text-sm d-block mb-2">Clear </span>
+                                                    <!-- <span class="h4 font-bold mb-0">Save</span>  -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- sidebar  -->
+            <script>
+                let sidebarToggle = document.querySelector(".sidebarToggle");
+                sidebarToggle.addEventListener("click", function(){
+                    document.querySelector("body").classList.toggle("active");
+                    document.getElementById("sidebarToggle").classList.toggle("active");
+                })
+            </script>
+            <!-- Form  -->
+            <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function() {
+                  'use strict';
+                  window.addEventListener('load', function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                      form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                          event.preventDefault();
+                          event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                      }, false);
+                    });
+                  }, false);
+                })();
+                </script>
+    </div>   
+</body>
+</html>

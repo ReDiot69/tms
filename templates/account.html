@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing</title>
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <!-- js -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/fontawesome.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <style>
+        .img-user{
+            border-radius: 50%;
+            max-height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo-container">
+                    <div class="logo-container">
+                        <img class="logo-sidebar" src="assets/img/logo.png" />
+                    </div>
+                    <div class="brand-name-container">
+                        <p class="brand-name">
+                            Collection & Creation<br>
+                            <span class="brand-subname">
+                                TailorManagementSystem
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-body">
+                <ul class="navigation-list">
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="/">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-tachometer"></i>
+                                </div>
+                                <div class="col-9">
+                                    Dashboard
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="employee.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="col-9">
+                                    Employees
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="Measurement.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                                <div class="col-9">
+                                    Measurement
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item active">
+                        <a class="navigation-link" href="#">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                                <div class="col-9">
+                                    Accounts
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="customer.html">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-address-book"></i>
+                                </div>
+                                <div class="col-9">
+                                    Customer
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <hr style="color:rgb(255, 255, 255);margin-top:30px;">
+                <div class="user-title-container">
+                    <p class="user-title" id="username"></p>
+                </div>
+                <div class="sidebar-body">
+                    <ul class="navigation-list">
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="notification.html">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                    <div class="col-9">
+                                        Notification
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="/">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-comments"></i>
+                                    </div>
+                                    <div class="col-9">
+                                        Message
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="navigation-list-item">
+                            <a class="navigation-link" href="/">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-sign-out"></i>
+                                    </div>
+                                    <div class="col-9">
+                                        Sign-out
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- content -->
+        <div class="content">
+            <div class="navigationBar">
+                <button id="sidebarToggle" class="btn sidebarToggle">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+            
+            
+            <!-- table  -->
+            <div class="card shadow border-1 mb-7">
+                <div class="card-header row">
+                    <h5 class=" mb-0 ">Account Details</h5>
+                    <div class="input-group">
+                        <div class="col-9"></div>
+                            <input type="search" placeholder="Search" id="searchbox" class="form-control col-3">
+                            <button type="button" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">S.N</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Deadline</th>
+                                <th scope="col">Order</th>
+                                <th scope="col">Cash</th>
+                                <th scope="col">Receivable</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="sn">1</td>
+                                <td class="img"><img id="currentPhoto"  class="img-user" src="../img/new.jpg" onerror="this.onerror=null; this.src='../image/user.png'" alt=""></td>
+                                <td class="name"><p>XYZ</p></td>
+                                <td class="">2079/01/01</td>
+                                <td>2078/12/25</td>
+                                <td>1500</td>
+                                <td>2500</td>
+                                <td>4000</td>
+                            </tr>
+                            <tr>
+                                <td id="sn">2</td>
+                                <td class="img"><img id="currentPhoto"  class="img-user" src="../img/new.jpg" onerror="this.onerror=null; this.src='../image/user.png'" alt=""></td>
+                                <td class="name"><p>ABC</p></td>
+                                <td class="">2079/01/01</td>
+                                <td>2078/12/25</td>
+                                <td>2500</td>
+                                <td>2500</td>
+                                <td>5000</td>
+                            </tr>
+                            <tr>
+                                <td id="sn">3</td>
+                                <td class="img"><img id="currentPhoto"  class="img-user" src="../img/new.jpg" onerror="this.onerror=null; this.src='../image/user.png'" alt=""></td>
+                                <td class="name"><p>XYZ</p></td>
+                                <td class="">2079/01/01</td>
+                                <td>2078/12/25</td>
+                                <td>1500</td>
+                                <td>2500</td>
+                                <td>4000</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr><th colspan="5">Total</th></tr>
+                            <tr><th colspan="5">Cash</th></tr>
+                            <tr><th colspan="5">Receivable</th></tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="card-footer border-0 py-5">
+                     <span class="text-muted text-sm">
+                        <!-- Showing 2 items out of 250 results found -->
+                     </span>
+                </div>
+            </div>
+        </div>
+            <script>
+                let sidebarToggle = document.querySelector(".sidebarToggle");
+                sidebarToggle.addEventListener("click", function(){
+                    document.querySelector("body").classList.toggle("active");
+                    document.getElementById("sidebarToggle").classList.toggle("active");
+                })
+            </script>
+    </div>   
+</body>
+</html>
