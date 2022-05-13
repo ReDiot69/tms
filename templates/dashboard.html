@@ -11,7 +11,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/measurement.css'%}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/sidebar.css'%}">
-    
+    <style>
+        .card{
+            box-shadow: 5px 5px 5px #585755;
+            margin-left: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -74,8 +79,8 @@
                             </div>
                         </a>
                     </li>
-                    <li class="navigation-list-item ">
-                        <a class="navigation-link" href="account">
+                    <li class="navigation-list-item">
+                        <a class="navigation-link" href="accounts">
                             <div class="row">
                                 <div class="col-2">
                                     <i class="fa fa-calculator"></i>
@@ -128,42 +133,37 @@
                                 <i class="fa fa-sign-out"></i></a>
                             </a>
                         </li>
+                    </ul>
                 </div>
             </header>
-            <div class="container-fluid search_box">
-                <form class="form-inline">
-                    <div class="row">
-                        <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search"></div>
-                        <div class="col-2"><button class="btn btn-outline-success " type="submit">Search</button></div>
+            <div class="container-fluid px-5">
+                <div class="row gx-5"> 
+                    <div class="card text-light bg-dark mb-3 col" style="max-width: 16rem;">
+                        <div class="card-body">
+                        <h5 class="card-title">No. of Order</h5>
+                        <label class="card-text" name="order_count">10<label>
+                        </div>
                     </div>
-                    <div class="row">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th class="th">#</th>
-                                    <th class="th">Name</th>
-                                    <th class="th">Total</th>
-                                    <th class="th">Advance</th>
-                                    <th class="th">Remaining</th>
-                                    <style>
-                                        .th{
-                                            text-align: center;
-                                        }
-                                    </style>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><a href="#"><label for="name" name="name"></label></a></td>
-                                    <td><label for="total" name="total"></label></td>
-                                    <td><label for="advance" name="advance"></label></td>
-                                    <td><label for="remaning" name="remaining"></label></td>
-                                  </tr>
-                            </tbody>
-                        </table>
+                    <div class="card text-light bg-dark mb-3 col" style="max-width: 16rem;">
+                        <div class="card-body">
+                        <h5 class="card-title">Total</h5>
+                        <label class="card-text" name="total">10<label>
+                        </div>
                     </div>
-                  </form>
+                    <div class="card text-light bg-dark mb-3 col" style="max-width: 16rem;">
+                        <div class="card-body">
+                        <h5 class="card-title">No of Customer</h5>
+                        <label class="card-text" name="customer_count">10<label>
+                        </div>
+                    </div>
+                    <div class="card text-light bg-dark mb-3 col" style="max-width: 16rem;">
+                        <div class="card-body">
+                        <h5 class="card-title">Receivable</h5>
+                        <label class="card-text" name="remaining">10<label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
             </div>
         </div>          
     </div>

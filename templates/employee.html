@@ -152,15 +152,7 @@
                         </li>
                 </div>
             </header>
-            <div class="container-fluid">
-                <form action="#" method="POST"> 
-                    <div class="d-flex mx-auto m-2">
-                        <div class="g-5"> <button class="btn btn-primary" name="register">Register</button></div>
-                        <div class="g-5"> <button class="btn btn-primary" name="remove">Remove</button></div>
-                    </div>
-
-                </form>
-            </div>
+           
             <div class="container-fluid">
                 <!-- <div id="slide" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
@@ -200,13 +192,22 @@
                         </div>
                         <div class="row mb-3 mx-1">
                             <p class="employee_label">No. of Order Count:</p><label for="ordernumber" name="order_count"></label>
-                            
-                                <button class="btn btn-primary mb-1">Send Measurement</button>
-                                <button class="btn btn-primary">Email/Message</button>
+                                
+                                <button class="btn btn-secondary mb-1">Send Measurement</button>
+                                <button class="btn btn-secondary">Email/Message</button>
                         </div>
                 </div>
             </div>
-           
+            <div class="container-fluid ">
+                <form action="#" method="POST">
+                    {csrf_token}
+                 <div class="row mb-3 mx-1">           
+                    <Label for="buttons">To add and remove employee from employee list</Label>         
+                         <button class="btn btn-dark mb-1">Register</button>
+                         <button class="btn btn-dark">Remove</button>
+                 </div>
+                </form>
+             </div>
         </div>          
     </div>
     

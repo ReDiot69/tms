@@ -1,3 +1,4 @@
+from pickletools import read_uint1
 from django.shortcuts import render
 from customer.forms import CustomerForm
 from customer.models import Customer, Measurement
@@ -14,6 +15,9 @@ def employee(request):
 
 def customer(request):
     return render(request,"customer.html")
+
+def dashboard(request):
+    return render(request,"dashboard.html")
     
 def customer_store(request):
     form = CustomerForm(request.POST)
