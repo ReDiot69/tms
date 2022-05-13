@@ -18,3 +18,6 @@ class Employee(models.Model):
 class EmployeeOrder(models.Model):
     order = models.ForeignKey('customer.Order',on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee,on_delete=models.CASCADE)
+
+
+# git check
