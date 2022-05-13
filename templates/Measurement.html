@@ -1,310 +1,177 @@
-{%load static%}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Measurement</title>
-
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/measurement.css'%}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/sidebar.css'%}">
-    
-</head>
-
-<body>
-    <div class="page">
-        <!-- sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo-container">
-                    <div class="logo-container">
-                        <img class="logo-sidebar" src="/media/dress.jpg" />
+{% extends 'navside.html'%}
+{% block content%}
+{% if not reg%}
+<div class="form-box">
+    <form action="customer_store" method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <section class="customerDetail container-fluid row">
+            <div class="info col-9 ">
+                <div class="row">
+                    <div class="col-4 mb-3">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Customer name" value="" required>
+                            <div class="valid-feedback">
+                            Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please choose a Username.
+                            </div>
                     </div>
-                    <div class="brand-name-container">
-                        <p class="brand-name">
-                            Collection & Creation<br>
-                        </p>
+                    <div class="col-4 mb-3">
+                        <label for="number">Mobile number</label>
+                        <input type="text" name="number" maxlength="10" class="form-control" id="ph-number" placeholder="Phone-number" value="" required>
+                        <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a Phone-number.
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                                </div>
+                            <div class="invalid-feedback">
+                                Please choose a Email.
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <label for="name">Address</label>
+                        <input type="text" class="form-control" name="address" id="name" placeholder="Address" value="" required>
+                        <div class="valid-feedback">
+                        Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a Address.
+                        </div>
+                    </div>
+                    <div class="col-4 mb-3">
+                            <label for="employee">Employee</label>
+                            <select name="employee" class="form-control" id="order-date" required placeholder="select">
+                                <option value="" disabled selected hidden> Choose Employee </option>
+                                {% for e in employee%}
+                                <option value={{e.id}}>{{e.name}}</option>
+                                {% endfor  %}
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                            Please provide a valid city.
+                            </div>
+                        </div>
+                    <div class="col-4 mb-3">
+                        <label for="Deadline">Deadline</label>
+                        <input type="date" class="form-control" name="deadline" id="Deadline" required>
+                        <div class="invalid-feedback">
+                        Please provide a valid date.
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage(); required">
+                <div class="invalid-feedback">
+                    Please provide a image of product.
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
                     </div>
                 </div>
             </div>
-            <div class="sidebar-body">
-                <div class="user-title-container">
-                    <span class="brand-subname user-title">
-                        Tailor Management System
-                    </span>
-                </div>
-                <ul class="navigation-list">
-                    <li class="navigation-list-item">
-                        <a class="navigation-link" href="dashboard">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-tachometer"></i>
-                                </div>
-                                <div class="col-10">
-                                    Dashboard
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
-                        <a class="navigation-link" href="employee">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-users"></i>
-                                </div>
-                                <div class="col-10">
-                                    Employees
-                                </div>
-                                
-                            </div>
-                        </a>
-                    </li>
-                    <li class="navigation-list-item active">
-                        <a class="navigation-link" href="#">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-edit"></i>
-                                </div>
-                                <div class="col-10">
-                                    Measurement
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
-                        <a class="navigation-link" href="account">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-calculator"></i>
-                                </div>
-                                <div class="col-10">
-                                    Accounts
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
-                        <a class="navigation-link" href="customer">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-address-book"></i>
-                                </div>
-                                <div class="col-10">
-                                    Customer
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <hr style="color:rgb(255, 255, 255);margin-top:30px;">
-                
-                
+            <div class="photo col-3 ">
+                <img id="uploadPreview" class="customer_photo">
             </div>
-        </div>
-        <!-- content -->
-        <div class="content">
-            <header class="navigationBar">
-                <div class="col-10">
-                    <button id="sidebarToggle" class="btn sidebarToggle">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </div>
-                <div class="col-2">
-                    <ul class="nav nav-pill">
-                        <li class="nav-item">
-                            <a class="nav-link link-dark" href="/">
-                                <i class="fa fa-comments"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link link-dark">
-                                <i class="fa fa-bell"></i></a>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link link-dark">
-                                <i class="fa fa-sign-out"></i></a>
-                            </a>
-                        </li>
-                </div>
-            </header>
-            {% if not reg%}
-            <div class="form-box">
-                <form action="customer_store" method="POST" class="needs-validation" novalidate>
-                    {% csrf_token %}
-                    <section class="customerDetail container-fluid row">
-                        <div class="info col-9 ">
-                            <div class="row">
-                                <div class="col-4 mb-3">
-                                        <label for="name">Name</label>
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Customer name" value="" required>
-                                        <div class="valid-feedback">
-                                        Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Please choose a Username.
-                                        </div>
-                                </div>
-                                <div class="col-4 mb-3">
-                                    <label for="number">Mobile number</label>
-                                    <input type="text" name="number" maxlength="10" class="form-control" id="ph-number" placeholder="Phone-number" value="" required>
-                                    <div class="valid-feedback">
-                                    Looks good!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        Please choose a Phone-number.
-                                    </div>
-                                </div>
-                                <div class="col-4 mb-3">
-                                        <label for="email">Email</label>
-                                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" required>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                            </div>
-                                        <div class="invalid-feedback">
-                                            Please choose a Email.
-                                        </div>
-                                </div>
-                                 <div class="col-4 mb-3">
-                                        <label for="name">Address</label>
-                                        <input type="text" class="form-control" name="address" id="name"  value="" required>
-                                        <div class="valid-feedback">
-                                        Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                            Please choose a Username.
-                                        </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 mb-3">
-                                        <label for="employee">Employee</label>
-                                        <select name="employee" class="form-control" id="order-date" required placeholder="select">
-                                            <option value="" disabled selected hidden> Choose Employee </option>
-                                            {% for e in employee%}
-                                            <option value={{e.id}}>{{e.name}}</option>
-                                            {% endfor  %}
-                                        </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                        Please provide a valid city.
-                                        </div>
-                                    </div>
-                                    <div class="col-6 mb-3">
-                                        <label for="Deadline">Deadline</label>
-                                        <input type="date" class="form-control" name="deadline" id="Deadline" required>
-                                        <div class="invalid-feedback">
-                                        Please provide a valid date.
-                                        </div>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="photo col-3 ">
-                            <img src="/media/login.jpg" alt="No_Image_found" class="customer_photo">
-                        </div>
-                    </section>
+        </section>
 
-                    <section class="customer_measurement container-fluid row">
-                        <div class="measurement_table col-3">
-                            <table class="table mytable"> 
-                                <thead>
-                                    <tr>
-                                        <th class="th">Type</th>
-                                        <th class="th">Data</th>
-                                        <style>
-                                            .th{
-                                                text-align: center;
-                                            }
-                                        </style>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><label for="Shoulder">SH</label></td>
-                                        <td><input type="number" name="shoulder" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="Full-length">FL</label></td>
-                                        <td><input type="number" name="full_length" min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="chest">Chest</label></td>
-                                        <td><input type="number" name="chest"  min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="hip">Hip</label></td>
-                                        <td><input type="number" name="hip"  min="0"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="sl">Sl</label></td>
-                                        <td><input type="number"  min="0" name="sl" id=""></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="m">M</label></td>
-                                        <td><input type="number" min="0" name="m" id=""></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="ah">AH</label></td>
-                                        <td><input type="number"  min="0" name="ah" id=""></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="open">Open</label></td>
-                                        <td><input type="number"  min="0" name="open" id=""></td>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td><label for="fl">FL</label></td>
-                                        <td><input type="number" name="" id=""></td>
-                                    </tr> -->
-                                    <tr>
-                                        <td><label for="thigh">Thigh</label></td>
-                                        <td><input type="number" name="thigh" min="0" id="thigh"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="knee">Knee</label></td>
-                                        <td><input type="number" name="knee" min="0" id=""></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="whiteboard col-9">
-                            <div class="row">
-                                <!-- whiteboard -->
-                            </div>
-                            <div class="row"></div>
-                        </div>
-                    </section>
-                    <section class="invoice">
-                        <div class="container-fluid">
-                            <div class="row mybutton">
-                                <button class="btn btn-primary">Next</button>
-                            </div>
-                        </div>
-                    </section>
-                </form>
-                {% endif%}
-                {% if reg%}
-                <h1>Registered</h1>
-                {% endif %}
+        <section class="customer_measurement container-fluid row">
+            <div class="measurement_table col-3">
+                <table class="table mytable"> 
+                    <thead>
+                        <tr>
+                            <th class="th">Type</th>
+                            <th class="th">Data</th>
+                            <style>
+                                .th{
+                                    text-align: center;
+                                }
+                            </style>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label for="Shoulder">SH</label></td>
+                            <td><input type="number" name="shoulder" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="Full-length">FL</label></td>
+                            <td><input type="number" name="full_length" min="0"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="chest">Chest</label></td>
+                            <td><input type="number" name="chest"  min="0"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="hip">Hip</label></td>
+                            <td><input type="number" name="hip"  min="0"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="sl">Sl</label></td>
+                            <td><input type="number"  min="0" name="sl" id=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="m">M</label></td>
+                            <td><input type="number" min="0" name="m" id=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="ah">AH</label></td>
+                            <td><input type="number"  min="0" name="ah" id=""></td>
+                        </tr>
+                        <tr>
+                            <td><label for="open">Open</label></td>
+                            <td><input type="number"  min="0" name="open" id=""></td>
+                        </tr>
+                        <!-- <tr>
+                            <td><label for="fl">FL</label></td>
+                            <td><input type="number" name="" id=""></td>
+                        </tr> -->
+                        <tr>
+                            <td><label for="thigh">Thigh</label></td>
+                            <td><input type="number" name="thigh" min="0" id="thigh"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="knee">Knee</label></td>
+                            <td><input type="number" name="knee" min="0" id=""></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>          
-    </div>
-    
-    
-</body>
-<!-- sidebar  --><script>
-        let sidebarToggle = document.querySelector(".sidebarToggle");
-        sidebarToggle.addEventListener("click", function(){
-            document.querySelector("body").classList.toggle("active");
-            document.getElementById("sidebarToggle").classList.toggle("active");
-        })
-    </script>
+            <div class="whiteboard col-9">
+                <div class="row">
+                    <!-- whiteboard -->
+                </div>
+                <div class="row"></div>
+            </div>
+        </section>
+        <section class="invoice">
+            <div class="container-fluid">
+                <div class="row mybutton">
+                    <button class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </section>
+    </form>
+    {% endif%}
+    {% if reg%}
+    <h1>Registered</h1>
+    {% endif %}
+</div>
  <!-- Form  --><script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
@@ -324,5 +191,18 @@
             });
           }, false);
         })();
-    </script>    
-</html>
+    </script> 
+    <!-- customer_photo -->
+    <script type="text/javascript">
+
+        function PreviewImage() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+    
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("uploadPreview").src = oFREvent.target.result;
+            };
+        };
+    
+    </script>   
+{%endblock%}
