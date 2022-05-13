@@ -1,5 +1,9 @@
 from unicodedata import name
+
+from django.conf.urls.static import static
 from  django.urls import path
+
+from CreationDjango import settings
 from .import views
 
 urlpatterns=[
@@ -10,3 +14,5 @@ urlpatterns=[
      path('customer',views.customer,name="call_customer_page"),
      path('dashboard',views.dashboard,name="call_dashboard_page"),
  ]
+urlpatterns += static(settings.MEDIA_URL,
+                              document_root=settings.MEDIA_ROOT)
