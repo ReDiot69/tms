@@ -49,3 +49,5 @@ def accounts_detail(request):
 def dashboard(request):
     return render(request,"dashboard.html")
 
+def login(request):
+    return render(request, "home.html")
