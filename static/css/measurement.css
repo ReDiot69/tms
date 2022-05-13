@@ -1,0 +1,16 @@
+.customer_photo{
+    box-shadow:  5px 10px 18px grey;
+    border-radius: 50%;
+    margin-left: 3%;
+    width: 200px;
+    height: 200px;
+}
+
+.mytable{
+    outline: 1px solid rgb(190, 190, 190);
+}
+.no_border{
+    border: none;
+    border-bottom:1px solid grey ;
+    outline: 0;
+}

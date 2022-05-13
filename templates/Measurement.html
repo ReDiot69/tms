@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,30 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measurement</title>
-    <!-- css -->
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/measurement.css'%}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-    <!-- js -->
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/fontawesome.min.js"></script>
-    <script src="../js/jquery.min.js"></script>
-    <style>
-        .add-button{
-            border: none;
-        }
-        .img-dress{
-            max-height: 150px;
-            width: 150px;
-        }
-        .customer-detail-table tr td input{
-            border-top: none;
-            border-left: none;
-            border-right: none;
-        }
-                   
-    </style>
+    <link rel="stylesheet" href="{% static 'css/sidebar.css'%}">
+    
 </head>
+
 <body>
     <div class="page">
         <!-- sidebar -->
@@ -41,17 +26,19 @@
                     <div class="brand-name-container">
                         <p class="brand-name">
                             Collection & Creation<br>
-                            <span class="brand-subname">
-                                TailorManagementSystem
-                            </span>
                         </p>
                     </div>
                 </div>
             </div>
             <div class="sidebar-body">
+                <div class="user-title-container">
+                    <span class="brand-subname user-title">
+                        Tailor Management System
+                    </span>
+                </div>
                 <ul class="navigation-list">
                     <li class="navigation-list-item">
-                        <a class="navigation-link" href="/">
+                        <a class="navigation-link" href="dashboard">
                             <div class="row">
                                 <div class="col-2">
                                     <i class="fa fa-tachometer"></i>
@@ -63,7 +50,7 @@
                         </a>
                     </li>
                     <li class="navigation-list-item">
-                        <a class="navigation-link" href="employee.html">
+                        <a class="navigation-link" href="employee">
                             <div class="row">
                                 <div class="col-2">
                                     <i class="fa fa-users"></i>
@@ -88,7 +75,7 @@
                         </a>
                     </li>
                     <li class="navigation-list-item">
-                        <a class="navigation-link" href="billing.html">
+                        <a class="navigation-link" href="account">
                             <div class="row">
                                 <div class="col-2">
                                     <i class="fa fa-calculator"></i>
@@ -100,7 +87,7 @@
                         </a>
                     </li>
                     <li class="navigation-list-item">
-                        <a class="navigation-link" href="customer.html">
+                        <a class="navigation-link" href="customer">
                             <div class="row">
                                 <div class="col-2">
                                     <i class="fa fa-address-book"></i>
@@ -113,133 +100,108 @@
                     </li>
                 </ul>
                 <hr style="color:rgb(255, 255, 255);margin-top:30px;">
-                <div class="user-title-container">
-                    <p class="user-title" id="username">Username</p>
-                </div>
-                <div class="sidebar-body">
-                    <ul class="navigation-list">
-                        <li class="navigation-list-item">
-                            <a class="navigation-link" href="notification.html">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <i class="fa fa-bell"></i>
-                                    </div>
-                                    <div class="col-10">
-                                        Notification
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="navigation-list-item">
-                            <a class="navigation-link" href="/">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <i class="fa fa-comments"></i>
-                                    </div>
-                                    <div class="col-10">
-                                        Message
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="navigation-list-item">
-                            <a class="navigation-link" href="/">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <i class="fa fa-sign-out"></i>
-                                    </div>
-                                    <div class="col-10">
-                                        Sign-out
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                
+                
             </div>
         </div>
         <!-- content -->
         <div class="content">
-            <div class="navigationBar">
-                <button id="sidebarToggle" class="btn sidebarToggle">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </div>
-
-            <div class="Full-box">
-                <!-- form -->
-                <div class="container-fluid form_box">
-                    <form class="needs-validation" novalidate>
-                        <div class="form-row row">
-                        <div class="col-4 mb-3">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Customer name" value="" required>
-                                <div class="valid-feedback">
-                                Looks good!
+            <header class="navigationBar">
+                <div class="col-10">
+                    <button id="sidebarToggle" class="btn sidebarToggle">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+                <div class="col-2">
+                    <ul class="nav nav-pill">
+                        <li class="nav-item">
+                            <a class="nav-link link-dark" href="/">
+                                <i class="fa fa-comments"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link link-dark">
+                                <i class="fa fa-bell"></i></a>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link link-dark">
+                                <i class="fa fa-sign-out"></i></a>
+                            </a>
+                        </li>
+                </div>
+            </header>
+            <div class="form-box">
+                <form action="customer_store" method="POST" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <section class="customerDetail container-fluid row">
+                        <div class="info col-9 ">
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                        <label for="name">Name</label>
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="Customer name" value="" required>
+                                        <div class="valid-feedback">
+                                        Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please choose a Username.
+                                        </div>
                                 </div>
-                                <div class="invalid-feedback">
-                                    Please choose a Username.
-                                </div>
-                        </div>
-                        <div class="col-4 mb-3">
-                                <label for="ph-number">Mobile number</label>
-                                <input type="text" maxlength="10" class="form-control" id="ph-number" placeholder="Phone-number" value="" required>
-                                <div class="valid-feedback">
-                                Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please choose a Phone-number.
-                                </div>
-                        </div>
-                        <div class="col-4 mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Example@xyz.com" required>
-                                <div class="valid-feedback">
+                                <div class="col-4 mb-3">
+                                    <label for="number">Mobile number</label>
+                                    <input type="text" name="number" maxlength="10" class="form-control" id="ph-number" placeholder="Phone-number" value="" required>
+                                    <div class="valid-feedback">
                                     Looks good!
                                     </div>
-                                <div class="invalid-feedback">
-                                    Please choose a Email.
+                                    <div class="invalid-feedback">
+                                        Please choose a Phone-number.
+                                    </div>
                                 </div>
+                                <div class="col-4 mb-3">
+                                        <label for="email">Email</label>
+                                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                            </div>
+                                        <div class="invalid-feedback">
+                                            Please choose a Email.
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                        <label for="Orderdate">Orderdate</label>
+                                        <input type="date" class="form-control" id="order-date" required>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                        Please provide a valid city.
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="Deadline">Deadline</label>
+                                        <input type="date" class="form-control" id="Deadline" required>
+                                        <div class="invalid-feedback">
+                                        Please provide a valid date.
+                                        </div>
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
                             </div>
                         </div>
-                        <div class="form-row row">
-                        <div class="col-6 mb-3">
-                                <label for="Orderdate">Orderdate</label>
-                                <input type="date" class="form-control" id="order-date" required>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                Please provide a valid city.
-                                </div>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <label for="Deadline">Deadline</label>
-                                <input type="date" class="form-control" id="Deadline" required>
-                                <div class="invalid-feedback">
-                                Please provide a valid date.
-                                </div>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                            </div>
+                        <div class="photo col-3 ">
+                            <img src="/media/login.jpg" alt="No_Image_found" class="customer_photo">
                         </div>
-                        <button class="btn btn-primary" type="submit">Next form</button>
-                    </form>
+                    </section>
 
-                    
-                </div>
-
-
-                <!-- Measurement -->
-                <div class="container-fluid measurement_box">
-                    <div class="row">
-                        <div class="measurement col-3">
-                            <Table class="table table-striped"> 
+                    <section class="customer_measurement container-fluid row">
+                        <div class="measurement_table col-3">
+                            <table class="table mytable"> 
                                 <thead>
                                     <tr>
                                         <th class="th">Type</th>
-                                        <th class="th">Detail</th>
+                                        <th class="th">Data</th>
                                         <style>
                                             .th{
                                                 text-align: center;
@@ -293,105 +255,56 @@
                                         <td><input type="number" name="" min="0" id=""></td>
                                     </tr>
                                 </tbody>
-                            </Table>
+                            </table>
                         </div>
-
-                        <div class="details col-9">
+                        <div class="whiteboard col-9">
                             <div class="row">
-                                <div class="order-detail col-8">
-                                    <label for="name"></label>                            
-                                </div>
-                                <div class="col-4 ">
-                                    <img src="../image/dress.jpg" class=" rounded mx-auto d-block img-dress" alt="Dress">
-                                </div>
+                                <!-- whiteboard -->
                             </div>
-                            <hr>
-                            
-                            
+                            <div class="row"></div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- billing  -->
-
-                <div class="container-fluid billing_box" >
-                    <div class="table">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Particular</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><input type="text" name="product_name" id=""></td>
-                                    <td><input type="number" name="price"></td>
-                                    <td>xxxx</td>
-                                </tr>
+                    </section>
+                    <section class="invoice">
+                        <div class="container-fluid">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Particular</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="date" name="date" class="no_border"></td>
+                                        <td><input type="text" name="particular" class="no_border"></td>
+                                        <td><input type="number" name="quantity" min="0" id="" class="no_border"></td>
+                                        <td><input type="number"name="amount" min="0" class="no_border"></td>
+                                    </tr>
+                                </tbody>
                                 
-                            </tbody>
-                            <tfoot>
-                                <tr> 
-                                    <th scope="row"></th>
-                                   <td></td>
-                                   <td></td>
-                                   <td> <input type="button" value="Add product" class="btn btn-dark "> </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Buttons for customer-->
-                <div class="row gx-4 mb-6">
-                    <!-- Save -->
-                    <div class="col-6 ">
-                        <div class="card shadow border-0">
-                            <button class="btn btn-outline-light">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col"> 
-                                            <span class="h4 font-semibold text-success text-sm d-block mb-2">Save</span>
-                                            <!-- <span class="h4 font-bold mb-0">Save</span>  -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
+                            </table>
+                            <div class="row mybutton">
+                                <button class="btn btn-primary">Next</button>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Clear -->
-                    <div class="col-6 ">
-                        <div class="card shadow border-0">
-                            <button class="btn btn-outline-light">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col"> 
-                                            <span class="h4 font-semibold text-success text-sm d-block mb-2">Clear </span>
-                                            <!-- <span class="h4 font-bold mb-0">Save</span>  -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                    </section>
+                </form>
             </div>
-        </div>
-    </div>   
+        </div>          
+    </div>
     
-    <!-- sidebar  --><script>
+    
+</body>
+<!-- sidebar  --><script>
         let sidebarToggle = document.querySelector(".sidebarToggle");
         sidebarToggle.addEventListener("click", function(){
             document.querySelector("body").classList.toggle("active");
             document.getElementById("sidebarToggle").classList.toggle("active");
         })
     </script>
-
-    <!-- Form  --><script>
+ <!-- Form  --><script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
           'use strict';
@@ -410,6 +323,5 @@
             });
           }, false);
         })();
-    </script>
-</body>
+    </script>    
 </html>
