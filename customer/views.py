@@ -10,8 +10,8 @@ def measurement(request):
     return render(request, 'measurement.html', context)
 
 
-def accounts(request):
-    return render(request, 'accounts.html')
+def account(request):
+    return render(request, 'account.html')
 
 
 def customer(request):
