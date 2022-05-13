@@ -9,11 +9,11 @@ def measurement(request):
 def accounts(request):
     return render(request, 'accounts.html')
 
-def employee(request):
-    return render(request, 'employee.html')
 
 def customer(request):
-    return render(request,"customer.html")
+    cus = Customer.objects.all()
+    context = {'customer': cus}
+    return render(request,"customer.html", context)
     
 def customer_store(request):
     form = CustomerForm(request.POST)

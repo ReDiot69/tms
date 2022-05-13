@@ -5,15 +5,18 @@ from django.db import models
 import datetime
 
 import vendor
+
+
 # Create your models here.
 class Customer(models.Model):
     name = models.CharField(max_length=25)
-    email =models.EmailField()
+    email = models.EmailField()
     address = models.CharField(max_length=25)
     number = models.IntegerField()
 
+
 class Measurement(models.Model):
-    customer = models.ForeignKey(Customer,on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     shoulder = models.FloatField()
     full_length = models.FloatField()
     chest = models.FloatField()
@@ -25,8 +28,9 @@ class Measurement(models.Model):
     thigh = models.FloatField()
     knee = models.FloatField()
 
+
 class Order(models.Model):
-    vendor = models.ForeignKey('vendor.Vendor',on_delete=models.CASCADE)
-    customer_measurement =  models.ForeignKey(Measurement,on_delete=models.CASCADE)
-    orderdate = models.DateField(auto_now=False,default=datetime.date.today)
+    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE)
+    customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
+    orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)

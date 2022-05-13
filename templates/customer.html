@@ -148,7 +148,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="th">#</th>
-                                    <th class="th">Photo</th>
+<!--                                    <th class="th">Photo</th>-->
                                     <th class="th">Name</th>
                                     <th class="th">Order-date</th>
                                     <th class="th">Number</th>
@@ -166,17 +166,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            {% for cust in customer%}
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td><img src="/media/login.jpg" alt="" class="customer-photo" name="photo"></td>
-                                    <td><a href="#"><label for="name" name="name"></label></a></td>
+                                    <th scope="row">{{cust.id}}</th>
+<!--                                    <td><img src="/media/login.jpg" alt="" class="customer-photo" name="photo"></td>-->
+                                    <td><a href="#"><label for="name" name="name">{{cust.name}}</label></a></td>
                                     <td><label for="order-date" name="order-date"></label></td>
-                                    <td><label for="number" name="number"></label></td>
-                                    <td><label for="emil" name="email"></label></td>
+                                    <td><label for="number" name="number">{{cust.number}}</label></td>
+                                    <td><label for="emil" name="email">{{cust.email}}</label></td>
                                     <td><label for="total" name="total"></label></td>
                                     <td><label for="advance" name="advance"></label></td>
                                     <td><label for="remaning" name="remaining"></label></td>
                                   </tr>
+                            {% endfor%}
                             </tbody>
                         </table>
                     </div>
