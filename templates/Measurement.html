@@ -21,7 +21,7 @@
             <div class="sidebar-header">
                 <div class="sidebar-logo-container">
                     <div class="logo-container">
-                        <img class="logo-sidebar" src="assets/img/logo.png" />
+                        <img class="logo-sidebar" src="/media/dress.jpg" />
                     </div>
                     <div class="brand-name-container">
                         <p class="brand-name">
@@ -130,6 +130,7 @@
                         </li>
                 </div>
             </header>
+            {% if not reg%}
             <div class="form-box">
                 <form action="customer_store" method="POST" class="needs-validation" novalidate>
                     {% csrf_token %}
@@ -166,11 +167,26 @@
                                             Please choose a Email.
                                         </div>
                                 </div>
+                                 <div class="col-4 mb-3">
+                                        <label for="name">Address</label>
+                                        <input type="text" class="form-control" name="address" id="name"  value="" required>
+                                        <div class="valid-feedback">
+                                        Looks good!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Please choose a Username.
+                                        </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-6 mb-3">
-                                        <label for="Orderdate">Orderdate</label>
-                                        <input type="date" class="form-control" id="order-date" required>
+                                        <label for="employee">Employee</label>
+                                        <select name="employee" class="form-control" id="order-date" required placeholder="select">
+                                            <option value="" disabled selected hidden> Choose Employee </option>
+                                            {% for e in employee%}
+                                            <option value={{e.id}}>{{e.name}}</option>
+                                            {% endfor  %}
+                                        </select>
                                         <div class="valid-feedback">
                                             Looks good!
                                         </div>
@@ -180,7 +196,7 @@
                                     </div>
                                     <div class="col-6 mb-3">
                                         <label for="Deadline">Deadline</label>
-                                        <input type="date" class="form-control" id="Deadline" required>
+                                        <input type="date" class="form-control" name="deadline" id="Deadline" required>
                                         <div class="invalid-feedback">
                                         Please provide a valid date.
                                         </div>
@@ -212,35 +228,35 @@
                                 <tbody>
                                     <tr>
                                         <td><label for="Shoulder">SH</label></td>
-                                        <td><input type="number" min="0"></td>
+                                        <td><input type="number" name="shoulder" min="0"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="Full-length">FL</label></td>
-                                        <td><input type="number"  min="0"></td>
+                                        <td><input type="number" name="full_length" min="0"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="chest">Chest</label></td>
-                                        <td><input type="number"  min="0"></td>
+                                        <td><input type="number" name="chest"  min="0"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="hip">Hip</label></td>
-                                        <td><input type="number"  min="0"></td>
+                                        <td><input type="number" name="hip"  min="0"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="sl">Sl</label></td>
-                                        <td><input type="number"  min="0" name="" id=""></td>
+                                        <td><input type="number"  min="0" name="sl" id=""></td>
                                     </tr>
                                     <tr>
                                         <td><label for="m">M</label></td>
-                                        <td><input type="number" min="0" name="" id=""></td>
+                                        <td><input type="number" min="0" name="m" id=""></td>
                                     </tr>
                                     <tr>
                                         <td><label for="ah">AH</label></td>
-                                        <td><input type="number"  min="0" name="" id=""></td>
+                                        <td><input type="number"  min="0" name="ah" id=""></td>
                                     </tr>
                                     <tr>
                                         <td><label for="open">Open</label></td>
-                                        <td><input type="number"  min="0" name="" id=""></td>
+                                        <td><input type="number"  min="0" name="open" id=""></td>
                                     </tr>
                                     <!-- <tr>
                                         <td><label for="fl">FL</label></td>
@@ -248,11 +264,11 @@
                                     </tr> -->
                                     <tr>
                                         <td><label for="thigh">Thigh</label></td>
-                                        <td><input type="number" name="" min="0" id=""></td>
+                                        <td><input type="number" name="thigh" min="0" id="thigh"></td>
                                     </tr>
                                     <tr>
                                         <td><label for="knee">Knee</label></td>
-                                        <td><input type="number" name="" min="0" id=""></td>
+                                        <td><input type="number" name="knee" min="0" id=""></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -266,31 +282,16 @@
                     </section>
                     <section class="invoice">
                         <div class="container-fluid">
-                            <table class="table">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Particular</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="date" name="date" class="no_border"></td>
-                                        <td><input type="text" name="particular" class="no_border"></td>
-                                        <td><input type="number" name="quantity" min="0" id="" class="no_border"></td>
-                                        <td><input type="number"name="amount" min="0" class="no_border"></td>
-                                    </tr>
-                                </tbody>
-                                
-                            </table>
                             <div class="row mybutton">
                                 <button class="btn btn-primary">Next</button>
                             </div>
                         </div>
                     </section>
                 </form>
+                {% endif%}
+                {% if reg%}
+                <h1>Registered</h1>
+                {% endif %}
             </div>
         </div>          
     </div>
