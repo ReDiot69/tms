@@ -14,6 +14,9 @@ class Customer(models.Model):
     address = models.CharField(max_length=25)
     number = models.IntegerField()
 
+    def __str__(self):
+        return self.name
+
 
 class Measurement(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -30,7 +33,7 @@ class Measurement(models.Model):
 
 
 class Order(models.Model):
-    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE)
+    employee = models.ForeignKey('employee.Employee', on_delete=models.CASCADE)
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
