@@ -18,7 +18,7 @@
         .welcome_img{
             border-radius: 50%;
             box-shadow: 10px 15px 50px rgba(52, 54, 54, 0.719);
-            max-width:400px;
+            width:400px;
             height: 60vh;
             margin: 20px;
         }
@@ -64,8 +64,8 @@
             <div class="col-3 d-flex flex-row-reverse">
                 <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a href="#signup">
-                            <buttton class="btn btn-outline-dark">Sign up</buttton>
+                        <a href="home">
+                            <buttton class="btn btn-outline-dark">Login<buttton>
                         </a>
                     </li>
                 </ul>
@@ -80,37 +80,61 @@
             <div class="col-7">
                 <section class="login_form col-10 ">
                     <h1 class="font-weight-bold py-3">Tailor Management System</h1>
-                            <h4>Sign into your account</h4>
+                            {% if reg_comp%}
                             <form class="row">
                                 <section class="col-8">
+                                    <Label>Company Detail</Label>
                                     <div class="form-row">
-                                        <input type="Name" placeholder="Robbin hood pandey" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Company Name" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="Address" placeholder="Kathmandu" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Company number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="email" placeholder="xyz@gmail.com " class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="number" placeholder="984155555" class="form-control rounded-pill my-3 p-2">
+                                        <label for="Insert_img"> <h5>InsertLogo</h5></label>
+                                        <input id="uploadImage" type="file" name="image" onchange="PreviewImage(); required">
+                                    </div>
+                                    <hr>
+                                    <Label>Owner Detail</Label>
+                                    <div class="form-row">
+                                        <input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                   
+                                    <div class="form-row">
+                                        <input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="password" placeholder="*******" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
                                     </div>
+                                    <div class="form-row">
+                                        <input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="Insert_img"> <h5>Insert photo</h5></label>
+                                        <input type="file" name="owner_image" >
+                                    </div>
+                                    <button class="btn btn-dark">Register</button>
                                 </section>
                                 <section class="col-4"></section>
                                 <section>
                                     <a href="#">Forgot Password?</a>
                                     <p style="margin-left:2px">Already have an Account?
-                                    <a href="signup.html">  Login here</a></p>
+                                    <a href="home">  Login here</a></p>
                                 </section>
                             </form>
+                            {% endif %}
+                            
                 </section>
             </div>
 
             <div class="col-5 d-flex">
-                <img src="/media/home.jpg" alt="No_Image_found" class="welcome_img">
+                <img src="/media/clothes.jpg" id="uploadPreview" alt="No_Image_found" class="welcome_img">
             </div>
         </div>
     </div>
@@ -130,4 +154,16 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+    };
+
+</script>   
 </html>

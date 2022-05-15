@@ -50,6 +50,8 @@
             <h2 class="myfont">Employee Detail</h2>
         </div>
             <div class="card-body d-flex mx-auto row">
+              
+              {% if not reg_emp%}
                 <div class="col-5 photo">
                     <img src="/media/login.jpg" alt="No_Image_found" class="employee_photo">
                 </div>
@@ -59,23 +61,60 @@
                     <p class="employee_label">E-mail:</p><label for="email" name="email"></label>
                     <p class="employee_label">Phone-number:</p><label for="number" name="number"></label>
                 </div>
+                
             </div>
+            
             <div class="row mb-3 mx-1">
                 <p class="employee_label">No. of Order Count:</p><label for="ordernumber" name="order_count"></label>
                     
                     <button class="btn btn-secondary mb-1">Send Measurement</button>
                     <button class="btn btn-secondary">Email/Message</button>
             </div>
+            {% endif%}
+            {% if reg_emp %}
+                            <form class="row">
+                                <section class="col-8">
+                                    <div class="form-row">
+                                        <input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                   
+                                    <div class="form-row">
+                                        <input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2">
+                                    </div>
+                                    <div class="form-row">
+                                        <label for="Insert_img"> <h5>Insert photo</h5></label>
+                                        <input type="file" name="owner_image" >
+                                    </div>
+                                    <button class="btn btn-dark">Register</button>
+                                </section>
+                                <section class="col-4"></section>
+                            </form>
+                            {% endif %}
     </div>
 </div>
 <div class="container-fluid ">
+  {% if not reg_emp%}
     <form action="#" method="POST">
-        {csrf_token}
+        {% csrf_token%}
      <div class="row mb-3 mx-1">           
         <Label for="buttons">To add and remove employee from employee list</Label>         
-             <button class="btn btn-dark mb-1">Register</button>
+             
              <button class="btn btn-dark">Remove</button>
      </div>
     </form>
+    <div class="row mb-3 mx-1">   
+    <a href='reg_emp'><button class="btn btn-dark mb-1">Register</button></a>
+    </div>
+    
+    {% endif %}
  </div>
  {%endblock%}
