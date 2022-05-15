@@ -8,6 +8,7 @@ class Customer(models.Model):
     email = models.EmailField()
     address = models.CharField(max_length=25)
     number = models.IntegerField()
+    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE )
 
     def __str__(self):
         return self.name
@@ -25,10 +26,10 @@ class Measurement(models.Model):
     open = models.FloatField()
     thigh = models.FloatField()
     knee = models.FloatField()
-    image = models.ImageField()
+
 
 class Order(models.Model):
-    employee = models.ForeignKey('employee.Employee', on_delete=models.CASCADE)
+    employee = models.ForeignKey('vendor.MyUser', on_delete=models.CASCADE)
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
