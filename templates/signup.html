@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if reg is 0 %}
+<form action="reg_vendor" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+{% endif %}
+{% if reg is 1 %}
+<form action="reg_emp" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+{% endif %}
+</body>
+</html>
