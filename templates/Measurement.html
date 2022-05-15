@@ -2,7 +2,7 @@
 {% block content%}
 {% if not reg%}
 <div class="form-box">
-    <form action="customer_store" method="POST" class="needs-validation" novalidate>
+    <form action="customer_store" method="POST"  enctype="multipart/form-data" class="needs-validation" novalidate>
         {% csrf_token %}
         <section class="customerDetail container-fluid row">
             <div class="info col-9 ">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage(); required">
+                    <input id="uploadImage" type="file" name="image" onchange="PreviewImage(); required">
                 <div class="invalid-feedback">
                     Please provide a image of product.
                     </div>
@@ -170,7 +170,7 @@
     {% endif%}
     {% if reg%}
     <h1>Registered</h1>
-    {% endif %}
+        {% endif %}
 </div>
  <!-- Form  --><script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
