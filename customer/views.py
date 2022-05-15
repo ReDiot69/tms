@@ -1,13 +1,10 @@
 from django.shortcuts import render
 from customer.forms import CustomerForm
 from customer.models import Customer, Measurement, Order
-from employee.models import Employee
 
 
 def measurement(request):
-    emp = Employee.objects.all()
-    context = {'employee': emp}
-    return render(request, 'measurement.html', context)
+    return render(request, 'measurement.html')
 
 
 def accounts(request):
