@@ -17,3 +17,4 @@ class CustomerForm(forms.Form):
     knee = forms.FloatField()
     employee = forms.IntegerField()
     deadline = forms.DateField()
+    image = forms.ImageField()
