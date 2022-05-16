@@ -72,27 +72,28 @@
             </div>
             {% endif%}
             {% if reg_emp %}
-                            <form class="row">
+                            <form class="row" action="reg_emp" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
                                 <section class="col-8">
                                     <div class="form-row">
-                                        <input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder=" Name" name="name" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                    
                                     <div class="form-row">
-                                        <input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2">
+                                        <input type="email" placeholder="Email address" name="email" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Phone number" name="number" pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2">
+                                        <input type="text" placeholder="Address" name="address" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
-                                        <input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2">
+                                        <input type="password" placeholder="Password" name="password" class="form-control rounded-pill my-3 p-2">
                                     </div>
                                     <div class="form-row">
                                         <label for="Insert_img"> <h5>Insert photo</h5></label>
-                                        <input type="file" name="owner_image" >
+                                        <input id="uploadImage" type="file" name="image" >
                                     </div>
                                     <button class="btn btn-dark">Register</button>
                                 </section>

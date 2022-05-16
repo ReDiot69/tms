@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from customer.forms import CustomerForm
 from customer.models import Customer, Measurement, Order
+from vendor.models import Vendor, MyUser
 
 
 def measurement(request):
-    return render(request, 'measurement.html')
+    vendor = Vendor.objects.get(vendor=request.user.vendor)
+    m = MyUser.objects.filter(vendor=vendor)
+    return render(request, 'measurement.html', {'emp': m})
 
 
 def account(request):
@@ -29,7 +32,8 @@ def customer_store(request):
                                        sl=form.cleaned_data['sl'], m=form.cleaned_data['m'], ah=form.cleaned_data['ah'],
                                        open=form.cleaned_data['open'], thigh=form.cleaned_data['thigh'],
                                        knee=form.cleaned_data['knee'], image=form.cleaned_data['image'])
-        emp = Employee.objects.get(id=form.cleaned_data['employee'])
+
+        emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                              employee=emp)
         context = {'reg': True}
@@ -45,6 +49,7 @@ def accounts_detail(request):
 
 def dashboard(request):
     return render(request,"dashboard.html")
+
 
 def login(request):
     return render(request, "home.html")

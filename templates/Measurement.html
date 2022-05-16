@@ -53,7 +53,7 @@
                             <label for="employee">Employee</label>
                             <select name="employee" class="form-control" id="order-date" required placeholder="select">
                                 <option value="" disabled selected hidden> Choose Employee </option>
-                                {% for e in employee%}
+                                {% for e in emp%}
                                 <option value={{e.id}}>{{e.name}}</option>
                                 {% endfor  %}
                             </select>

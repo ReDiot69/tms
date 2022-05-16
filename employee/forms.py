@@ -1,9 +1,10 @@
 from django import forms
 
-from employee.models import Employee
 
-
-class EmployeeForm(forms.ModelForm):
-    class Meta:
-        model = Employee
-        fields = '__all__'
+class EmployeeRegForm(forms.Form):
+    name = forms.CharField(max_length=25)
+    address = forms.CharField(max_length=25)
+    number = forms.IntegerField()
+    image = forms.ImageField()
+    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField()
