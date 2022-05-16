@@ -1,0 +1,33 @@
+.header{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.welcome_img{
+    border-radius: 50%;
+    box-shadow: 10px 15px 50px rgba(52, 54, 54, 0.719);
+    max-width:400px;
+    height: 60vh;
+    margin: 20px;
+}
+.header_container{
+    box-shadow: 0px 10px 10px rgba(52, 54, 54, 0.1) ;
+    border-bottom: solid rgba(52, 54, 54, 0.1);
+    margin: 0px;
+}
+.main-container{
+    background-color: rgba(233, 233, 233, 0.171);
+    box-shadow: 10px 10px 25px whitesmoke;
+}
+.main-row{
+    padding-top: 25px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.divider{
+    height: 3rem;
+    border-width: 1px 0;
+}
+.login_img{
+    width: 800px;
+    max-height: 100vh;
+}

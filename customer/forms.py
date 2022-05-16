@@ -1,8 +1,5 @@
 from datetime import datetime
 from django import forms
-
-from customer.models import Customer, Measurement
-
 class CustomerForm(forms.Form):
     name = forms.CharField(max_length=25)
     email = forms.EmailField()
@@ -20,3 +17,4 @@ class CustomerForm(forms.Form):
     knee = forms.FloatField()
     employee = forms.IntegerField()
     deadline = forms.DateField()
+    image = forms.ImageField()

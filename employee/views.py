@@ -5,3 +5,6 @@ from django.shortcuts import render
 
 def employee(request):
     return render(request, 'employee.html')
+
+def reg_employ(request):
+    return render(request, 'employee.html', {'reg_emp':True})

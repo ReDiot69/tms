@@ -7,8 +7,8 @@ def measurement(request):
     return render(request, 'measurement.html')
 
 
-def accounts(request):
-    return render(request, 'accounts.html')
+def account(request):
+    return render(request, 'account.html')
 
 
 def customer(request):
@@ -18,7 +18,7 @@ def customer(request):
 
 
 def customer_store(request):
-    form = CustomerForm(request.POST)
+    form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
         c = Customer.objects.create(name=form.cleaned_data['name'], email=form.cleaned_data['email'],
                                     address=form.cleaned_data['address'],
@@ -28,7 +28,7 @@ def customer_store(request):
                                        chest=form.cleaned_data['chest'], hip=form.cleaned_data['hip'],
                                        sl=form.cleaned_data['sl'], m=form.cleaned_data['m'], ah=form.cleaned_data['ah'],
                                        open=form.cleaned_data['open'], thigh=form.cleaned_data['thigh'],
-                                       knee=form.cleaned_data['knee'])
+                                       knee=form.cleaned_data['knee'], image=form.cleaned_data['image'])
         emp = Employee.objects.get(id=form.cleaned_data['employee'])
         Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                              employee=emp)

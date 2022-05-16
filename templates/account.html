@@ -1,0 +1,38 @@
+{% extends 'navside.html'%}
+{% block content%}
+<div class="container-fluid search_box">
+    <form class="form-inline">
+        <div class="row">
+            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search"></div>
+            <div class="col-2"><button class="btn btn-outline-success " type="submit">Search</button></div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="th">#</th>
+                        <th class="th">Name</th>
+                        <th class="th">Total</th>
+                        <th class="th">Advance</th>
+                        <th class="th">Remaining</th>
+                        <style>
+                            .th{
+                                text-align: center;
+                            }
+                        </style>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><a href="#"><label for="name" name="name"></label></a></td>
+                        <td><label for="total" name="total"></label></td>
+                        <td><label for="advance" name="advance"></label></td>
+                        <td><label for="remaning" name="remaining"></label></td>
+                      </tr>
+                </tbody>
+            </table>
+        </div>
+      </form>
+</div>
+{%endblock%}
