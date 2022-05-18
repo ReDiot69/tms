@@ -1,20 +1,39 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from django.contrib import messages
 # Create your views here.
-from vendor.forms import UserLoginForm
+from vendor.forms import UserLoginForm, UserRegForm
 from django.contrib.auth import logout
 
+from vendor.models import Vendor, MyUser, Role
+
+
 def home(request):
-    return render(request,'home.html',{})
+    return render(request, 'home.html', {})
 
 
 def signup(request):
-    
-    return render(request,'signup.html',{'reg_comp': True})
+    return render(request, 'signup.html', {'reg_comp': True})
 
 
-def loginUser(request):
+def reg_user(request):
+    form = UserRegForm(request.POST, request.FILES)
+    if form.is_valid():
+        vendor = Vendor.objects.create(vendor=form.cleaned_data['c_name'],
+                              address=form.cleaned_data['c_address'], phone=form.cleaned_data['c_number'],
+                              logo=form.cleaned_data['c_image'])
+        password = make_password(form.cleaned_data['password'])
+        role = Role.objects.get(id=2)
+        MyUser.objects.create(email=form.cleaned_data['email'], name=form.cleaned_data['name'],
+                              password=password, address=form.cleaned_data['address'], vendor=vendor,
+                              role=role, number=form.cleaned_data['number'])
+
+        print(request.POST, request.FILES)
+    return render(request, 'home.html')
+
+
+def login_user(request):
     form = UserLoginForm(request.POST)
     if form.is_valid():
         email = form.cleaned_data['email']
@@ -30,6 +49,7 @@ def loginUser(request):
         return render(request, 'home.html')
 
 
-def logoutUser(request):
+def logout_user(request):
     logout(request)
     return render(request, "home.html");
+

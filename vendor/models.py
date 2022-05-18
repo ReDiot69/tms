@@ -59,7 +59,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(null=False, blank=False, max_length=25)
     password = models.CharField(null=False, max_length=256)
     address = models.CharField(max_length=25, null=True)
-    number = models.IntegerField( null=False)
+    number = models.IntegerField(null=False)
     image = models.ImageField(max_length=255, null=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
