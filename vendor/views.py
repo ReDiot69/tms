@@ -21,15 +21,14 @@ def reg_user(request):
     form = UserRegForm(request.POST, request.FILES)
     if form.is_valid():
         vendor = Vendor.objects.create(vendor=form.cleaned_data['c_name'],
-                              address=form.cleaned_data['c_address'], phone=form.cleaned_data['c_number'],
-                              logo=form.cleaned_data['c_image'])
+                                       address=form.cleaned_data['c_address'], phone=form.cleaned_data['c_number'],
+                                       logo=form.cleaned_data['c_image'])
         password = make_password(form.cleaned_data['password'])
-        role = Role.objects.get(id=2)
+        role = Role.objects.get(id=1)
         MyUser.objects.create(email=form.cleaned_data['email'], name=form.cleaned_data['name'],
                               password=password, address=form.cleaned_data['address'], vendor=vendor,
                               role=role, number=form.cleaned_data['number'])
 
-        print(request.POST, request.FILES)
     return render(request, 'home.html')
 
 
@@ -52,4 +51,3 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return render(request, "home.html");
-
