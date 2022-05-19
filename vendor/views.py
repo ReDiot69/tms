@@ -10,6 +10,7 @@ from vendor.models import Vendor, MyUser, Role
 
 
 def home(request):
+    print(request.user)
     return render(request, 'home.html', {})
 
 

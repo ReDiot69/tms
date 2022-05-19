@@ -15,17 +15,19 @@ def account(request):
 
 
 def customer(request):
-    cus = Customer.objects.all()
-    context = {'customer': cus}
+    order = Order.objects.all()
+    context = {'order': order}
     return render(request, "customer.html", context)
 
 
 def customer_store(request):
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
+        vendor = request.user.vendor
+        v = Vendor.objects.get(vendor=vendor)
         c = Customer.objects.create(name=form.cleaned_data['name'], email=form.cleaned_data['email'],
                                     address=form.cleaned_data['address'],
-                                    number=form.cleaned_data['number'])
+                                    number=form.cleaned_data['number'], vendor=v)
         m = Measurement.objects.create(customer=c, shoulder=form.cleaned_data['shoulder'],
                                        full_length=form.cleaned_data['full_length'],
                                        chest=form.cleaned_data['chest'], hip=form.cleaned_data['hip'],

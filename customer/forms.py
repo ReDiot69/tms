@@ -15,6 +15,6 @@ class CustomerForm(forms.Form):
     open = forms.FloatField()
     thigh = forms.FloatField()
     knee = forms.FloatField()
-    # employee = forms.IntegerField()
+    employee = forms.IntegerField()
     deadline = forms.DateField()
     image = forms.ImageField()
