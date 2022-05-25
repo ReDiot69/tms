@@ -28,8 +28,16 @@ class Measurement(models.Model):
     knee = models.FloatField()
     image = models.ImageField()
 
+
 class Order(models.Model):
     employee = models.ForeignKey('vendor.MyUser', on_delete=models.CASCADE)
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
+
+
+# class Invoice(models.Models):
+#     order =
+#     total =
+#     advance =
+#     remai = asdasd

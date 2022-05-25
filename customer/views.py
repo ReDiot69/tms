@@ -50,7 +50,10 @@ def accounts_detail(request):
 
 
 def dashboard(request):
-    return render(request,"dashboard.html")
+    if(request.user == 'AnonymousUser'):
+        return render(request,"dashboard.html")
+    else:
+        return render(request, "home.html")
 
 
 def login(request):

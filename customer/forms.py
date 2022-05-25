@@ -1,5 +1,7 @@
 from datetime import datetime
 from django import forms
+
+
 class CustomerForm(forms.Form):
     name = forms.CharField(max_length=25)
     email = forms.EmailField()
