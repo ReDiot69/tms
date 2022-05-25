@@ -68,7 +68,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ['name', 'password']
+    REQUIRED_FIELDS = ['name', 'password', 'number']
     USERNAME_FIELD = 'email'
 
     objects = CustomUserManager()

@@ -43,16 +43,17 @@
         <section class="col-10 ">
             <h1 class="font-weight-bold py-3">Tailor Management System</h1>
             {% if reg_comp%}
-            <form class="row">
+            <form class="row" method="post" action="register" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="col-6 signup_form mx-3">
                     <h3 style="text-decoration: none;">Company Details</h3>
                     <div class=" form_row row">
-                        <div class="col-4"><input type="text" placeholder="Company Name" class="form-control my-3 p-2"></div>
-                        <div class="col-4"><input type="text" placeholder="Company number"  pattern="[0-9]+" maxlength="10" class="form-control my-3 p-2"></div>
-                        <div class="col-4"><input type="text" placeholder="Address" class="form-control my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="c_name" placeholder="Company Name" class="form-control my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="c_number" placeholder="Company number"  pattern="[0-9]+" maxlength="10" class="form-control my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="c_address" placeholder="Address" class="form-control my-3 p-2"></div>
                         <div class="image-upload btn" id="file-input">
                              <label for="file-input">Insert logo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
-                            <input type="file" id="file-input" name="image">
+                            <input type="file" id="file-input" name="c_image">
                         </div>
                         
                     </div>
@@ -61,11 +62,11 @@
 
                     <h3 style="text-decoration: none;">Owner Details</h3>
                     <div class="row">
-                        <div class="col-4"><input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-4"><input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-4"><input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-6"><input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-6"><input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="name" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="address" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-6"><input type="email" name="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-6"><input type="password" name="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
                         <div class="image-upload mb-5 ">
                             <label for="file-input">Insert Photo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
                            <input type="file" id="file-input" name="owner_image">

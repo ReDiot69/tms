@@ -10,7 +10,6 @@ from vendor.models import Vendor, MyUser, Role
 
 
 def home(request):
-    print(request.user)
     return render(request, 'home.html', {})
 
 
@@ -19,7 +18,9 @@ def signup(request):
 
 
 def reg_user(request):
+    print('here')
     form = UserRegForm(request.POST, request.FILES)
+    print(request)
     if form.is_valid():
         vendor = Vendor.objects.create(vendor=form.cleaned_data['c_name'],
                                        address=form.cleaned_data['c_address'], phone=form.cleaned_data['c_number'],
@@ -40,6 +41,7 @@ def login_user(request):
         password = form.cleaned_data['password']
         user = authenticate(email=email, password=password)
         if user:
+            login(request, user)
             return render(request, 'dashboard.html')
         else:
             messages.info(request, 'No such account!')
