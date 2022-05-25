@@ -3,7 +3,8 @@ from .import views
 
 urlpatterns = [
     path('employee', views.employee, name="call_employee_page"),
-    path('reg_emp', views.reg_employ)
+    path('reg_emp', views.reg_employ),
+    path('employeelanding', views.employeelanding, name="call_employee_page")
  ]
 
 # new branch

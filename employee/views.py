@@ -7,4 +7,7 @@ def employee(request):
     return render(request, 'employee.html')
 
 def reg_employ(request):
-    return render(request, 'employee.html', {'reg_emp':True})
+    return render(request, 'employeelanding.html', {'reg_emp':True})
+
+def employeelanding(request):
+    return render(request, 'employeelanding.html')

@@ -9,7 +9,6 @@ def home(request):
     return render(request,'home.html',{})
 
 def signup(request):
-    
     return render(request,'signup.html',{'reg_comp': True})
 
 
@@ -25,4 +24,4 @@ def login(request):
             messages.info(request, 'No such account!')
             return render(request, 'home.html', {'msg': True})
     else:
-        return render(request, 'home.html')
+        return render(request, 'home.html') 

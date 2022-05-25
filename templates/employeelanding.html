@@ -1,0 +1,92 @@
+{% extends 'navside.html'%}
+{% block content%}
+<style>
+   .center{
+       display: block;
+       margin-left: auto;
+       margin-right: auto;
+   }
+</style>
+<div class="container-fluid">
+{% if not reg_emp%}
+    <div class="row">
+         <div class="">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="th">#</th>
+                                <th class="th">Name</th>
+                                <th class="th">Email</th>
+                                <th class="th">Number</th>
+                                <th class="th">Address</th>
+                                <th class="th">Status</th>
+                                <th class="th" colspan="2">Edit</th>
+                                <style>
+                                    .th{
+                                        text-align: center;
+                                    }
+                                </style>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td><a href="#"><label for="name" name="name"></label></a></td>
+                                <td><label for="total" name="total"></label></td>
+                                <td><label for="advance" name="advance"></label></td>
+                                <td><label for="remaning" name="remaining"></label></td>
+                                <td ><div class="form-check form-switch"><input class="form-check-input center" type="checkbox" id="flexSwitchCheckDefault"></div></td>
+                                <td><button class="btn btn-dark">Change</button></td>
+                                <td><button class="btn btn-dark">Delete</button></td>
+                              </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+{% endif%}
+{% if reg_emp %}
+<div class="container">
+    
+    <form class="row">
+        <section class="col-3">
+            <img id="uploadPreview" class="customer_photo">
+        </section>
+        <section class="col-9">
+            <div class="row">
+                
+                <div class="col-12"><input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
+           
+                <div class="col-4"><input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
+                <div class="col-4"><input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
+                <div class="col-4"><input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
+        
+                <div class="col-12"><input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
+                <div class="col-12">
+                    <label for="Insert_img"> <h5>Insert photo</h5></label>
+                    <input id="uploadImage" type="file" name="emp_image" onchange="PreviewImage();">
+                </div>
+            </div>
+            <div class="mt-3 row"> <button class="btn btn-dark">Register</button></div>
+        </section>
+        
+    </form>
+</div>
+{% endif %}
+
+{% if not reg_emp%}
+    <a href='reg_emp'class="row mb-3 mx-1" style="text-decoration:none;"><button class="btn btn-dark mb-1">Register</button></a>
+{% endif %}
+ </div>
+
+ <script type="text/javascript">
+
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+    };
+</script>
+{%endblock%}
