@@ -26,7 +26,7 @@ class Measurement(models.Model):
     open = models.FloatField()
     thigh = models.FloatField()
     knee = models.FloatField()
-
+    image = models.ImageField()
 
 class Order(models.Model):
     employee = models.ForeignKey('vendor.MyUser', on_delete=models.CASCADE)
