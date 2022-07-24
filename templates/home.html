@@ -27,9 +27,9 @@
                         </div>
                     </section>
                     {% if messages %}
-                    {% for message in messages %}
-                    <h3 id ="success-msg" style="color:red">{{ message }}</h3>
-                    {% endfor %}
+                        {% for message in messages %}
+                        <h3 id ="success-msg" style="color:red">{{ message }}</h3>
+                        {% endfor %}
                     {% endif %}
                     <button class="btn btn-primary">Login</button>
                     <section class="col-4"></section>
@@ -62,9 +62,9 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     const hideMessage=()=>{
         msid = document.querySelector('#success-msg').classList.add('hide');
     }
-</script>
+</script> -->
 {%endblock%}
