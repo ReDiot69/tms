@@ -13,11 +13,12 @@ def measurement(request):
 def account(request):
     return render(request, 'account.html')
 
-
-def customer(request):
+def billing(request):
+    return render(request,'billing.html')
+def order(request):
     order = Order.objects.all()
     context = {'order': order}
-    return render(request, "customer.html", context)
+    return render(request, "order.html", context)
 
 
 def customer_store(request):
