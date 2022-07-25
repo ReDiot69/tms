@@ -14,10 +14,10 @@ def account(request):
     return render(request, 'account.html')
 
 
-def customer(request):
+def orders(request):
     order = Order.objects.all()
     context = {'order': order}
-    return render(request, "customer.html", context)
+    return render(request, "order.html", context)
 
 
 def customer_store(request):
