@@ -30,20 +30,25 @@
         </div>
         <div class="card-body d-flex mx-auto row">
             {% if not reg_emp%}
-                <div class="col-5 photo">
-                    <img src="/media/login.jpg" alt="No_Image_found" class="employee_photo">
+            <div>
+                {% if fetchemp %}
+                    {% for i in fetchemp %}
+                        <div class="col-5 photo">
+                            <img src="/media/login.jpg" alt="No_Image_found" class="employee_photo">
+                        </div>
+                        <div class="col-7 employee_info">
+                            <p class="employee_label">Name:</p><label for="name" name="name">{{i.name}}</label>
+                            <p class="employee_label">Address:</p><label for="address" name="address"></label>
+                            <p class="employee_label">E-mail:</p><label for="email" name="email"></label>
+                            <p class="employee_label">Phone-number:</p><label for="number" name="number"></label>
+                            <p class="employee_label">No. of Order Count:</p><label for="ordernumber" name="order_count"></label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="row mb-3 mx-1">
+                    <button class="btn btn-secondary mb-1">Send Measurement</button>
+                    <button class="btn btn-secondary">Email/Message</button>
                 </div>
-                <div class="col-7 employee_info">
-                    <p class="employee_label">Name:</p><label for="name" name="name"></label>
-                    <p class="employee_label">Address:</p><label for="address" name="address"></label>
-                    <p class="employee_label">E-mail:</p><label for="email" name="email"></label>
-                    <p class="employee_label">Phone-number:</p><label for="number" name="number"></label>
-                </div>
-            
-            <div class="row mb-3 mx-1">
-                <p class="employee_label">No. of Order Count:</p><label for="ordernumber" name="order_count"></label>
-                <button class="btn btn-secondary mb-1">Send Measurement</button>
-                <button class="btn btn-secondary">Email/Message</button>
             </div>
             {% endif%}
                
