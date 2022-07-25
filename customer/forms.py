@@ -4,6 +4,7 @@ from django import forms
 
 class CustomerForm(forms.Form):
     name = forms.CharField(max_length=25)
+    category = forms.IntegerField()
     email = forms.EmailField()
     address = forms.CharField(max_length=25)
     number = forms.IntegerField()

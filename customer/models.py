@@ -14,7 +14,12 @@ class Customer(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=25)
+
+
 class Measurement(models.Model):
+    category = models.ManyToManyField(Category)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     shoulder = models.FloatField()
     full_length = models.FloatField()
