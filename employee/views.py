@@ -25,9 +25,9 @@ def reg_employ(request):
 
 
 def employeelanding(request):
+    if request.user.is_anonymous:
+        return render(request, "home.html")
     user = request.user
-    print(user)
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
-    print( emp_detail)
     context = {'emp_detail': emp_detail}
     return render(request, 'employeelanding.html', context)

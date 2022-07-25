@@ -6,13 +6,19 @@ from vendor.models import Vendor, MyUser
 
 
 def measurement(request):
+    if request.user.is_anonymous:
+        return render(request, "home.html")
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = MyUser.objects.filter(vendor=vendor)
     category = Category.objects.all()
-    return render(request, 'measurement.html', {'emp': m, 'category': category})
+    context = {}
+    a = CustomerForm()
+    return render(request, 'measurement.html', {'emp': m, 'category': category, 'form':a})
 
 
 def account(request):
+    if request.user.is_anonymous:
+        return render(request, "home.html")
     return render(request, 'account.html')
 
 
@@ -29,7 +35,7 @@ def order(request):
 def customer_store(request):
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
-        cat = Category.objects.get(id=form.cleaned_data['category'])
+        ct = form.cleaned_data['category']
         vendor = request.user.vendor
         v = Vendor.objects.get(vendor=vendor)
         c = Customer.objects.create(name=form.cleaned_data['name'], email=form.cleaned_data['email'],
@@ -41,8 +47,9 @@ def customer_store(request):
                                        sl=form.cleaned_data['sl'], m=form.cleaned_data['m'], ah=form.cleaned_data['ah'],
                                        open=form.cleaned_data['open'], thigh=form.cleaned_data['thigh'],
                                        knee=form.cleaned_data['knee'])
-        m.category.add(cat)
-        m.save()
+        for cat in ct:
+            m.category.add(cat)
+            m.save()
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                              employee=emp)
@@ -57,7 +64,7 @@ def accounts_detail(request):
 
 
 def dashboard(request):
-    if request.user == 'AnonymousUser':
+    if request.user.is_anonymous:
         return render(request, "home.html")
     else:
         return render(request, "dashboard.html")
