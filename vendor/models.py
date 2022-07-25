@@ -57,16 +57,17 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     id = models.BigAutoField(primary_key=True)
     email = models.EmailField(_('email'), unique=True, null=False)
     name = models.CharField(null=False, blank=False, max_length=25)
-    password = models.CharField(null=False, max_length=256)
+    # password = models.CharField(null=False, max_length=256)
     address = models.CharField(max_length=25, null=True)
-    number = models.IntegerField(null=False)
+    number = models.IntegerField(null=False, unique=True)
     image = models.ImageField(max_length=255, null=True)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, null=True)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, null=True)
+    is_manager = models.BooleanField(default=False)
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    is_manager = models.BooleanField(default=False)
 
     REQUIRED_FIELDS = ['name', 'password', 'number']
     USERNAME_FIELD = 'email'
