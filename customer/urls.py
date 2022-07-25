@@ -12,7 +12,7 @@ urlpatterns=[
      path('accounts_detail',views.accounts_detail,name="display_accountDetail_from_db"),
      path('account',views.account,name="call_accounts_page"),
      path('order',views.order,name="call_order_page"),
+     path('billing',views.billing,name="call_billing_page"),
      path('dashboard',views.dashboard,name="call_dashboard_page"),
  ]
-urlpatterns += static(settings.MEDIA_URL,
-                              document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

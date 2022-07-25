@@ -13,8 +13,9 @@ def measurement(request):
 def account(request):
     return render(request, 'account.html')
 
-
-def orders(request):
+def billing(request):
+    return render(request,'billing.html')
+def order(request):
     order = Order.objects.all()
     context = {'order': order}
     return render(request, "order.html", context)
