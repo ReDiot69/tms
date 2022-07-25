@@ -7,4 +7,3 @@ urlpatterns = [
     path('employeelanding', views.employeelanding, name="call_employee_page")
  ]
 
-# new branch

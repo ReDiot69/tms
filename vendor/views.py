@@ -18,9 +18,7 @@ def signup(request):
 
 
 def reg_user(request):
-    print('here')
     form = UserRegForm(request.POST, request.FILES)
-    print(request)
     if form.is_valid():
         vendor = Vendor.objects.create(vendor=form.cleaned_data['c_name'],
                                        address=form.cleaned_data['c_address'], phone=form.cleaned_data['c_number'],
