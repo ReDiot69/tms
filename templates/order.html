@@ -1,5 +1,6 @@
 {% extends 'navside.html'%}
 {% block content%}
+
 <style>
         .customer-photo{
         border-radius: 50%;
@@ -7,6 +8,7 @@
         width: 50px;
     }
 </style>
+
 <div class="container-fluid search_box">
     <form class="form-inline">
         <div class="row">
@@ -22,11 +24,7 @@
                         <th class="th">Order-date</th>
                         <th class="th">Number</th>
                         <th class="th">Email</th>
-                        <th class="th">Advance</th>
-                        <th class="th">Remaining</th>
-                        <th class="th">Total</th>
-
-
+                        <th class="th">Status</th>
                         <style>
                             .th{
                                 text-align: left;
@@ -38,14 +36,12 @@
                 {% for o in order%}
                     <tr>
                         <th scope="row">{{o.customer_measurement.customer.id}}</th>
-<!--                                    <td><img src="/media/login.jpg" alt="" class="customer-photo" name="photo"></td>-->
                         <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
                         <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
                         <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
-                        <td><label for="total" name="total"></label></td>
+                        <td><label for="status" name="status"><i class="fa fa-toggle-on"></i></label></td>
                         <td><label for="advance" name="advance"></label></td>
-                        <td><label for="remaning" name="remaining"></label></td>
                       </tr>
                 {% endfor%}
                 </tbody>
