@@ -14,18 +14,23 @@ class Customer(models.Model):
         return self.name
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=25)
+
+
 class Measurement(models.Model):
+    category = models.ManyToManyField(Category)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    shoulder = models.FloatField()
-    full_length = models.FloatField()
-    chest = models.FloatField()
-    hip = models.FloatField()
-    sl = models.FloatField()
-    m = models.FloatField()
-    ah = models.FloatField()
-    open = models.FloatField()
-    thigh = models.FloatField()
-    knee = models.FloatField()
+    shoulder = models.FloatField(null=True)
+    full_length = models.FloatField(null=True)
+    chest = models.FloatField(null=True)
+    hip = models.FloatField(null=True)
+    sl = models.FloatField(null=True)
+    m = models.FloatField(null=True)
+    ah = models.FloatField(null=True)
+    open = models.FloatField(null=True)
+    thigh = models.FloatField(null=True)
+    knee = models.FloatField(null=True)
     image = models.ImageField()
 
 
