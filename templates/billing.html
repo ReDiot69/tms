@@ -1,50 +1,86 @@
 {% extends 'navside.html'%}
 {% block content%}
+<style>
+    .tborderBottom{
+        border-bottom: 1px solid gray ;
+    }
+    .tborderTop{
+        border-top: 1px solid gray;
+    }
+</style>
     <div class="container-fluid">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="4">Invoice</th>
-                </tr>
-                <tr>
-                    <th colspan="2" class="border-bottom-0"></th>
-                    <th colspan="2"class="border-bottom-0">
-                        <label for="Date">Date:</label><label for="dateData"></label>
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="2"class="border-bottom-0"></th>
-                    <th colspan="2"class="border-bottom-0">
-                        <label for="Invoice_No" >Invoice No:</label><label for="Invoice_NoData"></label>
-                    </th>
-                </tr>
-                
-              <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Price</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Trouser</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="p-3">
+            <form action="">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="4">Invoice</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="2">
+                                <label for="Date">Date:</label><label for="dateData"></label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="2">
+                                <label for="Invoice_No" >Invoice No:</label><label for="Invoice_NoData"></label>
+                            </th>
+                        </tr>
+                        
+                    <tr class="tborderBottom">
+                        <th scope="col">S.N</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td scope="row">1</td>
+                        <td>Pant</td>
+                        <td>1</td>
+                        <td>350</td>
+                        <td>350</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="tborderTop">
+                            <th scope="row">Gross Total</th>
+                            <td colspan="3"></td>
+                            <td><label for="totalData">0</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Discount Amount</th>
+                            <td colspan="3"></td>
+                            <td><label for="discountData">0</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">VAT</th>
+                            <td colspan="3"></td>
+                            <td><label for="VAT">13%</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Paid</th>
+                            <td colspan="3"></td>
+                            <td><label for="Paid">0</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Due</th>
+                            <td colspan="3"></td>
+                            <td><label for="Due">0</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" colspan="3"></th>
+                            <th>Net Total</th>
+                            <td><label for="netTotal">0</label></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button class="btn btn-primary">Save</button>
+            </form>
+        </div>
     </div>
 {%endblock%}
