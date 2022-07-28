@@ -15,7 +15,8 @@ def home(request):
 
 def signup(request):
      return render(request, 'signup.html', {'reg_comp': True})
-
+def home1(request):
+     return render(request, 'home1.html',{})
 
 def reg_user(request):
     form = UserRegForm(request.POST, request.FILES)

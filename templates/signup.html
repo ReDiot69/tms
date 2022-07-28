@@ -2,7 +2,7 @@
 {% load  static%}
 {%block content%}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-<style>
+<!-- <style>
     .insert_logo{
         display: none;
     }
@@ -19,11 +19,10 @@
         border-radius: 25px;
     }
     .main-row{
-        background-image: url('../media/signupbg.jpg');
+        background-image: url('../media/signup1.jpg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        box-shadow: 5px 5px 5px #585755;
     }
     .regbtn{
         margin: auto;
@@ -37,61 +36,73 @@
     input[type=file]{
         color:red;
     }
+</style> -->
+<style>
+    .signupForm div .form-control{
+        margin-top: 9px;
+        margin-left: 15px;
+        border-radius: 90px;
+    }
+    .img_signup{
+        color: #6c7592;
+    }
+    .sideimg_signup{
+        object-fit: contain;
+        width: 500px;
+        height: 70vh;
+    }
+    .bg-img{
+        background-image:url("/media/signup1.jpg");
+        background-size: cover;
+        margin-top: 18px;
+        box-shadow: 0px 3px 6px rgba(52, 54, 54, 0.6) ;
+    }
+    .headSign{
+        padding-bottom: 9px;
+        margin-left: 25px;
+        border-bottom: 1px solid #ced4da;
+    }
+    .regbtn{
+        margin-left: 25px;
+    }
 </style>
-<div class="container-fluid main-container">
-    <div class="row main-row">
-        <section class="col-10 ">
-            <h1 class="font-weight-bold py-3">Tailor Management System</h1>
+<div class="container-fluid">
             {% if reg_comp%}
-            <form class="row" method="post" action="register" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="col-6 signup_form mx-3">
-                    <h3 style="text-decoration: none;">Company Details</h3>
-                    <div class=" form_row row">
-                        <div class="col-4"><input type="text" name="c_name" placeholder="Company Name" class="form-control my-3 p-2"></div>
-                        <div class="col-4"><input type="text" name="c_number" placeholder="Company number"  pattern="[0-9]+" maxlength="10" class="form-control my-3 p-2"></div>
-                        <div class="col-4"><input type="text" name="c_address" placeholder="Address" class="form-control my-3 p-2"></div>
-                        <div class="image-upload btn" id="file-input">
-                             <label for="file-input">Insert logo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
-                            <input type="file" id="file-input" name="c_image">
+            
+            <div class="container mb-5">
+                <form class="signupForm" method="post" action="register" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-6 bg-img">
+                           <!-- <img src="/media/signup1.jpg" alt="No_Image_found" class="sideimg_signup" > -->
+                        </div>
+                        <div class="col-6">
+                            <h1 class="d-flex justify-content-center mb-2 headSign">Sign up your Account</h1>
+                            <h4 class="d-flex justify-content-center">Organization Detail</h4>
+                            <div class="d-flex flex-column"><input type="text" name="c_name" placeholder="Organization's Name" class="form-control "></div>
+                            <div class="d-flex flex-column"><input type="text" name="c_number" placeholder=" Contact no."  pattern="[0-9]+" maxlength="10" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="text" name="c_address" placeholder="Address" class="form-control"></div>
+                            <div class="d-flex flex-column">
+                                <label class="form-control img_signup" for="file-input">Add Logo</label>
+                                <input  type="file" id="file-input" name="c_image" style="display: none;">
+                            </div>
+                            <h4 class="d-flex justify-content-center mt-2">Proprietor Detail</h4>
+                            <div class="d-flex flex-column"><input type="text" name="name" placeholder=" Name" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="text" name="address" placeholder="Address" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="email" name="email" placeholder="Email address " class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="password" name="password" placeholder="Password" class="form-control"></div>
+                            <div class="d-flex flex-column">
+                                <label class="form-control img_signup" for="file-input2">Insert Photo</label>
+                            <input type="file" id="file-input2" name="owner_image" style="display: none;">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center regbtn mt-3 px-5"><button class="btn btn-primary">Register</button></div> 
                         </div>
                         
                     </div>
-
-                    <div class="container-fluid divider"></div>
-
-                    <h3 style="text-decoration: none;">Owner Details</h3>
-                    <div class="row">
-                        <div class="col-4"><input type="text" name="name" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-4"><input type="text" name="address" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-4"><input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-6"><input type="email" name="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="col-6"><input type="password" name="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
-                        <div class="image-upload mb-5 ">
-                            <label for="file-input">Insert Photo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
-                           <input type="file" id="file-input" name="owner_image">
-                       </div>
-                    </div>
                     
-                    <div class="row regbtn mb-3"><button class="btn btn-primary">Register</button></div> 
-                </div>
-            </form>
-            {% endif %}   
-        </section>
-        <section class="col-2"></section>
-    </div>
+                </form>
+            </div>
+            {% endif %}
 </div>
-
-<script type="text/javascript">
-
-    function PreviewImage() {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("uploadPreview").src = oFREvent.target.result;
-        };
-    };
-
-</script>   
 {%endblock%}

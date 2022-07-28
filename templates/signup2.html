@@ -1,0 +1,92 @@
+{% extends 'frontpage.html'%}
+{% load  static%}
+{%block content%}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+<style>
+    .insert_logo{
+        display: none;
+    }
+    .image-upload{
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(189, 187, 187);
+        color: grey;
+        padding: 5px 0px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 2px 10px;
+        width: 96%;
+        border-radius: 25px;
+    }
+    .main-row{
+        background-image: url('../media/signup1.jpg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .regbtn{
+        margin: auto;
+    }
+
+    .signup_form{
+        background-color: #58575523;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    input[type=file]{
+        color:red;
+    }
+</style>
+<div class="container-fluid main-container">
+    <div class="row main-row">
+        <section class="flex ">
+            <h1 class="font-weight-bold py-3">Tailor Management System</h1>
+            {% if reg_comp%}
+            <form class="row" method="post" action="register" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-6 signup_form mx-3">
+                    <h3 style="text-decoration: none;">Company Details</h3>
+                    <div class=" form_row row">
+                        <div class="col-4"><input type="text" name="c_name" placeholder="Company Name" class="form-control my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="c_number" placeholder="Company number"  pattern="[0-9]+" maxlength="10" class="form-control my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="c_address" placeholder="Address" class="form-control my-3 p-2"></div>
+                        <div class="image-upload btn" id="file-input">
+                             <label for="file-input">Insert logo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
+                            <input type="file" id="file-input" name="c_image">
+                        </div>
+                        
+                    </div>
+                    <h3 style="text-decoration: none;">Owner Details</h3>
+                    <div class="row">
+                        <div class="col-4"><input type="text" name="name" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="address" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-4"><input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-6"><input type="email" name="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="col-6"><input type="password" name="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
+                        <div class="image-upload mb-5 ">
+                            <label for="file-input">Insert Photo<i class="attach-doc fa fa-paperclip" aria-hidden="true"></i> :</label>
+                           <input type="file" id="file-input" name="owner_image">
+                       </div>
+                    </div>
+                    
+                    <div class="row regbtn mb-3"><button class="btn btn-primary">Register</button></div> 
+                </div>
+            </form>
+            {% endif %}   
+        </section>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+    };
+
+</script>   
+{%endblock%}

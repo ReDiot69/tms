@@ -1,0 +1,70 @@
+{% extends 'frontpage.html'%}
+{% load  static%}
+{%block content%}
+<style>
+    .hide{
+        display: none;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="{% static 'css/homepage.css'%}">
+<div class="container-fluid main-container">
+    <div class="row main-row">
+        <div class="col-7">
+            <section class="login_form col-10 ">
+                <h1 class="font-weight-bold py-3">Tailor Management System</h1>
+                <h4>Sign into your account</h4>
+
+                <form class="row" method="post" action="login">
+                    {% csrf_token %}
+                    <section class="col-8">
+                        <div class="form-row">
+                            <input onfocus="hideMessage()" type="email" name="email" placeholder="xyz@gmail.com "
+                                   class="form-control rounded-pill my-3 p-2">
+                        </div>
+                        <div class="form-row">
+                            <input type="password" name="password" placeholder="*******"
+                                   class="form-control rounded-pill my-3 p-2">
+                        </div>
+                    </section>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <h3 id ="success-msg" style="color:red">{{ message }}</h3>
+                    {% endfor %}
+                    {% endif %}
+                    <button class="btn btn-primary">Login</button>
+                    <section class="col-4"></section>
+                    <section>
+                        <a href="#">Forgot Password?</a>
+                        <p style="margin-left:2px;">Don't have an Account?
+                            <a href="signup"> Register here</a></p>
+                    </section>
+                </form>
+            </section>
+        </div>
+
+        <div class="col-5 d-flex">
+            <img src="/media/home.jpg" alt="No_Image_found" class="welcome_img">
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid divider"></div>
+
+<div class="container-fluid login" id="login">
+    <div class="row">
+        <div class="col-4 login_form">
+            <div class="form-row">
+
+            </div>
+        </div>
+        <div class="col-8 ">
+            <!-- <img src="/media/login.jpg" alt="No_Image_found" class="login_img"> -->
+        </div>
+    </div>
+</div>
+<!-- <script>
+    const hideMessage=()=>{
+        msid = document.querySelector('#success-msg').classList.add('hide');
+    }
+</script> -->
+{%endblock%}
