@@ -1,3 +1,4 @@
+from urllib import request
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 
@@ -31,3 +32,5 @@ def employeelanding(request):
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
     context = {'emp_detail': emp_detail}
     return render(request, 'employeelanding.html', context)
+
+    
