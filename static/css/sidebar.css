@@ -27,7 +27,7 @@
             background-color: #e6e6e6;
         }
         .page .sidebar{
-            background:linear-gradient(290deg,#0dcaf078,#00c7be21);
+            background: salmon;
             position: fixed;
             top: 0;
             left: 0;
@@ -36,6 +36,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             transition: all 0.3s ease;
+            box-shadow: 2px 0px #fcfcfc;
         }
 
 
@@ -80,7 +81,7 @@
         }
 
         .page .content .container-fluid{
-            margin: 15px;
+            margin-top: 3px;
             background: #fff;
             padding: 20px;
             line-height: 28px;
@@ -121,7 +122,9 @@
             width: 100%;
             height: auto;
         }
-
+        .container-fluid{
+            background: white;
+        }
         .brand-name {
             color: white;
             margin: 0px;
