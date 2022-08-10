@@ -25,6 +25,7 @@
                         <th class="th">Order-date</th>
                         <th class="th">Number</th>
                         <th class="th">Email</th>
+                        <th class="th">Details</th>
                         <th class="th">Status</th>
                         <style>
                             .th{
@@ -41,6 +42,7 @@
                         <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
                         <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
+                        <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a></td>
                         <td><label for="status" name="status"><i class="fa fa-toggle-on"></i></label></td>
                         <td><label for="advance" name="advance"></label></td>
                       </tr>
@@ -52,6 +54,7 @@
                         <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
                         <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
+                        <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
                         <td><label for="status" name="status"><i class="fa fa-toggle-on"></i></label></td>
                         <td><label for="advance" name="advance"></label></td>
                       </tr>
