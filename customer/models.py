@@ -3,24 +3,26 @@ from django.db import models
 import datetime
 
 
-# Create your models here.
 class Customer(models.Model):
     name = models.CharField(max_length=25)
     email = models.EmailField()
     address = models.CharField(max_length=25)
     number = models.IntegerField()
-    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE )
+    vendor = models.ForeignKey('vendor.Vendor', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=25)
+class Description(models.Model):
+    description = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.description
 
 
 class Measurement(models.Model):
-    category = models.ManyToManyField(Category)
+    description = models.ManyToManyField(Description)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     shoulder = models.FloatField(null=True)
     full_length = models.FloatField(null=True)
@@ -34,10 +36,11 @@ class Measurement(models.Model):
     knee = models.FloatField(null=True)
     image = models.ImageField()
 
+
 STATUS_COM = (
-        (1, 'Not Complete'),
-        (2, 'Completed')
-    )
+    (1, 'Not Complete'),
+    (2, 'Completed')
+)
 
 
 class Order(models.Model):
@@ -47,33 +50,32 @@ class Order(models.Model):
     deadline = models.DateField(auto_now=False)
     status = models.IntegerField(choices=STATUS_COM, default=1)
 
-
-def create_id():
-    now = datetime.datetime.now()
-    return str(now.month)+str(now.day)+str(now.hour)+str(now.minute)+str(now.second)+str(int(uuid4()))[:1]
-
-
-class OrderedCategory(models.Model):
-
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    subtotal = models.DecimalField(max_digits=9, decimal_places=4)
-    status = models.IntegerField(choices=STATUS_COM, default=1)
-    description = models.TextField()
-
-
-class Invoice(models.Model):
-    STATUS = (
-        (1, 'Paid'),
-        (2, 'Not Paid')
-    )
-    id = models.CharField(max_length=20, primary_key=True, default=create_id, editable=False)
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    date = models.DateField(default=datetime.date.today)
-    vat = models.IntegerField(default=13)
-    discount = models.FloatField()
-    total = models.DecimalField(decimal_places=4, max_digits=9)
-    advance = models.DecimalField(decimal_places=4, max_digits=9)
-    remaining = models.DecimalField(decimal_places=4, max_digits=9)
-    status = models.IntegerField(choices=STATUS, default=2)
-    ordercat = models.ManyToManyField(OrderedCategory)
+# def create_id():
+#     now = datetime.datetime.now()
+#     return str(now.month)+str(now.day)+str(now.hour)+str(now.minute)+str(now.second)+str(int(uuid4()))[:1]
+#
+#
+# class OrderedCategory(models.Model):
+#
+#     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+#     quantity = models.IntegerField()
+#     subtotal = models.DecimalField(max_digits=9, decimal_places=4)
+#     status = models.IntegerField(choices=STATUS_COM, default=1)
+#     description = models.TextField()
+#
+#
+# class Invoice(models.Model):
+#     STATUS = (
+#         (1, 'Paid'),
+#         (2, 'Not Paid')
+#     )
+#     id = models.CharField(max_length=20, primary_key=True, default=create_id, editable=False)
+#     order = models.OneToOneField(Order, on_delete=models.CASCADE)
+#     date = models.DateField(default=datetime.date.today)
+#     vat = models.IntegerField(default=13)
+#     discount = models.FloatField()
+#     total = models.DecimalField(decimal_places=4, max_digits=9)
+#     advance = models.DecimalField(decimal_places=4, max_digits=9)
+#     remaining = models.DecimalField(decimal_places=4, max_digits=9)
+#     status = models.IntegerField(choices=STATUS, default=2)
+#     ordercat = models.ManyToManyField(OrderedCategory)

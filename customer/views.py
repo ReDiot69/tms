@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
 from customer.forms import CustomerForm, SearchForm
-from customer.models import Customer, Measurement, Order, Category
+from customer.models import Customer, Measurement, Order, Description
 from vendor.models import Vendor, MyUser, Role
 
 
@@ -11,12 +11,11 @@ def measurement(request):
         return render(request, "home.html")
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = MyUser.objects.filter(vendor=vendor)
-    category = Category.objects.all()
     a = CustomerForm()
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'vendor': n, 'category': category, 'form': a})
-    return render(request, 'measurement.html', {'emp': m, 'category': category, 'vendor': n, 'form': a})
+        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'vendor': n, 'form': a})
+    return render(request, 'measurement.html', {'emp': m, 'vendor': n, 'form': a})
 
 
 def account(request):
@@ -31,7 +30,7 @@ def account(request):
 
 
 def billing(request):
-    return render(request, 'billing.html')
+    return render(request, 'billing.html', {'f': f})
 
 
 def order(request):
@@ -65,7 +64,7 @@ def customer_store(request):
     me = request.user.vendor.vendor
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
-        ct = form.cleaned_data['category']
+        descriptions = request.POST.getlist('des')
         vendor = request.user.vendor
         v = Vendor.objects.get(vendor=vendor)
         try:
@@ -80,8 +79,9 @@ def customer_store(request):
                                        sl=form.cleaned_data['sl'], m=form.cleaned_data['m'], ah=form.cleaned_data['ah'],
                                        open=form.cleaned_data['open'], thigh=form.cleaned_data['thigh'],
                                        knee=form.cleaned_data['knee'])
-        for cat in ct:
-            m.category.add(cat)
+        for description in descriptions:
+            des = Description.objects.create(description=description)
+            m.description.add(des)
             m.save()
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         o = Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],

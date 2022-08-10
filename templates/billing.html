@@ -85,6 +85,11 @@
     </div>
 {% else %}
     <p>Something went wrong!</p>
+    <form action = "" method = "post">
+    {% csrf_token %}
+    {{f }}
+    <input type="submit" value=Submit">
+</form>
 {% endif %}
 </div>
 <script type="text/javascript">
