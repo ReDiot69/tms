@@ -14,6 +14,7 @@
         border-color: darkgrey;
     }
 </style>
+{% if reg %}
     <div class="container-fluid">
         <div class="p-3">
             <form action="">
@@ -25,7 +26,7 @@
                         <tr>
                             <th colspan="3"></th>
                             <th colspan="3">
-                                <label for="Date">Date:</label><label for="dateData"></label>
+                                <label for="Date">Date:</label><label for="dateData">{{order.orderdate}}</label>
                             </th>
                         </tr>
                         <tr>
@@ -34,7 +35,7 @@
                                 <label for="Invoice_No" >Invoice No:</label><label for="Invoice_NoData"></label>
                             </th>
                         </tr>
-                        
+
                     <tr class="tborderBottom">
                         <th scope="col">S.N</th>
                         <th scope="col">Category</th>
@@ -44,12 +45,14 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for c in order.customer_measurement.category.all %}
                     <tr>
                         <td scope="row">1</td>
-                        <td><input type="text" value="Pant"class="borderNone"  disabled ></td>
-                        <td><input type="number" class="borderNone" min="0"></td>
-                        <td><input type="number"class="borderNone"  min="0"></td>
-                        <td><label for="total">123</label></td>
+                        <td><label class="borderNone"  disabled >{{c.name}}</label></td>
+                        <td><input type="number" class="borderNone" name="quantity" min="0"></td>
+                        <td><input type="number"class="borderNone" name="price" min="0"></td>
+                        <td><label for="total"></label></td>
+                    {% endfor %}
                     </tr>
                     </tbody>
                     <tfoot>
@@ -89,4 +92,10 @@
             </form>
         </div>
     </div>
+{% else %}
+    <p>Something went wrong!</p>
+{% endif %}
+<script>
+
+</script>
 {%endblock%}

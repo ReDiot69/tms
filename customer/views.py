@@ -72,12 +72,12 @@ def customer_store(request):
             m.category.add(cat)
             m.save()
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
-        Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
-                             employee=emp)
-        context = {'reg': True}
+        o = Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
+                                 employee=emp)
+        context = {'order': o, 'reg': True}
     else:
         context = {}
-    return render(request, 'measurement.html', context)
+    return render(request, 'billing.html', context)
 
 
 def accounts_detail(request):
