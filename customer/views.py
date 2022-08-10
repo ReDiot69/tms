@@ -6,6 +6,7 @@ from vendor.models import Vendor, MyUser, Role
 
 
 def measurement(request):
+    n = request.user.vendor.vendor
     if request.user.is_anonymous:
         return render(request, "home.html")
     vendor = Vendor.objects.get(vendor=request.user.vendor)
@@ -14,17 +15,19 @@ def measurement(request):
     a = CustomerForm()
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'category': category, 'form': a})
-    return render(request, 'measurement.html', {'emp': m, 'category': category, 'form': a})
+        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'vendor': n, 'category': category, 'form': a})
+    return render(request, 'measurement.html', {'emp': m, 'category': category, 'vendor': n, 'form': a})
 
 
 def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     r = Role.objects.get(role='Staff')
+
+    m = request.user.vendor.vendor
     if request.user.role == r:
-        return render(request, 'account.html', {'staff': True})
-    return render(request, 'account.html')
+        return render(request, 'account.html', {'staff': True, 'vendor': m})
+    return render(request, 'account.html', {'vendor': m})
 
 
 def billing(request):
@@ -32,28 +35,33 @@ def billing(request):
 
 
 def order(request):
+    m = request.user.vendor.vendor
     order = Order.objects.all()
-    context = {'order': order}
+    context = {'order': order, 'vendor': m}
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        return render(request, 'order.html', {'staff': True})
+        return render(request, 'order.html', {'staff': True, 'vendor': m})
     return render(request, "order.html", context)
 
+
 def orderSearch(request):
-    print('here')
     form = SearchForm(request.POST)
-    print(request.POST)
+    m = request.user.vendor.vendor
     if form.is_valid():
         data = form.cleaned_data['searchBox']
+
         try:
             nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
-            context = {'order': nameCustomer, 'singlecus': True}
+            context = {'order': nameCustomer, 'singlecus': True, 'vendor': m}
         except:
-            context = {'msg':'Not found'}
+            context = {'msg': 'Not found', 'vendor': m}
         return render(request, "order.html", context)
-    return render(request, "order.html")
+
+    return render(request, "order.html", {'vendor': m} )
+
 
 def customer_store(request):
+    m = request.user.vendor.vendor
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
         ct = form.cleaned_data['category']
@@ -74,9 +82,9 @@ def customer_store(request):
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         o = Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                                  employee=emp)
-        context = {'order': o, 'reg': True}
+        context = {'order': o, 'reg': True, 'vendor': m}
     else:
-        context = {}
+        context = {'vendor': m}
     return render(request, 'billing.html', context)
 
 
@@ -89,10 +97,11 @@ def dashboard(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     else:
+        m = request.user.vendor.vendor
         r = Role.objects.get(role='Staff')
         if user.role == r:
-            return render(request, 'dashboard.html', {'staff': True})
-        return render(request, "dashboard.html")
+            return render(request, 'dashboard.html', {'staff': True, 'vendor':m})
+        return render(request, "dashboard.html", {'vendor':m})
 
 
 def login(request):
