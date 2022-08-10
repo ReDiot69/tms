@@ -18,3 +18,6 @@ class UserRegForm(forms.Form):
     c_number = forms.IntegerField()
     c_address = forms.CharField(max_length=25)
     c_image = forms.ImageField()
+
+class billing(forms.Form):
+    pass
