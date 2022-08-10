@@ -22,11 +22,21 @@
     .card-body{
         margin-top: 50px;
     }
+    .card-header{
+        background: #212529;
+    }
+    .myfont{
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        align-content: center;
+        vertical-align: baseline;
+    }
 </style>
 <div class="container-fluid">
     <div class="card text-dark mb-3 row" >
         <div class="card-header">
-            <h2 class="myfont">Employee Detail</h2>
+            <h3 class="myfont">Employee Detail</h3>
         </div>
         <div class="card-body d-flex mx-auto row">
             {% if not reg_emp%}
