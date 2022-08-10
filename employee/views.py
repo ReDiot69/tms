@@ -1,8 +1,5 @@
-from urllib import request
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
-
-# Create your views here.
 from employee.forms import EmployeeRegForm
 from vendor.models import MyUser, Vendor, Role
 
@@ -33,7 +30,5 @@ def employeelanding(request):
     user = request.user
     m = request.user.vendor.vendor
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
-    context = {'emp_detail': emp_detail, 'vendor': m}
+    context = {'emp_detail': emp_detail, 'vendor': m, 'employ': True}
     return render(request, 'employeelanding.html', context)
-
-    

@@ -15,10 +15,12 @@
     }
 </style>
 <div>
+{% if not invoice%}
 {% if reg %}
     <div class="container-fluid">
         <div class="p-3">
-            <form action="">
+            <form action="billing" method="POST">
+                {% csrf_token %}
                 <table class="table table-borderless">
                     <thead>
                         <tr>
@@ -28,31 +30,25 @@
                             <th colspan="3"></th>
                             <th colspan="3">
                                 <label for="Date">Date:</label><label for="dateData">{{order.orderdate}}</label>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th colspan="3"></th>
-                            <th colspan="3">
-                                <label for="Invoice_No" >Invoice No:</label><label for="Invoice_NoData"></label>
+                                <input type="hidden" name="date" value="{{order.orderdate}}"/>
+                                <input type="hidden" name="order" value="{{order.id}}"/>
                             </th>
                         </tr>
 
                     <tr class="tborderBottom">
                         <th scope="col">S.N</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Price</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Total</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for c in order.customer_measurement.category.all %}
+                    {% for d in order.customer_measurement.description.all %}
                     <tr>
                         <td scope="row">1</td>
-                        <td><label class="borderNone">{{c.name}}</label></td>
-                        <td><input type="number" value="1" class="borderNone" id="quantity" onchange="calculateTotal();" min="1"></td>
-                        <td><input type="number" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
-                        <td><label for="total" id="totalPrice">0</label></td>
+                        <td><label class="borderNone">{{d.description}}</label></td>
+                        <td><input type="hidden" name="description" value="{{d.description}}"/></td>
+
+                        <td><input type="number" name="price" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -60,12 +56,12 @@
                         <tr class="tborderTop">
                             <th scope="row">Gross Total</th>
                             <td colspan="3"></td>
-                            <td><label for="totalData">0</label></td>
+                            <td><input type="number" name="grosstotal" value="0" class="borderNone" id="total" onchange="calculateTotal();" min="0"></td>
                         </tr>
                         <tr>
                             <th scope="row">Discount Amount</th>
                             <td colspan="3"></td>
-                            <td><input type="number" class="borderNone" min="0"></td>
+                            <td><input type="number" name="discount" class="borderNone" min="0"></td>
                         </tr>
                         <tr>
                             <th scope="row">VAT</th>
@@ -75,22 +71,83 @@
                         <tr>
                             <th scope="row" colspan="3"></th>
                             <th>Net Total</th>
-                            <td><label for="netTotal">0</label></td>
+                            <td><input type="number" name="nettotal" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
                         </tr>
                     </tfoot>
                 </table>
-                <button class="btn btn-primary">Save</button>
+                <button class="btn btn-primary">Generate Invoice</button>
             </form>
         </div>
     </div>
 {% else %}
     <p>Something went wrong!</p>
-    <form action = "" method = "post">
-    {% csrf_token %}
-    {{f }}
-    <input type="submit" value=Submit">
-</form>
 {% endif %}
+{% else %}
+    <div class="container-fluid">
+        <div class="p-3">
+            <form >
+                {% csrf_token %}
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="4">Invoice</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3"></th>
+                            <th colspan="3">
+                                <label for="Date">Date: </label><label for="dateData">{{invoice.date}}</label>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="3"></th>
+                            <th colspan="3">
+                                <label for="Invoice_No" >Invoice No: </label><label for="Invoice_NoData">{{invoice.id}}</label>
+                            </th>
+                        </tr>
+
+                    <tr class="tborderBottom">
+                        <th scope="col">S.N</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for d in invoice.orderdes.all %}
+                    <tr>
+                        <td scope="row">1</td>
+                        <td><label class="borderNone">{{d.description}}</label></td>
+                        <td><label class="borderNone">{{d.subtotal}}</label></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="tborderTop">
+                            <th scope="row">Gross Total</th>
+                            <td colspan="3"></td>
+                            <td><label class="borderNone">{{invoice.gross_total}}</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Discount Amount</th>
+                            <td colspan="3"></td>
+                            <td><label class="borderNone">{{invoice.discount}}</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">VAT</th>
+                            <td colspan="3"></td>
+                            <td><label for="VAT">13%</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" colspan="3"></th>
+                            <th>Net Total</th>
+                            <td><label class="borderNone">{{invoice.net_total}}</label></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button class="btn btn-primary">Print</button>
+            </form>
+        </div>
+    </div>
+   {% endif %}
 </div>
 <script type="text/javascript">
     function calculateTotal(){

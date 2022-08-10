@@ -10,8 +10,12 @@ from vendor.models import Vendor, MyUser, Role
 
 def home(request):
     if not request.user.is_anonymous:
+        r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
-        return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
+        if request.user.role == r:
+            return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
+        else:
+            return render(request, 'dashboard.html', {'vendor': m})
     return render(request, 'home.html', {})
 
 
@@ -54,7 +58,7 @@ def login_user(request):
                 r = Role.objects.get(role='Staff')
                 if user.role == r:
                     return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
-                return render(request, 'dashboard.html', {'vendor':m})
+                return render(request, 'dashboard.html', {'vendor': m})
             else:
                 messages.info(request, 'No such account!')
                 return render(request, 'home.html', {'msg': True})

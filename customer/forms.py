@@ -20,5 +20,12 @@ class CustomerForm(forms.Form):
     deadline = forms.DateField()
     image = forms.ImageField()
 
+
 class SearchForm(forms.Form):
     searchBox = forms.CharField()
+
+
+class BillingForm(forms.Form):
+    grosstotal = forms.DecimalField()
+    discount = forms.FloatField(required=False)
+    nettotal = forms.DecimalField()

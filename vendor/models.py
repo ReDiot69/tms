@@ -26,6 +26,7 @@ class CustomUserManager(BaseUserManager):
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
     """
+
     def create_user(self, email, password, **extra_fields):
         """
         Create and save a User with the given email and password.
@@ -76,5 +77,3 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return str(self.name)
-
-    

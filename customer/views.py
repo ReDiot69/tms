@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
-from customer.forms import CustomerForm, SearchForm
-from customer.models import Customer, Measurement, Order, Description
+from customer.forms import CustomerForm, SearchForm, BillingForm
+from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription
 from vendor.models import Vendor, MyUser, Role
 
 
@@ -14,23 +14,37 @@ def measurement(request):
     a = CustomerForm()
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'vendor': n, 'form': a})
-    return render(request, 'measurement.html', {'emp': m, 'vendor': n, 'form': a})
+        return render(request, 'measurement.html',
+                      {'staff': True, 'emp': m, 'vendor': n, 'form': a, 'measurement': True})
+    return render(request, 'measurement.html', {'emp': m, 'vendor': n, 'form': a, 'measurement': True})
 
 
 def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     r = Role.objects.get(role='Staff')
-
     m = request.user.vendor.vendor
     if request.user.role == r:
-        return render(request, 'account.html', {'staff': True, 'vendor': m})
-    return render(request, 'account.html', {'vendor': m})
+        return render(request, 'account.html', {'staff': True, 'vendor': m, 'accounts': True})
+    return render(request, 'account.html', {'vendor': m, 'accounts': True})
 
 
 def billing(request):
-    return render(request, 'billing.html', {'f': f})
+    form = BillingForm(request.POST)
+    if form.is_valid():
+        des = request.POST.getlist('description')
+        des_price = request.POST.getlist('price')
+        le = len(des)
+        o = Order.objects.get(id=request.POST.get('order'))
+        i = Invoice.objects.create(order=o, discount=form.cleaned_data['discount'],
+                                   net_total=form.cleaned_data['nettotal'], gross_total=form.cleaned_data['grosstotal'])
+        for d in range(le):
+            descrip = Description.objects.create(description=des[d])
+            od = OrderedDescription.objects.create(description=descrip, subtotal=des_price[d])
+            i.orderdes.add(od)
+            i.save()
+        print(i)
+    return render(request, 'billing.html', {'invoice': i})
 
 
 def order(request):
@@ -40,7 +54,7 @@ def order(request):
         o = Order.objects.filter(employee=r)
         return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
     od = Order.objects.filter(employee__vendor=m)
-    context = {'order': od, 'vendor': m.vendor}
+    context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
     return render(request, "order.html", context)
 
 
@@ -57,7 +71,7 @@ def orderSearch(request):
             context = {'msg': 'Not found', 'vendor': m}
         return render(request, "order.html", context)
 
-    return render(request, "order.html", {'vendor': m} )
+    return render(request, "order.html", {'vendor': m})
 
 
 def customer_store(request):
@@ -108,8 +122,10 @@ def dashboard(request):
         orders = len(od)
         employee = len(emp)
         if user.role == r:
-            return render(request, 'dashboard.html', {'staff': True, 'vendor': m, 'orders': orders, 'employees': employee})
-        return render(request, "dashboard.html", {'vendor': m, 'orders': orders, 'employees': employee})
+            return render(request, 'dashboard.html',
+                          {'staff': True, 'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+        return render(request, "dashboard.html",
+                      {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
 
 
 def login(request):
