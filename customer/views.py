@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 from customer.forms import CustomerForm
 from customer.models import Customer, Measurement, Order, Category
-from vendor.models import Vendor, MyUser
+from vendor.models import Vendor, MyUser, Role
 
 
 def measurement(request):
@@ -11,14 +11,19 @@ def measurement(request):
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = MyUser.objects.filter(vendor=vendor)
     category = Category.objects.all()
-    context = {}
     a = CustomerForm()
-    return render(request, 'measurement.html', {'emp': m, 'category': category, 'form':a})
+    r = Role.objects.get(role='Staff')
+    if request.user.role == r:
+        return render(request, 'measurement.html', {'staff': True, 'emp': m, 'category': category, 'form': a})
+    return render(request, 'measurement.html', {'emp': m, 'category': category, 'form': a})
 
 
 def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
+    r = Role.objects.get(role='Staff')
+    if request.user.role == r:
+        return render(request, 'account.html', {'staff': True})
     return render(request, 'account.html')
 
 
@@ -29,6 +34,9 @@ def billing(request):
 def order(request):
     order = Order.objects.all()
     context = {'order': order}
+    r = Role.objects.get(role='Staff')
+    if request.user.role == r:
+        return render(request, 'order.html', {'staff': True})
     return render(request, "order.html", context)
 
 
@@ -64,9 +72,13 @@ def accounts_detail(request):
 
 
 def dashboard(request):
+    user = request.user
     if request.user.is_anonymous:
         return render(request, "home.html")
     else:
+        r = Role.objects.get(role='Staff')
+        if user.role == r:
+            return render(request, 'dashboard.html', {'staff': True})
         return render(request, "dashboard.html")
 
 

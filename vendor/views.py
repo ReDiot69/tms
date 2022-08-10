@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from django.contrib import messages
-# Create your views here.
 from vendor.forms import UserLoginForm, UserRegForm
 from django.contrib.auth import logout
 
@@ -14,9 +13,12 @@ def home(request):
 
 
 def signup(request):
-     return render(request, 'signup.html', {'reg_comp': True})
+    return render(request, 'signup.html', {'reg_comp': True})
+
+
 def home1(request):
-     return render(request, 'home1.html',{})
+    return render(request, 'home1.html', {})
+
 
 def reg_user(request):
     form = UserRegForm(request.POST, request.FILES)
@@ -34,7 +36,7 @@ def reg_user(request):
 
 
 def login_user(request):
-    if request.method== 'POST':
+    if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -42,6 +44,9 @@ def login_user(request):
             user = authenticate(email=email, password=password)
             if user:
                 login(request, user)
+                r = Role.objects.get(role='Staff')
+                if user.role == r:
+                    return render(request, 'dashboard.html', {'staff': True})
                 return render(request, 'dashboard.html')
             else:
                 messages.info(request, 'No such account!')
@@ -49,8 +54,8 @@ def login_user(request):
         else:
             return render(request, 'home.html')
     else:
-            return render(request, 'home.html')
-    
+        return render(request, 'home.html')
+
 
 def logout_user(request):
     logout(request)
