@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render
-from customer.forms import CustomerForm
+from customer.forms import CustomerForm, SearchForm
 from customer.models import Customer, Measurement, Order, Category
 from vendor.models import Vendor, MyUser
 
@@ -31,6 +31,19 @@ def order(request):
     context = {'order': order}
     return render(request, "order.html", context)
 
+def orderSearch(request):
+    print('here')
+    form = SearchForm(request.POST)
+    print(request.POST)
+    if form.is_valid():
+        data = form.cleaned_data['searchBox']
+        try:
+            nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
+            context = {'order': nameCustomer, 'singlecus': True}
+        except:
+            context = {'msg':'Not found'}
+        return render(request, "order.html", context)
+    return render(request, "order.html")
 
 def customer_store(request):
     form = CustomerForm(request.POST, request.FILES)
