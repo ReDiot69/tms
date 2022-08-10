@@ -35,12 +35,13 @@ def billing(request):
 
 
 def order(request):
-    m = request.user.vendor.vendor
-    order = Order.objects.all()
-    context = {'order': order, 'vendor': m}
+    m = request.user.vendor
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        return render(request, 'order.html', {'staff': True, 'vendor': m})
+        o = Order.objects.filter(employee=r)
+        return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
+    od = Order.objects.filter(employee__vendor=m)
+    context = {'order': od, 'vendor': m.vendor}
     return render(request, "order.html", context)
 
 
@@ -99,9 +100,13 @@ def dashboard(request):
     else:
         m = request.user.vendor.vendor
         r = Role.objects.get(role='Staff')
+        od = Order.objects.filter(employee__vendor=request.user.vendor)
+        emp = MyUser.objects.filter(vendor=request.user.vendor)
+        orders = len(od)
+        employee = len(emp)
         if user.role == r:
-            return render(request, 'dashboard.html', {'staff': True, 'vendor':m})
-        return render(request, "dashboard.html", {'vendor':m})
+            return render(request, 'dashboard.html', {'staff': True, 'vendor': m, 'orders': orders, 'employees': employee})
+        return render(request, "dashboard.html", {'vendor': m, 'orders': orders, 'employees': employee})
 
 
 def login(request):
