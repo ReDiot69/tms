@@ -11,25 +11,31 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="th">#</th>
-                        <th class="th">Name</th>
+                        <th class="th">Invoice</th>
+                        <th class="th">Employee Name</th>
                         <th class="th">Total</th>
                         <th class="th">Advance</th>
                         <th class="th">Remaining</th>
+                        <th class="th">Status</th>
                         <style>
                             .th{
-                                text-align: center;
+                                text-align: left;
                             }
                         </style>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for i in invoice %}
                     <tr>
                         <th scope="row">1</th>
-                        <td><a href="#"><label for="name" name="name"></label></a></td>
-                        <td><label for="total" name="total"></label></td>
-                        <td><label for="advance" name="advance"></label></td>
-                        <td><label for="remaning" name="remaining"></label></td>
+                        <td><a href="#"><label for="name" name="invoice">{{i.invoice.id}}</label></a></td>
+                        <td><label for="total" name="total">{{i.invoice.order.employee}}</label></td>
+                        <td><label for="total" name="total">{{i.invoice.net_total}}</label></td>
+                        <td><label for="advance" name="advance">{{i.advance}}</label></td>
+                        <td><label for="remaning" name="remaining">{{i.remain}}</label></td>
+                        <td><label for="status" name="status">{{i.invoice.status}}</label></td>
                       </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

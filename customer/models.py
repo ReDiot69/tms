@@ -38,8 +38,8 @@ class Measurement(models.Model):
 
 
 STATUS_COM = (
-    (1, 'Not Complete'),
-    (2, 'Completed')
+    ('Not Complete', 'Not Complete'),
+    ('Complete', 'Completed')
 )
 
 
@@ -48,7 +48,7 @@ class Order(models.Model):
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
-    status = models.IntegerField(choices=STATUS_COM, default=1)
+    status = models.CharField(choices=STATUS_COM, default='Not Complete', max_length=25)
 
 
 def create_id():
@@ -59,13 +59,14 @@ def create_id():
 class OrderedDescription(models.Model):
     description = models.ForeignKey(Description, on_delete=models.CASCADE)
     subtotal = models.DecimalField(max_digits=9, decimal_places=2)
-    status = models.IntegerField(choices=STATUS_COM, default=1)
+    status = models.CharField(choices=STATUS_COM, default='Not Complete', max_length=25)
 
 
 class Invoice(models.Model):
     STATUS = (
-        (1, 'Paid'),
-        (2, 'Not Paid')
+        ('Paid', 'Paid'),
+        ('Not Paid', 'Not Paid'),
+        ('Partially Paid', 'Partially Paid')
     )
     id = models.CharField(max_length=20, primary_key=True, default=create_id, editable=False)
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
@@ -74,5 +75,11 @@ class Invoice(models.Model):
     discount = models.FloatField()
     net_total = models.DecimalField(decimal_places=2, max_digits=9)
     gross_total = models.DecimalField(decimal_places=2, max_digits=9)
-    status = models.IntegerField(choices=STATUS, default=2)
+    status = models.CharField(choices=STATUS, default='Not Paid', max_length=25)
     orderdes = models.ManyToManyField(OrderedDescription)
+
+
+class InvoiceDetail(models.Model):
+    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE)
+    advance = models.DecimalField(decimal_places=2, max_digits=9)
+    remain = models.DecimalField(decimal_places=2, max_digits=9)

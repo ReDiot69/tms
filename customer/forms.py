@@ -29,3 +29,4 @@ class BillingForm(forms.Form):
     grosstotal = forms.DecimalField()
     discount = forms.FloatField(required=False)
     nettotal = forms.DecimalField()
+    advance = forms.DecimalField()

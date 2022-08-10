@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render
 from customer.forms import CustomerForm, SearchForm, BillingForm
-from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription
+from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription, InvoiceDetail
 from vendor.models import Vendor, MyUser, Role
 
 
@@ -23,10 +23,13 @@ def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     r = Role.objects.get(role='Staff')
-    m = request.user.vendor.vendor
+    m = request.user.vendor
+
     if request.user.role == r:
-        return render(request, 'account.html', {'staff': True, 'vendor': m, 'accounts': True})
-    return render(request, 'account.html', {'vendor': m, 'accounts': True})
+        invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
+        return render(request, 'account.html', {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'accounts': True})
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
+    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
 def billing(request):
@@ -44,6 +47,8 @@ def billing(request):
             i.orderdes.add(od)
             i.save()
         print(i)
+        InvoiceDetail.objects.create(advance=form.cleaned_data['advance'], remain=i.net_total-form.cleaned_data['advance'],
+                                     invoice=i)
     return render(request, 'billing.html', {'invoice': i})
 
 
@@ -51,9 +56,15 @@ def order(request):
     m = request.user.vendor
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
-        o = Order.objects.filter(employee=r)
-        return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
-    od = Order.objects.filter(employee__vendor=m)
+        try:
+            o = Order.objects.filter(employee=request.user)
+            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
+        except:
+            return render(request, 'order.html', {'staff': True, 'vendor': m})
+    try:
+        od = Order.objects.filter(employee__vendor=m)
+    except:
+        od = None
     context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
     return render(request, "order.html", context)
 
