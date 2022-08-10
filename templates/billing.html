@@ -14,6 +14,7 @@
         border-color: darkgrey;
     }
 </style>
+<div>
 {% if reg %}
     <div class="container-fluid">
         <div class="p-3">
@@ -48,12 +49,12 @@
                     {% for c in order.customer_measurement.category.all %}
                     <tr>
                         <td scope="row">1</td>
-                        <td><label class="borderNone"  disabled >{{c.name}}</label></td>
-                        <td><input type="number" class="borderNone" name="quantity" min="0"></td>
-                        <td><input type="number"class="borderNone" name="price" min="0"></td>
-                        <td><label for="total"></label></td>
-                    {% endfor %}
+                        <td><label class="borderNone">{{c.name}}</label></td>
+                        <td><input type="number" value="1" class="borderNone" id="quantity" onchange="calculateTotal();" min="1"></td>
+                        <td><input type="number" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
+                        <td><label for="total" id="totalPrice">0</label></td>
                     </tr>
+                    {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr class="tborderTop">
@@ -71,16 +72,6 @@
                             <td colspan="3"></td>
                             <td><label for="VAT">13%</label></td>
                         </tr>
-                        <!-- <tr>
-                            <th scope="row">Paid</th>
-                            <td colspan="3"></td>
-                            <td><label for="Paid">0</label></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Due</th>
-                            <td colspan="3"></td>
-                            <td><label for="Due">0</label></td>
-                        </tr> -->
                         <tr>
                             <th scope="row" colspan="3"></th>
                             <th>Net Total</th>
@@ -95,7 +86,14 @@
 {% else %}
     <p>Something went wrong!</p>
 {% endif %}
-<script>
-
+</div>
+<script type="text/javascript">
+    function calculateTotal(){
+        console.log('here');
+        var price = document.getElementById("price").value;
+        var quantity = document.getElementById("quantity").value;
+        var total = price * quantity
+        document.getElementById("totalPrice").innerHTML = total;
+    }
 </script>
 {%endblock%}
