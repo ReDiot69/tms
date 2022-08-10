@@ -62,15 +62,18 @@ def orderSearch(request):
 
 
 def customer_store(request):
-    m = request.user.vendor.vendor
+    me = request.user.vendor.vendor
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
         ct = form.cleaned_data['category']
         vendor = request.user.vendor
         v = Vendor.objects.get(vendor=vendor)
-        c = Customer.objects.create(name=form.cleaned_data['name'], email=form.cleaned_data['email'],
-                                    address=form.cleaned_data['address'],
-                                    number=form.cleaned_data['number'], vendor=v)
+        try:
+            c = Customer.objects.get(email=form.cleaned_data['email'], number=form.cleaned_data['number'])
+        except:
+            c = Customer.objects.create(name=form.cleaned_data['name'], email=form.cleaned_data['email'],
+                                        address=form.cleaned_data['address'],
+                                        number=form.cleaned_data['number'], vendor=v)
         m = Measurement.objects.create(customer=c, shoulder=form.cleaned_data['shoulder'],
                                        full_length=form.cleaned_data['full_length'], image=form.cleaned_data['image'],
                                        chest=form.cleaned_data['chest'], hip=form.cleaned_data['hip'],
@@ -83,9 +86,9 @@ def customer_store(request):
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         o = Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                                  employee=emp)
-        context = {'order': o, 'reg': True, 'vendor': m}
+        context = {'order': o, 'reg': True, 'vendor': me}
     else:
-        context = {'vendor': m}
+        context = {'vendor': me}
     return render(request, 'billing.html', context)
 
 
