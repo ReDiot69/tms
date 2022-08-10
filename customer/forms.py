@@ -26,3 +26,6 @@ class CustomerForm(forms.Form):
     employee = forms.IntegerField()
     deadline = forms.DateField()
     image = forms.ImageField()
+
+class SearchForm(forms.Form):
+    searchBox = forms.CharField()

@@ -10,10 +10,11 @@
 </style>
 
 <div class="container-fluid search_box">
-    <form class="form-inline">
+    <form class="form-inline" action="search" method="POST" >
+    {% csrf_token %}
         <div class="row">
-            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search"></div>
-            <div class="col-2"><button class="btn btn-outline-success " type="submit">Search</button></div>
+            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchBox"></div>
+            <div class="col-2"><button class="btn btn-outline-success" type="submit" for="searchBox">Search</button></div>
         </div>
         <div class="row">
             <table class="table">
@@ -33,6 +34,17 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% if singlecus %}
+                    <tr>
+                        <th scope="row">{{order.customer_measurement.customer.id}}</th>
+                        <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a></td>
+                        <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
+                        <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
+                        <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
+                        <td><label for="status" name="status"><i class="fa fa-toggle-on"></i></label></td>
+                        <td><label for="advance" name="advance"></label></td>
+                      </tr>
+                {% else %}
                 {% for o in order%}
                     <tr>
                         <th scope="row">{{o.customer_measurement.customer.id}}</th>
@@ -44,6 +56,7 @@
                         <td><label for="advance" name="advance"></label></td>
                       </tr>
                 {% endfor%}
+                {% endif %}
                 </tbody>
             </table>
         </div>
