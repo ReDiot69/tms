@@ -22,15 +22,18 @@ def reg_employ(request):
                               address=form.cleaned_data['address'], email=form.cleaned_data['email'],
                               password=password, image=form.cleaned_data['image'],
                               role=role, vendor=v)
-    return render(request, 'employee.html', {'reg_emp': True})
+
+    m = request.user.vendor.vendor
+    return render(request, 'employee.html', {'vendor': m, 'reg_emp': True})
 
 
 def employeelanding(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     user = request.user
+    m = request.user.vendor.vendor
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
-    context = {'emp_detail': emp_detail}
+    context = {'emp_detail': emp_detail, 'vendor': m}
     return render(request, 'employeelanding.html', context)
 
     
