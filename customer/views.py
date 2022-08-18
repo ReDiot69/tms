@@ -68,6 +68,21 @@ def order(request):
     context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
     return render(request, "order.html", context)
 
+def acceptorder(request):
+    m = request.user.vendor
+    r = Role.objects.get(role='Staff')
+    if request.user.role == r:
+        try:
+            o = Order.objects.filter(employee=request.user, status='Not Complete')
+            return render(request, 'acceptacceptorder.html', {'order': o, 'staff': True, 'vendor': m})
+        except:
+            return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+    try:
+        od = Order.objects.filter(employee__vendor=m, status='Not Complete')
+    except:
+        od = None
+    context = {'order': od, 'vendor': m.vendor, 'acceptorder': True}
+    return render(request, "acceptorder.html", context)
 
 def orderSearch(request):
     form = SearchForm(request.POST)

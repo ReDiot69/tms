@@ -9,6 +9,7 @@ urlpatterns = [
     path('measurement', views.measurement, name="call_measurement_page"),
     path('accounts_detail', views.accounts_detail, name="display_accountDetail_from_db"),
     path('account', views.account, name="call_accounts_page"),
+    path('acceptorder', views.acceptorder, name="call_accept_order_page"),
     path('order', views.order, name="call_order_page"),
     path('billing', views.billing, name="call_billing_page"),
     path('dashboard', views.dashboard, name="call_dashboard_page"),
