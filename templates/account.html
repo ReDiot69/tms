@@ -12,6 +12,7 @@
                     <tr>
                         <th class="th">#</th>
                         <th class="th">Invoice</th>
+                        <th class="th">Customer</th>
                         <th class="th">Employee Name</th>
                         <th class="th">Total</th>
                         <th class="th">Advance</th>
@@ -29,11 +30,20 @@
                     <tr>
                         <th scope="row">1</th>
                         <td><a href="#"><label for="name" name="invoice">{{i.invoice.id}}</label></a></td>
-                        <td><label for="total" name="total">{{i.invoice.order.employee}}</label></td>
+                        <td><label for="cus_name" name="cus_name">{{i.invoice.order.customer_measurement.customer}}</label></td>
+                        <td><label for="assigned_emp" name="assigned_emp">{{i.invoice.order.employee}}</label></td>
                         <td><label for="total" name="total">{{i.invoice.net_total}}</label></td>
                         <td><label for="advance" name="advance">{{i.advance}}</label></td>
                         <td><label for="remaning" name="remaining">{{i.remain}}</label></td>
-                        <td><label for="status" name="status">{{i.invoice.status}}</label></td>
+                        <td>
+                            <!-- <label for="status" name="status">{{i.invoice.status}}</label> -->
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <!-- <option selected>Open this select menu</option> -->
+                                <option value="1">Paid</option>
+                                <option value="2">Not Paid</option>
+                                <option value="3">Partially Paid</option>
+                              </select>
+                        </td>
                       </tr>
                     {% endfor %}
                 </tbody>
