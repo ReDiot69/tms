@@ -62,14 +62,12 @@
                         <td>
                             <!-- <label for="status" name="status" class="bg-danger rounded-pill p-1">{{o.status}}</label> -->
                             <!-- Example single danger button -->
-                                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Action
-                                </button>
-                                <ul class="dropdown-menu">
-                                <li><label for="Complete">Completed</label></li>
-                                <li><label for="Assigned">Assigned</label></li>
-                                <li><label for="Rejected">Rejected</label></li>
-                                </ul>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" disabled>
+                                <!-- <option selected>Open this select menu</option> -->
+                                <option value="1">Completed</option>
+                                <option value="2">Assigned</option>
+                                <option value="3">Rejected</option>
+                              </select>
                         </td>
                       </tr>
                 {% endfor%}
