@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-from multiprocessing import context
-from django.http import Http404
-=======
 import decimal
 
->>>>>>> 13a6ff60885be4069431acc2795e15cc2337dfaa
 from django.shortcuts import render
 from customer.forms import CustomerForm, SearchForm, BillingForm
 from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription, InvoiceDetail
