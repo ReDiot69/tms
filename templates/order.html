@@ -85,11 +85,88 @@
                 <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
                 <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                 <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
-                <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
+                <td>
+                    <button type="button" class="btn btn-primary" name="order" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{o.id}}" >{{o.customer_measurement}}</button>
+                     <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop{{o.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Measurement of Customer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table mytable">
+                                    <thead>
+                                    <tr>
+                                        <th class="th">Type</th>
+                                        <th class="th">Data</th>
+                                        <style>
+                                                .th{
+                                                    text-align: center;
+                                                }
+                                        </style>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><label for="Shoulder">SH</label></td>
+                                        <td><label for="Shoulder">{{o.customer_measurement.shoulder}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="Full-length">FL</label></td>
+                                        <td><label for="full_length">{{o.customer_measurement.full_length}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="chest">Chest</label></td>
+                                        <td><label for="chest">{{o.customer_measurement.chest}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="hip">Hip</label></td>
+                                        <td><label for="hip">{{o.customer_measurement.hip}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="sl">Sl</label></td>
+                                        <td><label for="sl">{{o.customer_measurement.sl}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="m">M</label></td>
+                                        <td><label for="m">{{o.customer_measurement.m}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="ah">AH</label></td>
+                                        <td><label for="ah">{{o.customer_measurement.ah}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="open">Open</label></td>
+                                        <td><label for="open">{{o.customer_measurement.open}}</label></td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td><label for="fl">FL</label></td>
+                                        <td><input type="number" name="" id=""></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td><label for="thigh">Thigh</label></td>
+                                        <td><label for="thigh">{{o.customer_measurement.thigh}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="knee">Knee</label></td>
+                                        <td><label for="knee">{{o.customer_measurement.knee}}</label></td>
+                                    </tr>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </td>
                 <td>
                     <label for="status" name="status">{{o.status}}</label>
-                    <!-- Example single danger button -->
-
                 </td>
             </tr>
             {% endfor%}
@@ -98,4 +175,7 @@
         </table>
     </div>
 </div>
+<!-- Button trigger modal -->
+  
+ 
 {%endblock%}
