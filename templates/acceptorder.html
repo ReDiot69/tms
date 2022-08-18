@@ -22,12 +22,11 @@
                     <tr>
                         <th class="th">#</th>
                         <th class="th">Customer</th>
-                        <th class="th">Assigned Employee</th>
                         <th class="th">Order-date</th>
                         <th class="th">Number</th>
                         <th class="th">Email</th>
                         <th class="th">Details</th>
-                        <th class="th">Status</th>
+                        <th class="th">Acction</th>
                         <style>
                             .th{
                                 text-align: left;
@@ -42,7 +41,6 @@
                             {{order.customer_measurement}}
                         </th>
                         <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a></td>
-                        <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
                         <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
                         <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
