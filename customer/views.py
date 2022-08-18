@@ -57,12 +57,12 @@ def order(request):
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
         try:
-            o = Order.objects.filter(employee=request.user, status='Not Complete')
+            o = Order.objects.filter(employee=request.user, status='Not Complete', emp_status='ACCEPTED')
             return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
         except:
             return render(request, 'order.html', {'staff': True, 'vendor': m})
     try:
-        od = Order.objects.filter(employee__vendor=m, status='Not Complete')
+        od = Order.objects.filter(employee__vendor=m, status='Not Complete', emp_status='ACCEPTED')
     except:
         od = None
     context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
