@@ -144,7 +144,11 @@
                         </li>
                     {% endif %}
                     {% if not staff%}
-                    <li class="navigation-list-item dropdown">
+                    {% if history %}
+                    <li class="navigation-list-item active">
+                    {% else %}
+                    <li class="navigation-list-item">
+                    {% endif %}
                         <a class="navigation-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="row">
                                 <div class="col-2">
