@@ -30,7 +30,7 @@
                         <tbody>
                         {% for e in emp_detail %}
                             <tr>
-                                <th scope="row">{{e.id}}</th>
+                                <th scope="row">{{ forloop.counter }}</th>
                                 <td><a href="#"><label for="name" name="name">{{e.name}}</label></a></td>
                                 <td><label for="total" name="total">{{e.email}}</label></td>
                                 <td><label for="advance" name="advance">{{e.number}}</label></td>
@@ -44,37 +44,40 @@
                 </div>
     </div>
 {% endif%}
-{% if reg_emp %}
-<div class="container">
-    
-    <form class="row">
-        <section class="col-3">
-            <img id="uploadPreview" class="customer_photo">
-        </section>
-        <section class="col-9">
-            <div class="row">
-                
-                <div class="col-12"><input type="text" placeholder=" Name" class="form-control rounded-pill my-3 p-2"></div>
-           
-                <div class="col-4"><input type="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2"></div>
-                <div class="col-4"><input type="text" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2"></div>
-                <div class="col-4"><input type="text" placeholder="Address" class="form-control rounded-pill my-3 p-2"></div>
-        
-                <div class="col-12"><input type="password" placeholder="Password" class="form-control rounded-pill my-3 p-2"></div>
-                <div class="col-12">
-                    <label for="Insert_img"> <h5>Insert photo</h5></label>
-                    <input id="uploadImage" type="file" name="emp_image" onchange="PreviewImage();">
-                </div>
+    {% if reg_emp %}
+    <form class="row" method="post" action="reg_emp" enctype="multipart/form-data">
+        {% csrf_token %}
+        <section class="col-2"></section>
+        <section class="col-8">
+            <div class="d-flex flex-row justify-content-center"><h3>Register Employee</h3></div>
+            <div class="form-row">
+                <input type="text" placeholder=" Name" name="name" class="form-control rounded-pill my-3 p-2">
             </div>
-            <div class="mt-3 row"> <button class="btn btn-dark">Register</button></div>
+            
+            <div class="form-row">
+                <input type="email" name="email" placeholder="Email address " class="form-control rounded-pill my-3 p-2">
+            </div>
+            <div class="form-row">
+                <input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control rounded-pill my-3 p-2">
+            </div>
+            <div class="form-row">
+                <input type="text" name="address" placeholder="Address" class="form-control rounded-pill my-3 p-2">
+            </div>
+            <div class="form-row">
+                <input type="password" name="password" placeholder="Password" class="form-control rounded-pill my-3 p-2">
+            </div>
+            <div class="form-row form-control rounded-pill my-1 p-1">
+                <label for="Insert_img"> <h6 style="color: grey;padding-left: 5px;">Insert photo:</h6></label>
+                <input type="file" name="image" >
+            </div>
+            <div class="d-flex flex-row justify-content-center" ><button class="btn btn-success mt-2" style="padding-right:40%;padding-left:40%;">Register</button></div>
         </section>
-        
+        <section class="col-2"></section>
     </form>
-</div>
-{% endif %}
+    {% endif %}
 
 {% if not reg_emp%}
-    <a href='reg_emp'class="row mb-3 mx-1" style="text-decoration:none;"><button class="btn btn-dark mb-1">Register</button></a>
+    <a href='reg_emp'class="row mb-3 mx-1" style="text-decoration:none;"><button class="btn btn-success mb-1">Register</button></a>
 {% endif %}
  </div>
 
