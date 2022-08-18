@@ -1,0 +1,45 @@
+{% extends 'navside.html'%}
+{% block content%}
+<div class="container-fluid search_box">
+    <form class="form-inline">
+        <div class="row">
+            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search"></div>
+            <div class="col-2"><button class="btn btn-outline-success " type="submit">Search</button></div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="th">#</th>
+                        <th class="th">Invoice</th>
+                        <th class="th">Customer</th>
+                        <th class="th">Employee Name</th>
+                        <th class="th">Total</th>
+                        <th class="th">Advance Data</th>
+                        <th class="th">Remaining</th>
+                        <th class="th">Status</th>
+                        <style>
+                            .th{
+                                text-align: left;
+                            }
+                        </style>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in invoice %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><a href="#"><label for="name" name="invoice">{{i.invoice.id}}</label></a></td>
+                        <td><label for="cus_name" name="cus_name">{{i.invoice.order.customer_measurement.customer}}</label></td>
+                        <td><label for="assigned_emp" name="assigned_emp">{{i.invoice.order.employee}}</label></td>
+                        <td><label for="total" name="total">{{i.invoice.net_total}}</label></td>
+                        <td><label for="advance" name="advance">{{i.advance}}</label></td>
+                        <td><label for="remaning" name="remaining">0</label></td>
+                      </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </form>
+</div>
+{%endblock%}
