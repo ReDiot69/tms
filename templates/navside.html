@@ -123,6 +123,22 @@
                             </div>
                         </a>
                     </li>
+                    <li class="navigation-list-item dropdown">
+                            <a class="navigation-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-address-book"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        History
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Account History</a></li>
+                            <li><a class="dropdown-item" href="#">Order History</a></li>
+                            </ul>
+                    </li>
                 </ul>
                 <hr style="color:rgb(255, 255, 255);margin-top:30px;">
                 
@@ -139,7 +155,7 @@
                 </div>
                 <div class="col-2">
                     <ul class="nav nav-pill">
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link link-dark" href="/">
                                 <i class="fa fa-comments"></i></a>
                         </li>
@@ -147,10 +163,10 @@
                             <a href="#" class="nav-link link-dark">
                                 <i class="fa fa-bell"></i></a>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="logout" class="nav-link link-dark">
-                                <i class="fa fa-sign-out"></i></a>
+                                <button class="btn btn-outline-secondary" style="color: black;" >Logout  <i class="fa fa4 fa-sign-out"></i></button>
                             </a>
                         </li>
                     </ul>
@@ -161,7 +177,7 @@
         </div>          
     </div>
     
-    
+<script src="../static/js/bootstrap.bundle.min.js"></script>   
 </body>
 <!-- sidebar  --><script>
         let sidebarToggle = document.querySelector(".sidebarToggle");

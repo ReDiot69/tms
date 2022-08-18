@@ -24,11 +24,11 @@
                 <table class="table table-borderless">
                     <thead>
                         <tr>
-                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="4">Invoice</th>
+                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="3">Invoice</th>
                         </tr>
                         <tr>
-                            <th colspan="3"></th>
-                            <th colspan="3">
+                            <th colspan="2"></th>
+                            <th colspan="2">
                                 <label for="Date">Date:</label><label for="dateData">{{order.orderdate}}</label>
                                 <input type="hidden" name="date" value="{{order.orderdate}}"/>
                                 <input type="hidden" name="order" value="{{order.id}}"/>
@@ -44,39 +44,36 @@
                     <tbody>
                     {% for d in order.customer_measurement.description.all %}
                     <tr>
-                        <td scope="row">1</td>
-                        <td><label class="borderNone">{{d.description}}</label></td>
-                        <td><input type="hidden" name="description" value="{{d.description}}"/></td>
+                        <td scope="row">{{ forloop.counter }}</td>
+                        <td>
+                            <label class="borderNone">{{d.description}}</label>
+                            <input type="hidden" name="description" value="{{d.description}}"/>
+                        </td>
 
-                        <td><input type="number" name="price" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
+                        <td><input type="number" min="0" name="price" oninput="this.value = Math.abs(this.value)" value="0" class="borderNone total" onkeyup="calculateTotal();" min="0"></td>
                     </tr>
                     {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr class="tborderTop">
-                            <th scope="row">Gross Total</th>
-                            <td colspan="3"></td>
-                            <td><input type="number" name="grosstotal" value="0" class="borderNone" id="total" onchange="calculateTotal();" min="0"></td>
+                            <th scope="row" colspan="2">Gross Total</th>
+                            <td><input type="text" name="grosstotal" value="0" readonly  class="borderNone gross" id="total" min="0"></td>
                         </tr>
                         <tr>
-                            <th scope="row">Discount Amount</th>
-                            <td colspan="3"></td>
-                            <td><input type="number" name="discount" class="borderNone" min="0"></td>
+                            <th scope="row" colspan="2">Discount Amount</th>
+                            <td><input type="number" name="discount" class="borderNone" id="discount" min="0" value="0" onkeyup="calculateTotal();"></td>
                         </tr>
                         <tr>
-                            <th scope="row">VAT</th>
-                            <td colspan="3"></td>
+                            <th scope="row" colspan="2">VAT</th>
                             <td><label for="VAT">13%</label></td>
                         </tr>
                         <tr>
-                            <th scope="row">Advance</th>
-                            <td colspan="3"></td>
-                            <td><input type="number" name="advance" class="borderNone" min="0"></td>
+                            <th scope="row" colspan="2">Advance</th>
+                            <td><input type="number" name="advance" id="advance" class="borderNone" min="0" value="0" onkeyup="calculateTotal();"></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="3"></th>
-                            <th>Net Total</th>
-                            <td><input type="number" name="nettotal" value="0" class="borderNone" id="price" onchange="calculateTotal();" min="0"></td>
+                            <th scope="row" colspan="2">Net Total</th>
+                            <td><input type="text" name="nettotal" value="0" class="borderNone " id="netTotal"  min="0"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -87,25 +84,26 @@
 {% else %}
     <p>Something went wrong!</p>
 {% endif %}
+
 {% else %}
     <div class="container-fluid">
         <div class="p-3">
-            <form >
+            <form action="dashboard" method="POST">
                 {% csrf_token %}
                 <table class="table table-borderless">
                     <thead>
                         <tr>
-                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="4">Invoice</th>
+                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="3">Invoice</th>
                         </tr>
                         <tr>
-                            <th colspan="3"></th>
-                            <th colspan="3">
+                            <th colspan="2"></th>
+                            <th colspan="2">
                                 <label for="Date">Date: </label><label for="dateData">{{invoice.date}}</label>
                             </th>
                         </tr>
                         <tr>
-                            <th colspan="3"></th>
-                            <th colspan="3">
+                            <th colspan="2"></th>
+                            <th colspan="2">
                                 <label for="Invoice_No" >Invoice No: </label><label for="Invoice_NoData">{{invoice.id}}</label>
                             </th>
                         </tr>
@@ -119,31 +117,27 @@
                     <tbody>
                     {% for d in invoice.orderdes.all %}
                     <tr>
-                        <td scope="row">1</td>
+                        <td scope="row">{{ forloop.counter }}</td>
                         <td><label class="borderNone">{{d.description}}</label></td>
-                        <td><label class="borderNone">{{d.subtotal}}</label></td>
+                        <td><label class="borderNone ">{{d.subtotal}}</label></td>
                     </tr>
                     {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr class="tborderTop">
-                            <th scope="row">Gross Total</th>
-                            <td colspan="3"></td>
+                            <th scope="row" colspan="2">Gross Total</th>
                             <td><label class="borderNone">{{invoice.gross_total}}</label></td>
                         </tr>
                         <tr>
-                            <th scope="row">Discount Amount</th>
-                            <td colspan="3"></td>
+                            <th scope="row" colspan="2">Discount Amount</th>
                             <td><label class="borderNone">{{invoice.discount}}</label></td>
                         </tr>
                         <tr>
-                            <th scope="row">VAT</th>
-                            <td colspan="3"></td>
+                            <th scope="row" colspan="2">VAT</th>
                             <td><label for="VAT">13%</label></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="3"></th>
-                            <th>Net Total</th>
+                            <th scope="row" colspan="2">Net Total</th>
                             <td><label class="borderNone">{{invoice.net_total}}</label></td>
                         </tr>
                     </tfoot>
@@ -155,12 +149,23 @@
    {% endif %}
 </div>
 <script type="text/javascript">
-    function calculateTotal(){
-        console.log('here');
-        var price = document.getElementById("price").value;
-        var quantity = document.getElementById("quantity").value;
-        var total = price * quantity
-        document.getElementById("totalPrice").innerHTML = total;
+      function calculateTotal(){
+        // console.log("hello");
+        var a;
+        var price = document.getElementsByClassName("total");
+        var sum=0;
+        for(var a=0;a<price.length;a++)
+        {
+        sum = sum +parseInt(price[a].value);
+        // console.log(sum);
+        }
+        document.getElementById('total').value =sum;
+        var dis = document.getElementById('discount').value;
+        var vat= 0.13;
+        var temp = (sum-dis)*vat+(sum-dis);
+        var adv = document.getElementById('advance').value;
+        document.getElementById('netTotal').value =Math.ceil(temp-adv);
+
     }
 </script>
 {%endblock%}
