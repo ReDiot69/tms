@@ -1,3 +1,4 @@
+from ast import Return
 import decimal
 
 from django.db.models import Q
@@ -233,6 +234,11 @@ def next_payment(request):
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
+def toogleStatus(request):
+    order = Order.objects.get(id=request.POST.get('order'))
+    order.status = request.POST.get("status")
+    order.save()
+    return render(request,"order.html")
 
 def login(request):
     return render(request, "home.html")

@@ -16,7 +16,8 @@ urlpatterns = [
     path('billing', views.billing, name="call_billing_page"),
     path('dashboard', views.dashboard, name="call_dashboard_page"),
     path('search', views.orderSearch, name="searchBox"),
-    path('change_emp', views.emp_change, name="searchBox"),
-    path('next_payment', views.next_payment, name="searchBox"),
+    path('change_emp', views.emp_change, name="changeEmp"),
+    path('next_payment', views.next_payment, name="payment"),
+    path('toogleStatus', views.toogleStatus, name="stautsToogle"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

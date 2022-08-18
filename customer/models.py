@@ -50,7 +50,7 @@ class Order(models.Model):
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
-    status = models.CharField(choices=STATUS_COM, default='Assigned', max_length=25)
+    status = models.CharField(choices=STATUS_COM, default='Accepted', max_length=25)
 
 
 def create_id():
