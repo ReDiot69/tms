@@ -16,6 +16,8 @@
             <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchBox"></div>
             <div class="col-2"><button class="btn btn-outline-success" type="submit" for="searchBox">Search</button></div>
         </div>
+
+      </form>
         <div class="row">
             <table class="table">
                 <thead class="thead-dark">
@@ -52,7 +54,6 @@
                     <tr>
                         <th scope="row">{{o.customer_measurement.customer.id}}</th>
                         <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
-                        <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
                         <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
                         <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
@@ -60,22 +61,26 @@
                         <td>
                             <!-- <label for="status" name="status" class="bg-danger rounded-pill p-1">{{o.status}}</label> -->
                             <!-- Example single danger button -->
-                            <button class="btn btn-success">
+                            <form action="accepto" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="order" value={{o.id}}>
+                            <button class="btn btn-success" name="accept" value="accept">
                                 <div class="d-flex d-row">
                                     <i class="fa fa-address-book"></i>
                                 </div>
                                 <div class="d-flex d-row">
-                                    <label for="accept">Accept</label>
+                                    <label for="accept" >Accept</label>
                                 </div>
                             </button>
-                            <button class="btn btn-danger">
+                            <button class="btn btn-danger" name="reject" value="reject">
                                 <div class="d-flex d-row">
                                     <i class="fa fa-address-book"></i>
                                 </div>
                                 <div class="d-flex d-row">
-                                    <label for="accept">Reject</label>
+                                    <label for="reject">Reject</label>
                                 </div>
                             </button>
+                            </form>
                         </td>
                       </tr>
                 {% endfor%}
@@ -83,6 +88,5 @@
                 </tbody>
             </table>
         </div>
-      </form>
 </div>
 {%endblock%}

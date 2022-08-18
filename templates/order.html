@@ -7,74 +7,95 @@
         max-height: 50px;
         width: 50px;
     }
+
+
+
 </style>
 
 <div class="container-fluid search_box">
-    <form class="form-inline" action="search" method="POST" >
-    {% csrf_token %}
+    <form class="form-inline" action="search" method="POST">
+        {% csrf_token %}
         <div class="row">
-            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchBox"></div>
-            <div class="col-2"><button class="btn btn-outline-success" type="submit" for="searchBox">Search</button></div>
+            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search"
+                                       name="searchBox"></div>
+            <div class="col-2">
+                <button class="btn btn-outline-success" type="submit" for="searchBox">Search</button>
+            </div>
         </div>
-        <div class="row">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th class="th">#</th>
-                        <th class="th">Customer</th>
-                        <th class="th">Assigned Employee</th>
-                        <th class="th">Order-date</th>
-                        <th class="th">Number</th>
-                        <th class="th">Email</th>
-                        <th class="th">Details</th>
-                        <th class="th">Status</th>
-                        <style>
+    </form>
+    <div class="row">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th class="th">#</th>
+                <th class="th">Customer</th>
+                <th class="th">Assigned Employee</th>
+                <th class="th">Order-date</th>
+                <th class="th">Number</th>
+                <th class="th">Email</th>
+                <th class="th">Details</th>
+                <th class="th">Status</th>
+                <style>
                             .th{
                                 text-align: left;
                             }
-                        </style>
-                    </tr>
-                </thead>
-                <tbody>
-                {% if singlecus %}
-                    <tr>
-                        <th scope="row">
-                            {{order.customer_measurement}}
-                        </th>
-                        <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a></td>
-                        <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
-                        <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
-                        <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
-                        <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
-                        <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a></td>
-                        <td><label for="status" name="status">{{order.status}}</label></td>
-                      </tr>
+
+
+
+                </style>
+            </tr>
+            </thead>
+            <tbody>
+            {% if singlecus %}
+            <tr>
+                <th scope="row">
+                    {{order.customer_measurement}}
+                </th>
+                <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a>
+                </td>
+                <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
+                <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
+                <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
+                <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
+                <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a>
+                </td>
+                <td><label for="status" name="status">{{order.status}}</label></td>
+            </tr>
+            {% else %}
+            {% for o in order%}
+            <tr>
+                <th scope="row">{{o.customer_measurement.customer.id}}</th>
+                <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
+                {% if o.status == "Rejected" %}
+                <td>
+                    <form method="post" action="change_emp">
+                        {% csrf_token %}
+                        <select name="employee" class="form-control" id="order-date" required placeholder="select">
+                            <option value="" disabled selected hidden> Choose Employee</option>
+                            {% for e in emp%}
+                            <option value={{e.id}}>{{e.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <button name="order" value={{o.id}}>Submit</button>
+                    </form>
+                </td>
                 {% else %}
-                {% for o in order%}
-                    <tr>
-                        <th scope="row">{{o.customer_measurement.customer.id}}</th>
-                        <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
-                        <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
-                        <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
-                        <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
-                        <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
-                        <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
-                        <td>
-                            <!-- <label for="status" name="status" class="bg-danger rounded-pill p-1">{{o.status}}</label> -->
-                            <!-- Example single danger button -->
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" disabled>
-                                <!-- <option selected>Open this select menu</option> -->
-                                <option value="1">Completed</option>
-                                <option value="2">Assigned</option>
-                                <option value="3">Rejected</option>
-                              </select>
-                        </td>
-                      </tr>
-                {% endfor%}
+                <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
                 {% endif %}
-                </tbody>
-            </table>
-        </div>
-      </form>
+                <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
+                <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
+                <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
+                <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
+                <td>
+                    <label for="status" name="status">{{o.status}}</label>
+                    <!-- Example single danger button -->
+
+                </td>
+            </tr>
+            {% endfor%}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {%endblock%}
