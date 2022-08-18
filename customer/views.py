@@ -28,6 +28,18 @@ def account(request):
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
+def historyacc(request):
+    if request.user.is_anonymous:
+        return render(request, "home.html")
+    r = Role.objects.get(role='Staff')
+    m = request.user.vendor
+
+    if request.user.role == r:
+        invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
+        return render(request, 'historyacc.html', {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'history': True})
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m, invoice__status='Not Paid')
+    return render(request, 'historyacc.html', {'invoice': invoice, 'vendor': m.vendor, 'history': True})
+
 
 def billing(request):
     form = BillingForm(request.POST)
@@ -137,9 +149,6 @@ def customer_store(request):
         context = {'vendor': me}
     return render(request, 'billing.html', context)
 
-
-def accounts_detail(request):
-    pass
 
 
 def dashboard(request):
