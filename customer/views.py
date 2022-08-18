@@ -10,7 +10,8 @@ def measurement(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     vendor = Vendor.objects.get(vendor=request.user.vendor)
-    m = MyUser.objects.filter(vendor=vendor)
+    role = Role.objects.get(id=3)
+    m = MyUser.objects.filter(vendor=vendor, role=role)
     a = CustomerForm()
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
@@ -24,11 +25,7 @@ def account(request):
         return render(request, "home.html")
     r = Role.objects.get(role='Staff')
     m = request.user.vendor
-
-    if request.user.role == r:
-        invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
-        return render(request, 'account.html', {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'accounts': True})
-    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m, invoice__status='Not Paid')
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 def historyacc(request):
@@ -59,42 +56,51 @@ def billing(request):
             i.orderdes.add(od)
             i.save()
         print(i)
-        InvoiceDetail.objects.create(advance=form.cleaned_data['advance'], remain=i.net_total-form.cleaned_data['advance'],
+        id = InvoiceDetail.objects.create(advance=form.cleaned_data['advance'], remain=i.net_total-form.cleaned_data['advance'],
                                      invoice=i)
+        if id.remain > 0:
+            i.status = 'Partially Paid'
+        else:
+            i.status = 'Not Paid'
+        i.save()
     return render(request, 'billing.html', {'invoice': i})
 
 
 def order(request):
+    vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = request.user.vendor
     r = Role.objects.get(role='Staff')
+    role = Role.objects.get(id=3)
+    n = MyUser.objects.filter(vendor=vendor, role=role)
     if request.user.role == r:
         try:
-            o = Order.objects.filter(employee=request.user, status='Not Complete', emp_status='ACCEPTED')
+            o = Order.objects.filter(employee=request.user, status='Accepted')
             return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
         except:
             return render(request, 'order.html', {'staff': True, 'vendor': m})
     try:
-        od = Order.objects.filter(employee__vendor=m, status='Not Complete', emp_status='ACCEPTED')
+        od = Order.objects.filter(employee__vendor=m)
     except:
         od = None
-    context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
+    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True}
     return render(request, "order.html", context)
+
 
 def acceptorder(request):
     m = request.user.vendor
-    r = Role.objects.get(role='Staff')
-    if request.user.role == r:
-        try:
-            o = Order.objects.filter(employee=request.user, status='Not Complete')
-            return render(request, 'acceptacceptorder.html', {'order': o, 'staff': True, 'vendor': m})
-        except:
-            return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+    # r = Role.objects.get(role='Staff')
+    # if request.user.role == r:
     try:
-        od = Order.objects.filter(employee__vendor=m, status='Not Complete')
+        o = Order.objects.filter(employee=request.user, status='Assigned')
+        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m})
     except:
-        od = None
-    context = {'order': od, 'vendor': m.vendor, 'acceptorder': True}
-    return render(request, "acceptorder.html", context)
+        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+    # try:
+    #     od = Order.objects.filter(employee__vendor=m, status='Not Complete')
+    # except:
+    #     od = None
+    # context = {'order': od, 'vendor': m.vendor, 'acceptorder': True}
+    # return render(request, "acceptorder.html", context)
 
 def orderSearch(request):
     form = SearchForm(request.POST)
@@ -163,6 +169,48 @@ def dashboard(request):
         employee = len(emp)
         return render(request, "dashboard.html",
                       {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+
+
+def accepto(request):
+    m = request.user.vendor
+    order = Order.objects.get(id=request.POST.get('order'))
+    if 'accept' in request.POST:
+        order.status = 'Accepted'
+        order.save()
+    if 'reject' in request.POST:
+        order.status = 'Rejected'
+        order.save()
+    try:
+        o = Order.objects.filter(employee=request.user, status='Assigned')
+        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m})
+    except:
+        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+
+
+def emp_change(request):
+    print(request.POST.get('employee'), request.POST.get('order'))
+    order = Order.objects.get(id=request.POST.get('order'))
+    employee = MyUser.objects.get(id=request.POST.get('employee'))
+    order.employee = employee
+    order.status = "Assigned"
+    order.save()
+    print(order.employee)
+    vendor = Vendor.objects.get(vendor=request.user.vendor)
+    m = request.user.vendor
+    r = Role.objects.get(role='Staff')
+    n = MyUser.objects.filter(vendor=vendor)
+    if request.user.role == r:
+        try:
+            o = Order.objects.filter(employee=request.user, status='Accepted')
+            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
+        except:
+            return render(request, 'order.html', {'staff': True, 'vendor': m})
+    try:
+        od = Order.objects.filter(employee__vendor=m)
+    except:
+        od = None
+    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True}
+    return render(request, "order.html", context)
 
 
 def login(request):

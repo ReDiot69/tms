@@ -11,9 +11,11 @@ urlpatterns = [
     path('account', views.account, name="call_accounts_page"),
     path('historyacc', views.historyacc, name="call_history_accounts_page"),
     path('acceptorder', views.acceptorder, name="call_accept_order_page"),
+    path('accepto', views.accepto, name="call_accept_order_page"),
     path('order', views.order, name="call_order_page"),
     path('billing', views.billing, name="call_billing_page"),
     path('dashboard', views.dashboard, name="call_dashboard_page"),
     path('search', views.orderSearch, name="searchBox"),
+    path('change_emp', views.emp_change, name="searchBox"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
