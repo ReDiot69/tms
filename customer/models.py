@@ -41,6 +41,11 @@ STATUS_COM = (
     ('Not Complete', 'Not Complete'),
     ('Complete', 'Completed')
 )
+STATUS_EMP = (
+    ('NA', 'NA'),
+    ('ACCEPTED', 'ACCEPTED'),
+    ('REJECTED', 'REJECTED')
+)
 
 
 class Order(models.Model):
@@ -48,6 +53,7 @@ class Order(models.Model):
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
+    emp_status = models.CharField(choices=STATUS_EMP, default='NA', max_length=25)
     status = models.CharField(choices=STATUS_COM, default='Not Complete', max_length=25)
 
 
