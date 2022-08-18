@@ -21,7 +21,7 @@ def reg_employ(request):
                               role=role, vendor=v)
 
     m = request.user.vendor.vendor
-    return render(request, 'employee.html', {'vendor': m, 'reg_emp': True})
+    return render(request, 'employeelanding.html', {'vendor': m, 'reg_emp': True})
 
 
 def employeelanding(request):
