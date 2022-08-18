@@ -130,11 +130,13 @@ def dashboard(request):
         r = Role.objects.get(role='Staff')
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
+        if user.role == r:
+            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            orders = len(od)
+            return render(request, 'dashboard.html',
+                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
         orders = len(od)
         employee = len(emp)
-        if user.role == r:
-            return render(request, 'dashboard.html',
-                          {'staff': True, 'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
         return render(request, "dashboard.html",
                       {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
 
