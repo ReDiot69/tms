@@ -1,4 +1,5 @@
-from django.http import Http404
+import decimal
+
 from django.shortcuts import render
 from customer.forms import CustomerForm, SearchForm, BillingForm
 from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription, InvoiceDetail
@@ -23,10 +24,10 @@ def measurement(request):
 def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
-    r = Role.objects.get(role='Staff')
     m = request.user.vendor
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
+
 
 def historyacc(request):
     if request.user.is_anonymous:
@@ -36,7 +37,8 @@ def historyacc(request):
 
     if request.user.role == r:
         invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
-        return render(request, 'historyacc.html', {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'history': True})
+        return render(request, 'historyacc.html',
+                      {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'history': True})
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m, invoice__status='Not Paid')
     return render(request, 'historyacc.html', {'invoice': invoice, 'vendor': m.vendor, 'history': True})
 
@@ -55,10 +57,10 @@ def billing(request):
             od = OrderedDescription.objects.create(description=descrip, subtotal=des_price[d])
             i.orderdes.add(od)
             i.save()
-        print(i)
-        id = InvoiceDetail.objects.create(advance=form.cleaned_data['advance'], remain=i.net_total-form.cleaned_data['advance'],
-                                     invoice=i)
-        if id.remain > 0:
+        id = InvoiceDetail.objects.create(advance=form.cleaned_data['advance'],
+                                          remain=i.net_total - form.cleaned_data['advance'],
+                                          invoice=i)
+        if id.advance > 0:
             i.status = 'Partially Paid'
         else:
             i.status = 'Not Paid'
@@ -88,19 +90,12 @@ def order(request):
 
 def acceptorder(request):
     m = request.user.vendor
-    # r = Role.objects.get(role='Staff')
-    # if request.user.role == r:
     try:
         o = Order.objects.filter(employee=request.user, status='Assigned')
         return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m})
     except:
         return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
-    # try:
-    #     od = Order.objects.filter(employee__vendor=m, status='Not Complete')
-    # except:
-    #     od = None
-    # context = {'order': od, 'vendor': m.vendor, 'acceptorder': True}
-    # return render(request, "acceptorder.html", context)
+
 
 def orderSearch(request):
     form = SearchForm(request.POST)
@@ -150,7 +145,6 @@ def customer_store(request):
     return render(request, 'billing.html', context)
 
 
-
 def dashboard(request):
     user = request.user
     if request.user.is_anonymous:
@@ -158,17 +152,21 @@ def dashboard(request):
     else:
         m = request.user.vendor.vendor
         r = Role.objects.get(role='Staff')
-        od = Order.objects.filter(employee__vendor=request.user.vendor)
-        emp = MyUser.objects.filter(vendor=request.user.vendor)
         if user.role == r:
             od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
+        od = Order.objects.filter(employee__vendor=request.user.vendor)
+        emp = MyUser.objects.filter(vendor=request.user.vendor)
+        invoice = Invoice.objects.filter(order__employee__vendor=user.vendor, status='Paid')
+        total_earning = 0
+        for i in invoice:
+            total_earning = total_earning + i.net_total
         orders = len(od)
         employee = len(emp)
         return render(request, "dashboard.html",
-                      {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
 
 
 def accepto(request):
@@ -188,13 +186,11 @@ def accepto(request):
 
 
 def emp_change(request):
-    print(request.POST.get('employee'), request.POST.get('order'))
     order = Order.objects.get(id=request.POST.get('order'))
     employee = MyUser.objects.get(id=request.POST.get('employee'))
     order.employee = employee
     order.status = "Assigned"
     order.save()
-    print(order.employee)
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = request.user.vendor
     r = Role.objects.get(role='Staff')
@@ -211,6 +207,29 @@ def emp_change(request):
         od = None
     context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True}
     return render(request, "order.html", context)
+
+
+def next_payment(request):
+    invoice_detail = InvoiceDetail.objects.get(id=request.POST.get('invoice'))
+    if invoice_detail.remain <= decimal.Decimal(request.POST.get('payment')):
+        invoice_detail.remain = 0
+        invoice_detail.advance = invoice_detail.advance + decimal.Decimal(request.POST.get('payment'))
+        i = invoice_detail.invoice
+        invoice_detail.save()
+        i.status = 'Paid'
+        i.save()
+    else:
+        invoice_detail.remain = invoice_detail.remain - decimal.Decimal(request.POST.get('payment'))
+        invoice_detail.advance = invoice_detail.advance + decimal.Decimal(request.POST.get('payment'))
+        i = invoice_detail.invoice
+        invoice_detail.save()
+        i.status = 'Partially Paid'
+        i.save()
+    if request.user.is_anonymous:
+        return render(request, "home.html")
+    m = request.user.vendor
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
+    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
 def login(request):
