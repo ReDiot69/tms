@@ -21,7 +21,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="th">#</th>
-                        <th class="th">Customer Name</th>
+                        <th class="th">Customer</th>
+                        <th class="th">Assigned Employee</th>
                         <th class="th">Order-date</th>
                         <th class="th">Number</th>
                         <th class="th">Email</th>
@@ -37,26 +38,28 @@
                 <tbody>
                 {% if singlecus %}
                     <tr>
-                        <th scope="row">{{order.customer_measurement.customer.id}}</th>
+                        <th scope="row">
+                            {{order.customer_measurement}}
+                        </th>
                         <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a></td>
+                        <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
                         <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
                         <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
                         <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a></td>
                         <td><label for="status" name="status">{{order.status}}</label></td>
-                        <td><label for="advance" name="advance"></label></td>
                       </tr>
                 {% else %}
                 {% for o in order%}
                     <tr>
                         <th scope="row">{{o.customer_measurement.customer.id}}</th>
                         <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
+                        <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
                         <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
                         <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                         <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
                         <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
-                        <td><label for="status" name="status"><i class="fa fa-toggle-on"></i></label></td>
-                        <td><label for="advance" name="advance"></label></td>
+                        <td><label for="status" name="status" class="bg-danger rounded-pill p-1">{{o.status}}</label></td>
                       </tr>
                 {% endfor%}
                 {% endif %}
