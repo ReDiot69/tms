@@ -1,0 +1,90 @@
+{% extends 'navside.html'%}
+{% block content%}
+
+<style>
+        .customer-photo{
+        border-radius: 50%;
+        max-height: 50px;
+        width: 50px;
+    }
+</style>
+
+<div class="container-fluid search_box">
+    <form class="form-inline" action="search" method="POST" >
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-10"><input class="form-control " type="search" placeholder="Search" aria-label="Search" name="searchBox"></div>
+            <div class="col-2"><button class="btn btn-outline-success" type="submit" for="searchBox">Search</button></div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="th">#</th>
+                        <th class="th">Customer</th>
+                        <th class="th">Assigned Employee</th>
+                        <th class="th">Order-date</th>
+                        <th class="th">Number</th>
+                        <th class="th">Email</th>
+                        <th class="th">Details</th>
+                        <th class="th">Status</th>
+                        <style>
+                            .th{
+                                text-align: left;
+                            }
+                        </style>
+                    </tr>
+                </thead>
+                <tbody>
+                {% if singlecus %}
+                    <tr>
+                        <th scope="row">
+                            {{order.customer_measurement}}
+                        </th>
+                        <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a></td>
+                        <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
+                        <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
+                        <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
+                        <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
+                        <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a></td>
+                        <td><label for="status" name="status">{{order.status}}</label></td>
+                      </tr>
+                {% else %}
+                {% for o in order%}
+                    <tr>
+                        <th scope="row">{{o.customer_measurement.customer.id}}</th>
+                        <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
+                        <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
+                        <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
+                        <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
+                        <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
+                        <td><a href=""><label for="measurement" name="measurement">{{o.customer_measurement}}</label></a></td>
+                        <td>
+                            <!-- <label for="status" name="status" class="bg-danger rounded-pill p-1">{{o.status}}</label> -->
+                            <!-- Example single danger button -->
+                            <button class="btn btn-success">
+                                <div class="d-flex d-row">
+                                    <i class="fa fa-address-book"></i>
+                                </div>
+                                <div class="d-flex d-row">
+                                    <label for="accept">Accept</label>
+                                </div>
+                            </button>
+                            <button class="btn btn-danger">
+                                <div class="d-flex d-row">
+                                    <i class="fa fa-address-book"></i>
+                                </div>
+                                <div class="d-flex d-row">
+                                    <label for="accept">Reject</label>
+                                </div>
+                            </button>
+                        </td>
+                      </tr>
+                {% endfor%}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+      </form>
+</div>
+{%endblock%}

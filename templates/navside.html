@@ -90,22 +90,24 @@
                         </a>
                     </li>
                     {% endif %}
-                    {% if accounts %}
-                    <li class="navigation-list-item active">
-                    {% else %}
-                    <li class="navigation-list-item">
+                    {% if not staff %}
+                        {% if accounts %}
+                        <li class="navigation-list-item active">
+                        {% else %}
+                        <li class="navigation-list-item">
+                        {% endif %}
+                        <a class="navigation-link" href="account">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa fa-calculator"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        Accounts
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                     {% endif %}
-                    <a class="navigation-link" href="account">
-                            <div class="row">
-                                <div class="col-2">
-                                    <i class="fa fa-calculator"></i>
-                                </div>
-                                <div class="col-10">
-                                    Accounts
-                                </div>
-                            </div>
-                        </a>
-                    </li>
 
                     {% if order_nav %}
                     <li class="navigation-list-item active">
@@ -123,22 +125,42 @@
                             </div>
                         </a>
                     </li>
-                    <li class="navigation-list-item dropdown">
-                            <a class="navigation-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if staff %}
+                        {% if acceptorder %}
+                        <li class="navigation-list-item active">
+                        {% else %}
+                        <li class="navigation-list-item">
+                        {% endif %}
+                            <a class="navigation-link" href="acceptorder">
                                 <div class="row">
                                     <div class="col-2">
                                         <i class="fa fa-address-book"></i>
                                     </div>
                                     <div class="col-10">
-                                        History
+                                        Acceptorder
                                     </div>
                                 </div>
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        </li>
+                    {% endif %}
+                    {% if not staff%}
+                    <li class="navigation-list-item dropdown">
+                        <a class="navigation-link dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-address-book"></i>
+                                </div>
+                                <div class="col-10">
+                                    History
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="#">Account History</a></li>
                             <li><a class="dropdown-item" href="#">Order History</a></li>
-                            </ul>
+                        </ul>
                     </li>
+                    {% endif %}
                 </ul>
                 <hr style="color:rgb(255, 255, 255);margin-top:30px;">
                 
