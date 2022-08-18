@@ -28,7 +28,7 @@ def account(request):
     if request.user.role == r:
         invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
         return render(request, 'account.html', {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'accounts': True})
-    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m, invoice__status='Not Paid')
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
@@ -57,12 +57,12 @@ def order(request):
     r = Role.objects.get(role='Staff')
     if request.user.role == r:
         try:
-            o = Order.objects.filter(employee=request.user)
+            o = Order.objects.filter(employee=request.user, status='Not Complete')
             return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
         except:
             return render(request, 'order.html', {'staff': True, 'vendor': m})
     try:
-        od = Order.objects.filter(employee__vendor=m)
+        od = Order.objects.filter(employee__vendor=m, status='Not Complete')
     except:
         od = None
     context = {'order': od, 'vendor': m.vendor, 'order_nav': True}
