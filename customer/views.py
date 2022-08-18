@@ -1,5 +1,6 @@
 import decimal
 
+from django.db.models import Q
 from django.shortcuts import render
 from customer.forms import CustomerForm, SearchForm, BillingForm
 from customer.models import Customer, Measurement, Order, Description, Invoice, OrderedDescription, InvoiceDetail
@@ -26,6 +27,7 @@ def account(request):
         return render(request, "home.html")
     m = request.user.vendor
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
+    print(invoice)
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
@@ -153,7 +155,7 @@ def dashboard(request):
         m = request.user.vendor.vendor
         r = Role.objects.get(role='Staff')
         if user.role == r:
-            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            od = Order.objects.filter(~Q(status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q
 from django.shortcuts import render
 from django.contrib import messages
 
@@ -16,7 +17,7 @@ def home(request):
         r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
         if request.user.role == r:
-            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            od = Order.objects.filter(~Q(invoice__order__status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
@@ -57,7 +58,7 @@ def login_user(request):
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
         if user.role == r:
-            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            od = Order.objects.filter(~Q(invoice__order__status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
