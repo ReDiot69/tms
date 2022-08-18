@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from django.contrib import messages
+
+from customer.models import Order
 from vendor.forms import UserLoginForm, UserRegForm
 from django.contrib.auth import logout
 
@@ -9,22 +11,27 @@ from vendor.models import Vendor, MyUser, Role
 
 
 def home(request):
+    user = request.user
     if not request.user.is_anonymous:
         r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
         if request.user.role == r:
-            return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
+            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            orders = len(od)
+            return render(request, 'dashboard.html',
+                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
         else:
-            return render(request, 'dashboard.html', {'vendor': m})
+            od = Order.objects.filter(employee__vendor=request.user.vendor)
+            emp = MyUser.objects.filter(vendor=request.user.vendor)
+            orders = len(od)
+            employee = len(emp)
+            return render(request, "dashboard.html",
+                          {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
     return render(request, 'home.html', {})
 
 
 def signup(request):
     return render(request, 'signup.html', {'reg_comp': True})
-
-
-def home1(request):
-    return render(request, 'home1.html', {})
 
 
 def reg_user(request):
@@ -44,8 +51,20 @@ def reg_user(request):
 
 def login_user(request):
     if not request.user.is_anonymous:
+        r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
-        return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
+        user = request.user
+        od = Order.objects.filter(employee__vendor=request.user.vendor)
+        emp = MyUser.objects.filter(vendor=request.user.vendor)
+        if user.role == r:
+            od = Order.objects.filter(employee__vendor=request.user.vendor, employee=user)
+            orders = len(od)
+            return render(request, 'dashboard.html',
+                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
+        orders = len(od)
+        employee = len(emp)
+        return render(request, "dashboard.html",
+                      {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
