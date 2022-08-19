@@ -70,13 +70,15 @@
                 <td>
                     <form method="post" action="change_emp">
                         {% csrf_token %}
-                        <select name="employee" class="form-control" id="order-date" required placeholder="select">
-                            <option value="" disabled selected hidden> Choose Employee</option>
-                            {% for e in emp%}
-                            <option value={{e.id}}>{{e.name}}</option>
-                            {% endfor %}
-                        </select>
-                        <button name="order" value={{o.id}}>Submit</button>
+                        <div class="d-flex flex-row">
+                            <select name="employee" class="form-select form-select-sm form-control" aria-label=".form-select-sm example" id="order-date" required placeholder="select">
+                                <option value="" disabled selected hidden> Choose Employee</option>
+                                {% for e in emp%}
+                                <option value={{e.id}}>{{e.name}}</option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn btn-primary btn-sm "name="order" value={{o.id}} style="margin-left:10px ;">Submit</button>
+                        </div>
                     </form>
                 </td>
                 {% else %}
@@ -174,6 +176,7 @@
                     <form action="toogleStatus" method="POST">
                         {% csrf_token %}
                         <div class="d-flex flex-row">
+                            <input type="hidden" name="order" value="{{o.id}}"/>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="status">
                                 <option value="Assigned">Assigned</option>
                                 <option value="Complete">Completed</option>
