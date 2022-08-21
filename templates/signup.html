@@ -2,41 +2,6 @@
 {% load  static%}
 {%block content%}
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-<!-- <style>
-    .insert_logo{
-        display: none;
-    }
-    .image-upload{
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(189, 187, 187);
-        color: grey;
-        padding: 5px 0px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        margin: 2px 10px;
-        width: 96%;
-        border-radius: 25px;
-    }
-    .main-row{
-        background-image: url('../media/signup1.jpg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .regbtn{
-        margin: auto;
-    }
-
-    .signup_form{
-        background-color: #58575523;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    input[type=file]{
-        color:red;
-    }
-</style> -->
 <style>
     .signupForm div .form-control{
         margin-top: 9px;
@@ -82,20 +47,22 @@
                         <div class="col-6">
                             <h1 class="d-flex justify-content-center mb-2 headSign">Sign up your Account</h1>
                             <h4 class="d-flex justify-content-center">Organization Detail</h4>
-                            <div class="d-flex flex-column"><input type="text" name="c_name" placeholder="Organization's Name" class="form-control "></div>
-                            <div class="d-flex flex-column"><input type="text" name="c_number" placeholder=" Contact no."  pattern="[0-9]+" maxlength="10" class="form-control"></div>
-                            <div class="d-flex flex-column"><input type="text" name="c_address" placeholder="Address" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="text" name="c_name" placeholder="Organization's Name" class="form-control"  onkeydown="return /[a-z]/i.test(event.key)"  required></div>
+                            <div class="d-flex flex-column"><input type="text" name="c_number" placeholder=" Contact no." maxlength="10" class="form-control" oninput="this.value = 
+                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required></div>
+                            <div class="d-flex flex-column"><input type="text" name="c_address" placeholder="Address" class="form-control" onkeydown="return /[a-z]/i.test(event.key)"  required></div>
                             <div class="d-flex flex-column">
                                 <label class="form-control img_signup" for="file-input1">Insert Photo</label>
                                 <span id="imageName"></span>
-                                <input type="file" id="file-input1" name="c_image" onchange="filename()" style="display: none;">
+                                <input type="file" id="file-input1" name="c_image" onchange="filename()" style="display: none;" required>
                             </div>
                             <h4 class="d-flex justify-content-center mt-2">Proprietor Detail</h4>
-                            <div class="d-flex flex-column"><input type="text" name="name" placeholder=" Name" class="form-control"></div>
-                            <div class="d-flex flex-column"><input type="text" name="address" placeholder="Address" class="form-control"></div>
-                            <div class="d-flex flex-column"><input type="text" name="number" placeholder="Phone number"  pattern="[0-9]+" maxlength="10" class="form-control"></div>
-                            <div class="d-flex flex-column"><input type="email" name="email" placeholder="Email address " class="form-control"></div>
-                            <div class="d-flex flex-column"><input type="password" name="password" placeholder="Password" class="form-control"></div>
+                            <div class="d-flex flex-column"><input type="text" name="name" placeholder=" Name" class="form-control"  onkeydown="return /[a-z]/i.test(event.key)"  required></div>
+                            <div class="d-flex flex-column"><input type="text" name="address" placeholder="Address" class="form-control" onkeydown="return /[a-z]/i.test(event.key)"  required></div>
+                            <div class="d-flex flex-column"><input type="text" name="number" placeholder="Phone number" maxlength="10" class="form-control" oninput="this.value = 
+                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required></div>
+                            <div class="d-flex flex-column"><input type="email" name="email" placeholder="Email address " class="form-control" required></div>
+                            <div class="d-flex flex-column"><input type="password" name="password" placeholder="Password" class="form-control" id="pwd"required></div>
                             <div class="d-flex flex-column">
                                 <label class="form-control img_signup" for="file-input2">Insert Photo</label>
                                 <!-- <span id="imageName"></span> -->

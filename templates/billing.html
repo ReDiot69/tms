@@ -77,7 +77,7 @@
                         </tr>
                         <tr>
                             <th scope="row" colspan="2">Remaining</th>
-                            <td><input type="text" name="nettotal" value="0" class="borderNone " id="Remaining"  min="0"></td>
+                            <td><input type="text" name="remaining" value="0" class="borderNone " id="remaining"  min="0"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -144,10 +144,12 @@
                             <th scope="row" colspan="2">Net Total</th>
                             <td><label class="borderNone">{{invoice.net_total}}</label></td>
                         </tr>
+                        <!-- {% for id in invoiceDetail %}
                         <tr>
                             <th scope="row" colspan="2">Advance</th>
-                            <td><label class="borderNone">{{invoice.}}</label></td>
+                            <td><label class="borderNone">{{id.advance}}</label></td>
                         </tr>
+                        {% endfor% } -->
                     </tfoot>
                 </table>
                 <button class="btn btn-primary">Print</button>
@@ -170,9 +172,9 @@
         document.getElementById('total').value =sum;
         var dis = document.getElementById('discount').value;
         var vat= 0.13;
-        var temp = (sum-dis)*vat+(sum-dis);
+        document.getElementById('netTotal').value = (sum-dis)*vat+(sum-dis);
         var adv = document.getElementById('advance').value;
-        document.getElementById('netTotal').value =Math.ceil(temp-adv);
+        document.getElementById('remaining').value =Math.ceil(document.getElementById('netTotal').value-adv);
 
     }
 </script>

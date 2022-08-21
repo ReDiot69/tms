@@ -103,14 +103,21 @@ def acceptorder(request):
 def orderSearch(request):
     form = SearchForm(request.POST)
     m = request.user.vendor.vendor
+    r = Role.objects.get(role='Staff')
     if form.is_valid():
         data = form.cleaned_data['searchBox']
-
-        try:
-            nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
-            context = {'order': nameCustomer, 'singlecus': True, 'vendor': m}
-        except:
-            context = {'msg': 'Not found', 'vendor': m}
+        if request.user.role == r:
+            try:
+                nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
+                context = {'order': nameCustomer, 'singlecus': True, 'staff': True,  'vendor': m}
+            except:
+                context = {'msg': 'Not found', 'staff': True, 'vendor': m}
+        else:
+            try:
+                nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
+                context = {'order': nameCustomer, 'singlecus': True, 'vendor': m}
+            except:
+                context = {'msg': 'Not found', 'vendor': m}
         return render(request, "order.html", context)
 
     return render(request, "order.html", {'vendor': m})
@@ -235,10 +242,12 @@ def next_payment(request):
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 def toogleStatus(request):
+    m = request.user.vendor
+    r = Role.objects.get(role='Staff')
     order = Order.objects.get(id=request.POST.get('order'))
     order.status = request.POST.get("status")
     order.save()
-    return render(request,"order.html")
+    return render(request, 'order.html',{ 'staff': True, 'vendor': m})
 
 def login(request):
     return render(request, "home.html")
