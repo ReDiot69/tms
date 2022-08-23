@@ -9,7 +9,7 @@
     }
     .table-container{
         margin-top: 30px;
-        margin-left: 10px;
+        /* margin-left: 10px; */
         margin-right: 10px;
     }
 
@@ -28,7 +28,7 @@
         </div>
     </form>
     <div class="shadow-lg table-container">
-        <table class="table table-sm">
+        <table class="table table-striped table-sm">
             <thead class="table-dark">
             <tr>
                 <th class="th">#</th>
@@ -179,15 +179,15 @@
                 <td>
                     <!-- <label for="status" name="status" class="primary" disabled>{{o.status}}</label> -->
                     {% if o.status == "Accepted" %}
-                        <label for="status" name="status" class="bg-success rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                        <button name="status" class="btn btn-success btn-sm rounded-pill">{{o.status}}</button>
                     {% elif o.status == "Assigned" %}
-                        <label for="status" name="status" class="bg-primary rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                        <button name="status" class="btn btn-primary btn-sm rounded-pill">{{o.status}}</button>
                     {% elif o.status == "Rejected" %}
-                        <label for="status" name="status" class="bg-danger rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                        <button name="status" class="btn btn-danger btn-sm rounded-pill">{{o.status}}</button>
                     {% elif o.status == "Working" %}
-                        <label for="status" name="status" class="bg-warning rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                        <button name="status" class="btn btn-warning btn-sm rounded-pill">{{o.status}}</button>
                     {% elif o.status == "Complete" %}
-                        <label for="status" name="status" class="bg-secondary rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                        <button name="status" class="btn btn-secondary btn-sm rounded-pill">{{o.status}}</button>
                     {% endif %}
                 </td>
                 {% else %}
