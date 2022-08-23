@@ -15,7 +15,7 @@
                     <div class="col-4 mb-3">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Customer name"
-                               value="" onkeydown="return /[a-z]/i.test(event.key)" required>
+                               value="" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -231,7 +231,7 @@
           }, false);
         })();
 </script>
-<!-- customer_photo -->
+<!-- Add Descroption -->
 <script type="text/javascript">
         function PreviewImage() {
             var oFReader = new FileReader();
@@ -242,9 +242,10 @@
             };
         };
         $('#descriptionAlternate').on('click',function() {
-          $('#description').append('<div class="form-group" id="altdes"><label for="">Another Location: </label> <input name = "des" class="form-control" placeholder="Enter Another Description" width: 50%;></div>');
+          $('#description').append('<div class="form-group" id="altdes"><label for="">Another Description: </label> <input name = "des" class="form-control" placeholder="Enter Another Description" width: 50%;></div>');
          });
 </script>
+<!-- time Deadline -->
 <script>
     $(function() {
         var dtToday = new Date();

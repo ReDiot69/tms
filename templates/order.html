@@ -7,7 +7,11 @@
         max-height: 50px;
         width: 50px;
     }
-
+    .table-container{
+        margin-top: 30px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 
 
 </style>
@@ -23,9 +27,9 @@
             </div>
         </div>
     </form>
-    <div class="row">
-        <table class="table">
-            <thead class="thead-dark">
+    <div class="shadow-lg table-container">
+        <table class="table table-sm">
+            <thead class="table-dark">
             <tr>
                 <th class="th">#</th>
                 <th class="th">Customer</th>
@@ -39,14 +43,6 @@
                 {% endif %}
                 <th class="th">Details</th>
                 <th class="th">Status</th>
-                <style>
-                            .th{
-                                text-align: left;
-                            }
-
-
-
-                </style>
             </tr>
             </thead>
             <tbody>
@@ -173,7 +169,7 @@
 
                             </div>
                             <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
                         </div>
@@ -181,7 +177,18 @@
                 </td>
                 {% if not staff %}
                 <td>
-                    <label for="status" name="status">{{o.status}}</label>
+                    <!-- <label for="status" name="status" class="primary" disabled>{{o.status}}</label> -->
+                    {% if o.status == "Accepted" %}
+                        <label for="status" name="status" class="bg-success rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                    {% elif o.status == "Assigned" %}
+                        <label for="status" name="status" class="bg-primary rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                    {% elif o.status == "Rejected" %}
+                        <label for="status" name="status" class="bg-danger rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                    {% elif o.status == "Working" %}
+                        <label for="status" name="status" class="bg-warning rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                    {% elif o.status == "Complete" %}
+                        <label for="status" name="status" class="bg-secondary rounded fs-6 p-1 text-white" disabled>{{o.status}}</label>
+                    {% endif %}
                 </td>
                 {% else %}
                  <td>

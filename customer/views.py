@@ -27,7 +27,7 @@ def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     m = request.user.vendor
-    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice.check_in')
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice__check_in')
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
@@ -240,7 +240,7 @@ def next_payment(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     m = request.user.vendor
-    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice__check_in')
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 def toogleStatus(request):
