@@ -29,10 +29,14 @@
             <tr>
                 <th class="th">#</th>
                 <th class="th">Customer</th>
+                {% if not staff %}
                 <th class="th">Assigned Employee</th>
+                {% endif %}
                 <th class="th">Order-date</th>
+                {% if not staff %}
                 <th class="th">Number</th>
                 <th class="th">Email</th>
+                {% endif %}
                 <th class="th">Details</th>
                 <th class="th">Status</th>
                 <style>
@@ -53,10 +57,14 @@
                 </th>
                 <td><a href="#"><label for="name" name="name">{{order.customer_measurement.customer.name}}</label></a>
                 </td>
+                {% if not staff %}
                 <td><label for="emp_name" name="emp_name">{{order.employee.name}}</label></td>
+                {% endif %}
                 <td><label for="order-date" name="order-date">{{order.orderdate}}</label></td>
+                {% if not staff %}      
                 <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
                 <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
+                {% endif %}
                 <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a>
                 </td>
                 <td><label for="status" name="status">{{order.status}}</label></td>
@@ -66,27 +74,31 @@
             <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td><a href="#"><label for="name" name="name">{{o.customer_measurement.customer.name}}</label></a></td>
-                {% if o.status == "Rejected" %}
-                <td>
-                    <form method="post" action="change_emp">
-                        {% csrf_token %}
-                        <div class="d-flex flex-row">
-                            <select name="employee" class="form-select form-select-sm form-control" aria-label=".form-select-sm example" id="order-date" required placeholder="select">
-                                <option value="" disabled selected hidden> Choose Employee</option>
-                                {% for e in emp%}
-                                <option value={{e.id}}>{{e.name}}</option>
-                                {% endfor %}
-                            </select>
-                            <button class="btn btn-primary btn-sm "name="order" value={{o.id}} style="margin-left:10px ;">Submit</button>
-                        </div>
-                    </form>
-                </td>
-                {% else %}
-                <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
+                {% if not staff %}
+                    {% if o.status == "Rejected" %}
+                    <td>
+                        <form method="post" action="change_emp">
+                            {% csrf_token %}
+                            <div class="d-flex flex-row">
+                                <select name="employee" class="form-select form-select-sm form-control" aria-label=".form-select-sm example" id="order-date" required placeholder="select">
+                                    <option value="" disabled selected hidden> Choose Employee</option>
+                                    {% for e in emp%}
+                                    <option value={{e.id}}>{{e.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <button class="btn btn-primary btn-sm "name="order" value={{o.id}} style="margin-left:10px ;">Submit</button>
+                            </div>
+                        </form>
+                    </td>
+                    {% else %}
+                    <td><label for="emp_name" name="emp_name">{{o.employee.name}}</label></td>
+                    {% endif %}
                 {% endif %}
                 <td><label for="order-date" name="order-date">{{o.orderdate}}</label></td>
+                {% if not staff %}
                 <td><label for="number" name="number">{{o.customer_measurement.customer.number}}</label></td>
                 <td><label for="email" name="email">{{o.customer_measurement.customer.email}}</label></td>
+                {% endif %}
                 <td>
                     <button type="button" class="btn btn-primary btn-sm" name="order" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{o.id}}" >{{o.customer_measurement}}</button>
                      <!-- Modal -->
