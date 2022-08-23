@@ -27,8 +27,7 @@ def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     m = request.user.vendor
-    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m)
-    print(invoice)
+    invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice.check_in')
     return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
 
 
@@ -99,6 +98,9 @@ def acceptorder(request):
     except:
         return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
 
+def empOrderRecord(request):
+    m = request.user.vendor
+    return render(request, 'empOrderRecord.html',{'vendor':m})
 
 def orderSearch(request):
     form = SearchForm(request.POST)

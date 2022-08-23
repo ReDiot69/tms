@@ -80,6 +80,7 @@ class Invoice(models.Model):
     gross_total = models.DecimalField(decimal_places=2, max_digits=9)
     status = models.CharField(choices=STATUS, default='Not Paid', max_length=25)
     orderdes = models.ManyToManyField(OrderedDescription)
+    # check_in = models.DateField()
 
 
 class InvoiceDetail(models.Model):

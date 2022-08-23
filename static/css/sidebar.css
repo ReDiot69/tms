@@ -36,7 +36,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         transition: all 0.3s ease;
-        box-shadow: 2px 0px #fcfcfc;
+        box-shadow: 2px 0px 5px #3c483c;
     }
 
 
