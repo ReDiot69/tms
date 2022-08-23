@@ -41,7 +41,8 @@ STATUS_COM = (
     ('Rejected', 'Rejected'),
     ('Assigned', 'Assigned'),
     ('Accepted', 'Accepted'),
-    ('Complete', 'Completed')
+    ('Complete', 'Completed'),
+    ('Working','Working')
 )
 
 
