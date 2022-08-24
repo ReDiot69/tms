@@ -47,7 +47,9 @@ def historyacc(request):
 
 def billing(request):
     form = BillingForm(request.POST)
+    print(request.POST)
     if form.is_valid():
+        print('here')
         des = request.POST.getlist('description')
         des_price = request.POST.getlist('price')
         le = len(des)
@@ -67,7 +69,7 @@ def billing(request):
         else:
             i.status = 'Not Paid'
         i.save()
-    return render(request, 'billing.html', {'invoice': i})
+    return render(request, 'billing.html', {'invoice': id})
 
 
 def order(request):
