@@ -75,11 +75,11 @@
                             <td></td>
                             <td><input type="number" name="advance" id="advance" class="borderNone" min="0" value="0" onkeyup="calculateTotal();"></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th scope="row">Remaining</th>
                             <td></td>
                             <td><input type="text" name="remain" value="0" class="borderNone " id="remaining"  min="0" disabled></td>
-                        </tr>
+                        </tr> -->
                     </tfoot>
                 </table>
                 <button class="btn btn-primary">Generate Invoice</button>
@@ -141,10 +141,10 @@
                             <th scope="row" colspan="2">Advance</th>
                             <td><label class="borderNone">{{invoiceDetail.advance}}</label></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th scope="row" colspan="2">Remaining</th>
                             <td><label class="borderNone">{{invoiceDetail.remain}}</label></td>
-                        </tr>
+                        </tr> -->
                     </tfoot>
                 </table>
                 <button class="btn btn-primary">Print</button>
