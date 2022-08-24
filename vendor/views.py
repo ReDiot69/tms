@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.contrib import messages
 
-from customer.models import Order
+from customer.models import Order, Customer, Invoice
 from vendor.forms import UserLoginForm, UserRegForm
 from django.contrib.auth import logout
 
@@ -26,8 +26,14 @@ def home(request):
             emp = MyUser.objects.filter(vendor=request.user.vendor)
             orders = len(od)
             employee = len(emp)
+            c = Customer.objects.filter(vendor=request.user.vendor)
+            invoice = Invoice.objects.filter(order__employee__vendor=user.vendor, status='Paid')
+            total_earning = 0
+            for i in invoice:
+                total_earning = total_earning + i.net_total
             return render(request, "dashboard.html",
-                          {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+                          {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True, 'earnings': total_earning,
+                           'customer': len(c)})
     return render(request, 'home.html', {})
 
 
@@ -64,8 +70,14 @@ def login_user(request):
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
         orders = len(od)
         employee = len(emp)
+        c = Customer.objects.filter(vendor=request.user.vendor)
+        invoice = Invoice.objects.filter(order__employee__vendor=user.vendor, status='Paid')
+        total_earning = 0
+        for i in invoice:
+            total_earning = total_earning + i.net_total
         return render(request, "dashboard.html",
-                      {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+                      {'vendor': m, 'orders': orders, 'employees': employee, 'customer': len(c), 'earnings': total_earning,
+                       'dashboard': True})
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():

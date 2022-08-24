@@ -47,7 +47,9 @@ def historyacc(request):
 
 def billing(request):
     form = BillingForm(request.POST)
+    print(request.POST)
     if form.is_valid():
+        print('here')
         des = request.POST.getlist('description')
         des_price = request.POST.getlist('price')
         le = len(des)
@@ -67,7 +69,7 @@ def billing(request):
         else:
             i.status = 'Not Paid'
         i.save()
-    return render(request, 'billing.html', {'invoice': i})
+    return render(request, 'billing.html', {'invoice': id})
 
 
 def order(request):
@@ -171,6 +173,7 @@ def dashboard(request):
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
+        c = Customer.objects.filter(vendor=request.user.vendor)
         invoice = Invoice.objects.filter(order__employee__vendor=user.vendor, status='Paid')
         total_earning = 0
         for i in invoice:
@@ -178,7 +181,8 @@ def dashboard(request):
         orders = len(od)
         employee = len(emp)
         return render(request, "dashboard.html",
-                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'customer':len(c),
+                       'dashboard': True})
 
 
 def accepto(request):
