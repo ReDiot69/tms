@@ -10,9 +10,10 @@
     }
     .table-container{
         margin-top: 30px;
-        /* margin-left: 10px; */
+        margin-left: 10px;
         margin-right: 10px;
     }
+
 </style>
 <div class="container-fluid search_box">
     <form class="form-inline">
@@ -25,27 +26,22 @@
         </div>
     </form>
         <div class="shadow-lg table-container">
-            <table class="table table-striped table-sm">
+            <h1>{{employee.name}}</h1>
+            <table class="table table-sm">
                 <thead class="table-dark">
                 <tr>
                     <th class="th">#</th>
                     <th class="th">Invoice</th>
                     <th class="th">Customer</th>
-                    <th class="th">Employee Name</th>
-                    <th class="th">Total</th>
-                    <th class="th">Advance</th>
-                    <th class="th">Remaining</th>
+                    <th class="th">Email</th>
+                    <th class="th">Number</th>
+                    <th class="th">Deadline</th>
                     <th class="th">Status</th>
-                    <th class="th">Action</th>
-                    <style>
-                            .th{
-                                text-align: left;
-                            }
-
-                    </style>
+                    <th class="th"></th>
+                   
                 </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                 {% for i in invoice %}
                 <tr>
                     <th scope="row">{{forloop.counter}}</th>
@@ -65,7 +61,7 @@
                     </td>
                     {% if i.invoice.status != "Paid" %}
                     <td>
-                        <button class="btn btn-warning btn-sm" type="button" data-bs-toggle="collapse"
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExample{{i.invoice.id}}" aria-expanded="false"
                                 aria-controls="collapseExample">
                             Payment
@@ -90,14 +86,10 @@
                             </div>
                         </div>
                     </td>
-                    {% else %}
-                        <td>
-                            <button class="btn btn-secondary btn-sm" disabled>Payment</button>
-                        </td>
                     {% endif %}
                 </tr>
                 {% endfor %}
-                </tbody>
+                </tbody> -->
             </table>
         </div>
 </div>

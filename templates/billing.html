@@ -21,21 +21,15 @@
         <div class="p-3">
             <form action="billing" method="POST">
                 {% csrf_token %}
-                <table class="table table-borderless">
+                <div class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; ">Invoice</div>
+                <table class="table table-striped table-sm">
+                    <div class="d-flex justify-content-end">
+                        <label for="Date" class="">Date:&nbsp;</label><label for="dateData">{{order.orderdate}}</label>
+                        <input type="hidden" name="date" value="{{order.orderdate}}"/>
+                        <input type="hidden" name="order" value="{{order.id}}"/>
+                    </div>
                     <thead>
-                        <tr>
-                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="3">Invoice</th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"></th>
-                            <th colspan="2">
-                                <label for="Date">Date:</label><label for="dateData">{{order.orderdate}}</label>
-                                <input type="hidden" name="date" value="{{order.orderdate}}"/>
-                                <input type="hidden" name="order" value="{{order.id}}"/>
-                            </th>
-                        </tr>
-
-                    <tr class="tborderBottom">
+                    <tr class="table-dark tborderBottom">
                         <th scope="col">S.N</th>
                         <th scope="col">Description</th>
                         <th scope="col">Total</th>
@@ -56,28 +50,35 @@
                     </tbody>
                     <tfoot>
                         <tr class="tborderTop">
-                            <th scope="row" colspan="2">Gross Total</th>
-                            <td><input type="text" name="grosstotal" value="0" readonly  class="borderNone gross" id="total" min="0"></td>
+                            <th scop>Gross Total</th>
+                            <td></td>
+                            <td><input type="text" name="grosstotal" value="0" readonly  class="borderNone gross" id="total" min="0" disabled></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">Discount Amount</th>
+                            <th scope="row">Discount Amount</th>
+                            <td></td>
                             <td><input type="number" name="discount" class="borderNone" id="discount" min="0" value="0" onkeyup="calculateTotal();"></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">VAT</th>
-                            <td><label for="VAT">13%</label></td>
+                            <th scope="row">VAT</th>
+                            <td></td>
+                            <td><input type="text" placeholder="13%" disabled></td>
+                            <!-- <td><label for="VAT">13%</label></td> -->
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">Net Total</th>
-                            <td><input type="text" name="nettotal" value="0" class="borderNone " id="netTotal"  min="0"></td>
+                            <th scope="row">Net Total</th>
+                            <td></td>
+                            <td><input type="text" name="nettotal" value="0" class="borderNone " id="netTotal"  min="0" disabled></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">Advance</th>
+                            <th scope="row">Advance</th>
+                            <td></td>
                             <td><input type="number" name="advance" id="advance" class="borderNone" min="0" value="0" onkeyup="calculateTotal();"></td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="2">Remaining</th>
-                            <td><input type="text" name="nettotal" value="0" class="borderNone " id="Remaining"  min="0"></td>
+                            <th scope="row">Remaining</th>
+                            <td></td>
+                            <td><input type="text" name="remain" value="0" class="borderNone " id="remaining"  min="0" disabled></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -94,24 +95,16 @@
         <div class="p-3">
             <form action="dashboard" method="POST">
                 {% csrf_token %}
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; " colspan="3">Invoice</th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"></th>
-                            <th colspan="2">
-                                <label for="Date">Date: </label><label for="dateData">{{invoice.date}}</label>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th colspan="2"></th>
-                            <th colspan="2">
-                                <label for="Invoice_No" >Invoice No: </label><label for="Invoice_NoData">{{invoice.id}}</label>
-                            </th>
-                        </tr>
-
+                <div class="d-flex justify-content-middle border-bottom-0" style="font-size: 54px; ">Invoice</div>
+                <table class="table table-striped table-sm">
+                    <div class="d-flex justify-content-end">
+                        <div>
+                            <label for="Date">Date: </label><label for="dateData">{{invoice.date}}</label>
+                        </div>
+                        <div>
+                            <label for="Invoice_No" >Invoice No: </label><label for="Invoice_NoData">{{invoice.id}}</label>
+                        </div>
+                    </div>
                     <tr class="tborderBottom">
                         <th scope="col">S.N</th>
                         <th scope="col">Description</th>
@@ -146,7 +139,11 @@
                         </tr>
                         <tr>
                             <th scope="row" colspan="2">Advance</th>
-                            <td><label class="borderNone">{{invoice.}}</label></td>
+                            <td><label class="borderNone">{{invoiceDetail.advance}}</label></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" colspan="2">Remaining</th>
+                            <td><label class="borderNone">{{invoiceDetail.remain}}</label></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -165,14 +162,14 @@
         for(var a=0;a<price.length;a++)
         {
         sum = sum +parseInt(price[a].value);
-        // console.log(sum);
         }
         document.getElementById('total').value =sum;
         var dis = document.getElementById('discount').value;
         var vat= 0.13;
-        var temp = (sum-dis)*vat+(sum-dis);
+        var Net_total = (sum-dis)*vat+(sum-dis);
+        document.getElementById('netTotal').value = Net_total;
         var adv = document.getElementById('advance').value;
-        document.getElementById('netTotal').value =Math.ceil(temp-adv);
+        document.getElementById('remaining').value =Math.ceil(Net_total-adv);
 
     }
 </script>

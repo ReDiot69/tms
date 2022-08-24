@@ -32,7 +32,7 @@ def home(request):
 
 
 def signup(request):
-    return render(request, 'signup.html', {'reg_comp': True})
+    return render(request, 'signup.html', {'reg_comp': True,'signup':True})
 
 
 def reg_user(request):

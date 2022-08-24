@@ -26,7 +26,8 @@
                     <div class="col-4 mb-3">
                         <label for="number">Mobile number</label>
                         <input type="text" name="number" maxlength="10" class="form-control" id="ph-number"
-                               placeholder="Phone-number" value="" required>
+                               placeholder="Phone-number" value="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -36,7 +37,7 @@
                     </div>
                     <div class="col-4 mb-3">
                         <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com"
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
                                required>
                         <div class="valid-feedback">
                             Looks good!
@@ -49,7 +50,7 @@
                 <div class="row">
                     <div class="col-4 mb-3">
                         <label for="name">Address</label>
-                        <input type="text" class="form-control" name="address" id="name" placeholder="Address" value=""
+                        <input type="text" class="form-control" name="address" id="name" placeholder="Address" value="" onkeydown="return /[a-z]/i.test(event.key)"
                                required>
                         <div class="valid-feedback">
                             Looks good!
@@ -75,7 +76,7 @@
                     </div>
                     <div class="col-4 mb-3">
                         <label for="Deadline">Deadline</label>
-                        <input type="date" class="form-control" name="deadline" id="Deadline" required>
+                        <input type="date" class="form-control" min="0" name="deadline" id="deadlineDate" required>
                         <div class="invalid-feedback">
                             Please provide a valid date.
                         </div>
@@ -84,8 +85,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <input id="uploadImage" type="file" name="image" onchange="PreviewImage(); required">
+                <div class="row" style="margin-left:2px;margin-right:10px;">
+                    <input id="uploadImage" class="form-control" aria-label="file example" required type="file" name="image" onchange="PreviewImage(); required">
                     <div class="invalid-feedback">
                         Please provide a image of product.
                     </div>
@@ -127,35 +128,43 @@
                     <tbody>
                     <tr>
                         <td><label for="Shoulder">SH</label></td>
-                        <td><input type="number" name="shoulder" min="0"></td>
+                        <td><input type="number" name="shoulder" min="0" oninput="this.value = 
+                            !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="Full-length">FL</label></td>
-                        <td><input type="number" name="full_length" min="0"></td>
+                        <td><input type="number" name="full_length" min="0" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="chest">Chest</label></td>
-                        <td><input type="number" name="chest" min="0"></td>
+                        <td><input type="number" name="chest" min="0" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="hip">Hip</label></td>
-                        <td><input type="number" name="hip" min="0"></td>
+                        <td><input type="number" name="hip" min="0" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="sl">Sl</label></td>
-                        <td><input type="number" min="0" name="sl" id=""></td>
+                        <td><input type="number" min="0" name="sl" id="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="m">M</label></td>
-                        <td><input type="number" min="0" name="m" id=""></td>
+                        <td><input type="number" min="0" name="m" id="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="ah">AH</label></td>
-                        <td><input type="number" min="0" name="ah" id=""></td>
+                        <td><input type="number" min="0" name="ah" id="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="open">Open</label></td>
-                        <td><input type="number" min="0" name="open" id=""></td>
+                        <td><input type="number" min="0" name="open" id="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <!-- <tr>
                         <td><label for="fl">FL</label></td>
@@ -163,11 +172,13 @@
                     </tr> -->
                     <tr>
                         <td><label for="thigh">Thigh</label></td>
-                        <td><input type="number" name="thigh" min="0" id="thigh"></td>
+                        <td><input type="number" name="thigh" min="0" id="thigh" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     <tr>
                         <td><label for="knee">Knee</label></td>
-                        <td><input type="number" name="knee" min="0" id=""></td>
+                        <td><input type="number" name="knee" min="0" id="" oninput="this.value = 
+                               !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -198,7 +209,6 @@
     {% if reg%}
     <h1>Registered</h1>
     {% endif %}
-
 </div>
 <!-- Form  -->
 <script>
@@ -220,13 +230,9 @@
             });
           }, false);
         })();
-
-
-
 </script>
-<!-- customer_photo -->
+<!-- Add Descroption -->
 <script type="text/javascript">
-
         function PreviewImage() {
             var oFReader = new FileReader();
             oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
@@ -235,12 +241,23 @@
                 document.getElementById("uploadPreview").src = oFREvent.target.result;
             };
         };
-
-
         $('#descriptionAlternate').on('click',function() {
-          $('#description').append('<div class="form-group" id="altdes"><label for="">Another Location: </label> <input name = "des" class="form-control" placeholder="Enter Another Description" width: 50%;></div>');
+          $('#description').append('<div class="form-group" id="altdes"><label for="">Another Description: </label> <input name = "des" class="form-control" placeholder="Enter Another Description" width: 50%;></div>');
          });
-
-
+</script>
+<!-- time Deadline -->
+<script>
+    $(function() {
+        var dtToday = new Date();
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+        var maxDate = year + '-' + month + '-' + day;
+        $('#deadlineDate').attr('min', maxDate);
+    });
 </script>
 {%endblock%}

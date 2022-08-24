@@ -1,7 +1,7 @@
 from uuid import uuid4
 from django.db import models
 import datetime
-
+from django.utils import timezone
 
 class Customer(models.Model):
     name = models.CharField(max_length=25)
@@ -41,7 +41,8 @@ STATUS_COM = (
     ('Rejected', 'Rejected'),
     ('Assigned', 'Assigned'),
     ('Accepted', 'Accepted'),
-    ('Complete', 'Completed')
+    ('Complete', 'Completed'),
+    ('Working','Working')
 )
 
 
@@ -50,7 +51,7 @@ class Order(models.Model):
     customer_measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     orderdate = models.DateField(auto_now=False, default=datetime.date.today)
     deadline = models.DateField(auto_now=False)
-    status = models.CharField(choices=STATUS_COM, default='Accepted', max_length=25)
+    status = models.CharField(choices=STATUS_COM, default='Assigned', max_length=25)
 
 
 def create_id():
@@ -79,6 +80,7 @@ class Invoice(models.Model):
     gross_total = models.DecimalField(decimal_places=2, max_digits=9)
     status = models.CharField(choices=STATUS, default='Not Paid', max_length=25)
     orderdes = models.ManyToManyField(OrderedDescription)
+    check_in = models.TimeField(default=timezone.now)
 
 
 class InvoiceDetail(models.Model):
