@@ -15,12 +15,18 @@ def measurement(request):
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     role = Role.objects.get(id=3)
     m = MyUser.objects.filter(vendor=vendor, role=role)
+    em = []
+    for emp in m:
+        order = Order.objects.filter(employee=emp, status='Accepted')
+        emp_current_orders = len(order)
+        if emp_current_orders < 2:
+            em.append(emp)
+    print(em)
     a = CustomerForm()
-    r = Role.objects.get(role='Staff')
-    if request.user.role == r:
-        return render(request, 'measurement.html',
-                      {'staff': True, 'emp': m, 'vendor': n, 'form': a, 'measurement': True})
-    return render(request, 'measurement.html', {'emp': m, 'vendor': n, 'form': a, 'measurement': True})
+    # if request.user.role == r:
+    #     return render(request, 'measurement.html',
+    #                   {'staff': True, 'emp': m, 'vendor': n, 'form': a, 'measurement': True})
+    return render(request, 'measurement.html', {'emp': em, 'vendor': n, 'form': a, 'measurement': True})
 
 
 def account(request):
@@ -102,6 +108,7 @@ def acceptorder(request):
 
 def empOrderRecord(request):
     m = request.user.vendor
+
     return render(request, 'empOrderRecord.html',{'vendor':m})
 
 def orderSearch(request):
