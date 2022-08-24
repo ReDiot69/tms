@@ -39,7 +39,9 @@
                         {% for e in emp_detail %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
+                                <form action="empOrder">
                                 <td><a href="#"><label for="name" name="name">{{e.name}}</label></a></td>
+                                </form>
                                 <td><label for="total" name="total">{{e.email}}</label></td>
                                 <td><label for="advance" name="advance">{{e.number}}</label></td>
                                 <td><label for="remaning" name="remaining">{{e.address}}</label></td>
