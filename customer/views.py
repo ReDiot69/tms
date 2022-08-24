@@ -173,6 +173,7 @@ def dashboard(request):
                           {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
+        c = Customer.objects.filter(vendor=request.user.vendor)
         invoice = Invoice.objects.filter(order__employee__vendor=user.vendor, status='Paid')
         total_earning = 0
         for i in invoice:
@@ -180,7 +181,8 @@ def dashboard(request):
         orders = len(od)
         employee = len(emp)
         return render(request, "dashboard.html",
-                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True})
+                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'customer':len(c),
+                       'dashboard': True})
 
 
 def accepto(request):
