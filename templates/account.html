@@ -63,7 +63,7 @@
                     <td>
                         <label for="status" name="status">{{i.invoice.status}}</label>
                     </td>
-                    {% if i.invoice.status != "Paid" and i.invoice.order.status == "Complete" %}
+                    {% if i.invoice.status != "Paid"%}
                     <td>
                         <button class="btn btn-warning btn-sm" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExample{{i.invoice.id}}" aria-expanded="false"

@@ -108,7 +108,7 @@ def acceptorder(request):
 
 def empOrderRecord(request):
     m = request.user.vendor
-
+    
     return render(request, 'empOrderRecord.html',{'vendor':m})
 
 def orderSearch(request):

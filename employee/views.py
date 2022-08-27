@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from employee.forms import EmployeeRegForm
 from vendor.models import MyUser, Vendor, Role
+from customer.models import  Order
 
 
 # def employee(request):
@@ -29,6 +30,9 @@ def employeelanding(request):
         return render(request, "home.html")
     user = request.user
     m = request.user.vendor.vendor
+    name=request.GET.get('name')
+    order = Order.objects.filter(employee__name=name)
+    print(order)
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
-    context = {'emp_detail': emp_detail, 'vendor': m, 'employ': True}
+    context = {'emp_detail': emp_detail, 'vendor': m,'order':order, 'employ': True}
     return render(request, 'employeelanding.html', context)

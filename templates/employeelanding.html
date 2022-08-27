@@ -39,9 +39,54 @@
                         {% for e in emp_detail %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
-                                <form action="empOrder">
-                                <td><a href="#"><label for="name" name="name">{{e.name}}</label></a></td>
-                                </form>
+                                    <td><form action="employeelanding" method="POST">
+                                        <input type="hidden" name="name" value="{{e.name}}">
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{e.id}}" >{{e.name}}</button>
+                                            <div class="modal fade" id="staticBackdrop{{e.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">{{e.name}}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="shadow-lg table-container">
+                                                            
+                                                                <table class="table table-sm">
+                                                                    <thead class="table-dark">
+                                                                    <tr>
+                                                                        <th class="th">#</th>
+                                                                        <th class="th">Customer</th>
+                                                                        <th class="th">Order-date</th>
+                                                                        <th class="th">Number</th>
+                                                                        <th class="th">Email</th>
+                                                                        <th class="th">Status</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for i in order%}
+                                                                        <tr>
+                                                                            <th scope="row">{{forloop.counter}}</th>
+                                                                            <td><label for="cus_name" name="cus_name">{{i.customer_measurement.customer.name}}</label></td>
+                                                                            <td><label for="order-date" name="orderdate">{{i.orderdate}}</label></td>
+                                                                            <td><label for="number" name="number">{{i.customer_measurement.customer.number}}</label></td>
+                                                                            <td><label for="email" name="email">{{i.customer_measurement.email}}</label></td>
+                                                                            <td><label for="status" name="status">{{i.status}}</label></td>
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                            
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
                                 <td><label for="total" name="total">{{e.email}}</label></td>
                                 <td><label for="advance" name="advance">{{e.number}}</label></td>
                                 <td><label for="remaning" name="remaining">{{e.address}}</label></td>
