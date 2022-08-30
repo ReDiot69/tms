@@ -61,9 +61,100 @@
                 <td><label for="number" name="number">{{order.customer_measurement.customer.number}}</label></td>
                 <td><label for="email" name="email">{{order.customer_measurement.customer.email}}</label></td>
                 {% endif %}
-                <td><a href=""><label for="measurement" name="measurement">{{order.customer_measurement}}</label></a>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" name="order" data-bs-toggle="modal" data-bs-target="#staticBackdrop1{{o.id}}" >{{order.customer_measurement}}</button>
+                     <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop1{{o.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Measurement of Customer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table mytable">
+                                    <thead>
+                                    <tr>
+                                        <th class="th">Type</th>
+                                        <th class="th">Data</th>
+                                        <style>
+                                                .th{
+                                                    text-align: center;
+                                                }
+                                        </style>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><label for="Shoulder">SH</label></td>
+                                        <td><label for="Shoulder">{{order.customer_measurement.shoulder}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="Full-length">FL</label></td>
+                                        <td><label for="full_length">{{order.customer_measurement.full_length}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="chest">Chest</label></td>
+                                        <td><label for="chest">{{order.customer_measurement.chest}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="hip">Hip</label></td>
+                                        <td><label for="hip">{{order.customer_measurement.hip}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="sl">Sl</label></td>
+                                        <td><label for="sl">{{order.customer_measurement.sl}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="m">M</label></td>
+                                        <td><label for="m">{{o.customer_measurement.m}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="ah">AH</label></td>
+                                        <td><label for="ah">{{order.customer_measurement.ah}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="open">Open</label></td>
+                                        <td><label for="open">{{order.customer_measurement.open}}</label></td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td><label for="fl">FL</label></td>
+                                        <td><input type="number" name="" id=""></td>
+                                    </tr> -->
+                                    <tr>
+                                        <td><label for="thigh">Thigh</label></td>
+                                        <td><label for="thigh">{{order.customer_measurement.thigh}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="knee">Knee</label></td>
+                                        <td><label for="knee">{{order.customer_measurement.knee}}</label></td>
+                                    </tr>
+                                    
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                 </td>
-                <td><label for="status" name="status">{{order.status}}</label></td>
+                    <td>
+                        <!-- <label for="status" name="status" class="primary" disabled>{{o.status}}</label> -->
+                        {% if order.status == "Accepted" %}
+                            <button name="status" class="btn btn-success btn-sm rounded-pill">{{order.status}}</button>
+                        {% elif order.status == "Assigned" %}
+                            <button name="status" class="btn btn-primary btn-sm rounded-pill">{{order.status}}</button>
+                        {% elif order.status == "Rejected" %}
+                            <button name="status" class="btn btn-danger btn-sm rounded-pill">{{order.status}}</button>
+                        {% elif order.status == "Working" %}
+                            <button name="status" class="btn btn-warning btn-sm rounded-pill">{{order.status}}</button>
+                        {% elif order.status == "Complete" %}
+                            <button name="status" class="btn btn-secondary btn-sm rounded-pill">{{order.status}}</button>
+                        {% endif %}
+                    </td>
             </tr>
             {% else %}
             {% for o in order%}

@@ -16,6 +16,7 @@ def home(request):
     if not request.user.is_anonymous:
         r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
+        username = request.user.name
         if request.user.role == r:
             od = Order.objects.filter(~Q(invoice__order__status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
@@ -33,7 +34,7 @@ def home(request):
                 total_earning = total_earning + i.net_total
             return render(request, "dashboard.html",
                           {'vendor': m, 'orders': orders, 'employees': employee, 'dashboard': True, 'earnings': total_earning,
-                           'customer': len(c)})
+                           'customer': len(c),'name':username})
     return render(request, 'home.html', {})
 
 
@@ -60,6 +61,7 @@ def login_user(request):
     if not request.user.is_anonymous:
         r = Role.objects.get(role='Staff')
         m = request.user.vendor.vendor
+        username = request.user.name
         user = request.user
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
@@ -67,7 +69,7 @@ def login_user(request):
             od = Order.objects.filter(~Q(invoice__order__status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
-                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
+                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True,'name':username})
         orders = len(od)
         employee = len(emp)
         c = Customer.objects.filter(vendor=request.user.vendor)
@@ -77,7 +79,7 @@ def login_user(request):
             total_earning = total_earning + i.net_total
         return render(request, "dashboard.html",
                       {'vendor': m, 'orders': orders, 'employees': employee, 'customer': len(c), 'earnings': total_earning,
-                       'dashboard': True})
+                       'dashboard': True,'name':username})
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -86,11 +88,12 @@ def login_user(request):
             user = authenticate(email=email, password=password)
             if user:
                 login(request, user)
-                m = request.user.vendor.vendor
+                m = request.user.vendor.vendor 
+                username = request.user.name
                 r = Role.objects.get(role='Staff')
                 if user.role == r:
-                    return render(request, 'dashboard.html', {'staff': True, 'vendor': m})
-                return render(request, 'dashboard.html', {'vendor': m})
+                    return render(request, 'dashboard.html', {'staff': True, 'vendor': m,'name':username})
+                return render(request, 'dashboard.html', {'vendor': m,'name':username})
             else:
                 messages.info(request, 'No such account!')
                 return render(request, 'home.html', {'msg': True})

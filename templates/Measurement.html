@@ -1,12 +1,15 @@
 {% extends 'navside.html'%}
 {% block content%}
-{% if not reg%}
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<div class="form-box">
+{% if not reg%}
+<div class="form-box ">
     <form action="customer_store" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
         {% csrf_token %}
         <section class="customerDetail container-fluid row">
@@ -25,7 +28,7 @@
                     </div>
                     <div class="col-4 mb-3">
                         <label for="number">Mobile number</label>
-                        <input type="text" name="number" maxlength="10" class="form-control" id="ph-number"
+                        <input type="text" name="number" minlength="10" maxlength="10" class="form-control" id="ph-number"
                                placeholder="Phone-number" value="" oninput="this.value = 
                                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" required>
                         <div class="valid-feedback">
@@ -37,7 +40,7 @@
                     </div>
                     <div class="col-4 mb-3">
                         <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Example@xyz.com" pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/"
                                required>
                         <div class="valid-feedback">
                             Looks good!
@@ -96,7 +99,7 @@
                 </div>
             </div>
             <div class="photo col-3 ">
-                <img id="uploadPreview" class="customer_photo">
+                <img id="uploadPreview" class="customer_photo shadow">
             </div>
         </section>
 
@@ -109,12 +112,12 @@
                             <input name="des" class="form-control" placeholder="Enter description">
                         </div>
                         <div class="d-flex flex-column">
-                            <button id="descriptionAlternate" type="button" class="btn btn-success" style="margin-left: 6px;">+</button>
+                            <button id="descriptionAlternate" type="button" class="btn btn-success" style="margin-left: 3px;">+</button>
                         </div>
                     </div>
                 </div>
-                <table class="table mytable">
-                    <thead>
+                <table class="table table-striped mytable table-sm">
+                    <thead class="table-dark">
                     <tr>
                         <th class="th">Type</th>
                         <th class="th">Data</th>
@@ -184,16 +187,14 @@
                 </table>
             </div>
             <div class="col-1"></div>
-            <div class="whiteboard col-8" style="box-shadow: 0px 0px 10px grey;">
-                    <div style="width: 100%;  height: 650px;" id="wt-container"></div>
+            <div class="whiteboard col-8 shadow-lg">
+                    <div style="width: 100%;  height: 550px;" id="wt-container"></div>
                     <script src="https://www.whiteboard.team/dist/api.js"></script>
                     <script type="text/javascript">
                         var wt = new api.WhiteboardTeam('#wt-container', {
                             clientId: 'b12786d751331e33ed4eed5ea8eb1827',
                             boardCode: '361249e0-feca-4acb-8483-66cf4d2ad409'
                         });
-
-
                     </script>
             </div>
         </section>
@@ -260,4 +261,8 @@
         $('#deadlineDate').attr('min', maxDate);
     });
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {%endblock%}

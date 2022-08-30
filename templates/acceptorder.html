@@ -7,6 +7,12 @@
         max-height: 50px;
         width: 50px;
     }
+    .table-container{
+        margin-top: 30px;
+        /* margin-left: 10px; */
+        margin-right: 10px;
+    }
+
 </style>
 
 <div class="container-fluid search_box">
@@ -18,9 +24,9 @@
         </div>
 
       </form>
-        <div class="row">
-            <table class="table">
-                <thead class="thead-dark">
+        <div class="shadow-lg table-container">
+            <table class="table table-sm table-striped">
+                <thead class="table-dark">
                     <tr>
                         <th class="th">#</th>
                         <th class="th">Customer</th>
@@ -64,22 +70,14 @@
                             <form action="accepto" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="order" value={{o.id}}>
-                            <button class="btn btn-success" name="accept" value="accept">
-                                <div class="d-flex d-row">
-                                    <i class="fa fa-address-book"></i>
-                                </div>
-                                <div class="d-flex d-row">
-                                    <label for="accept" >Accept</label>
-                                </div>
-                            </button>
-                            <button class="btn btn-danger" name="reject" value="reject">
-                                <div class="d-flex d-row">
-                                    <i class="fa fa-address-book"></i>
-                                </div>
-                                <div class="d-flex d-row">
-                                    <label for="reject">Reject</label>
-                                </div>
-                            </button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-success btn-sm" name="accept" value="accept">
+                                        <i class="fa fa-check"></i><label for="accept">&nbsp;&nbsp;Accept</label>
+                                </button>
+                                <button class="btn btn-danger btn-sm" name="reject" value="reject">
+                                        <i class="fa fa-times"></i><label for="reject">&nbsp;&nbsp;Reject</label>
+                                </button>
+                            </div>
                             </form>
                         </td>
                       </tr>

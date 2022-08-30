@@ -1,5 +1,6 @@
 from ast import Return
 import decimal
+from urllib import request
 
 from django.db.models import Q
 from django.shortcuts import render
@@ -10,6 +11,7 @@ from vendor.models import Vendor, MyUser, Role
 
 def measurement(request):
     n = request.user.vendor.vendor
+    username = request.user.name
     if request.user.is_anonymous:
         return render(request, "home.html")
     vendor = Vendor.objects.get(vendor=request.user.vendor)
@@ -26,15 +28,16 @@ def measurement(request):
     # if request.user.role == r:
     #     return render(request, 'measurement.html',
     #                   {'staff': True, 'emp': m, 'vendor': n, 'form': a, 'measurement': True})
-    return render(request, 'measurement.html', {'emp': em, 'vendor': n, 'form': a, 'measurement': True})
+    return render(request, 'measurement.html', {'emp': em, 'vendor': n, 'form': a, 'measurement': True,'name':username})
 
 
 def account(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     m = request.user.vendor
+    username = request.user.name
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice__check_in')
-    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
+    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True,'name':username})
 
 
 def historyacc(request):
@@ -42,13 +45,14 @@ def historyacc(request):
         return render(request, "home.html")
     r = Role.objects.get(role='Staff')
     m = request.user.vendor
+    username = request.user.name
 
     if request.user.role == r:
         invoice = InvoiceDetail.objects.filter(invoice__order__employee__role=r)
         return render(request, 'historyacc.html',
                       {'invoice': invoice, 'staff': True, 'vendor': m.vendor, 'history': True})
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m, invoice__status='Not Paid')
-    return render(request, 'historyacc.html', {'invoice': invoice, 'vendor': m.vendor, 'history': True})
+    return render(request, 'historyacc.html', {'invoice': invoice, 'vendor': m.vendor, 'history': True,'name':username})
 
 
 def billing(request):
@@ -81,61 +85,70 @@ def billing(request):
 def order(request):
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = request.user.vendor
+    username = request.user.name
     r = Role.objects.get(role='Staff')
     role = Role.objects.get(id=3)
     n = MyUser.objects.filter(vendor=vendor, role=role)
     if request.user.role == r:
         try:
-            o = Order.objects.filter(employee=request.user, status='Accepted')
-            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
+            o = Order.objects.filter(employee=request.user, status='Accepted').order_by('orderdate')
+            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m,'name':username})
         except:
-            return render(request, 'order.html', {'staff': True, 'vendor': m})
+            return render(request, 'order.html', {'staff': True, 'vendor': m,'name':username})
     try:
-        od = Order.objects.filter(employee__vendor=m)
+        od = Order.objects.filter(employee__vendor=m).order_by('orderdate')
     except:
         od = None
-    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True}
+    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True,'name':username}
     return render(request, "order.html", context)
 
 
 def acceptorder(request):
     m = request.user.vendor
+    username = request.user.name
     try:
         o = Order.objects.filter(employee=request.user, status='Assigned')
-        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m})
+        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m,'name':username})
     except:
-        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m,'name':username})
 
 def empOrderRecord(request):
-    m = request.user.vendor
-    
-    return render(request, 'empOrderRecord.html',{'vendor':m})
+    if request.user.is_anonymous:
+        return render(request, "home.html")
+    m = request.user.vendor.vendor
+    username = request.user.name
+    print(request.POST.get('id'))
+    order = Order.objects.filter(employee__id= request.POST.get('id'))
+    context = {'vendor': m,'order':order,'name':username}
+    return render(request, 'empOrderRecord.html', context)
 
 def orderSearch(request):
     form = SearchForm(request.POST)
     m = request.user.vendor.vendor
+    username = request.user.name
     r = Role.objects.get(role='Staff')
     if form.is_valid():
         data = form.cleaned_data['searchBox']
         if request.user.role == r:
             try:
                 nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
-                context = {'order': nameCustomer, 'singlecus': True, 'staff': True,  'vendor': m}
+                context = {'order': nameCustomer, 'singlecus': True, 'staff': True,  'vendor': m,'name':username}
             except:
-                context = {'msg': 'Not found', 'staff': True, 'vendor': m}
+                context = {'msg': 'Not found', 'staff': True, 'vendor': m,'name':username}
         else:
             try:
                 nameCustomer = Order.objects.get(customer_measurement__customer__name=data)
-                context = {'order': nameCustomer, 'singlecus': True, 'vendor': m}
+                context = {'order': nameCustomer, 'singlecus': True, 'vendor': m,'name':username}
             except:
-                context = {'msg': 'Not found', 'vendor': m}
+                context = {'msg': 'Not found', 'vendor': m,'name':username}
         return render(request, "order.html", context)
 
-    return render(request, "order.html", {'vendor': m})
+    return render(request, "order.html", {'vendor': m,'name':username})
 
 
 def customer_store(request):
     me = request.user.vendor.vendor
+    username = request.user.name
     form = CustomerForm(request.POST, request.FILES)
     if form.is_valid():
         descriptions = request.POST.getlist('des')
@@ -160,7 +173,7 @@ def customer_store(request):
         emp = MyUser.objects.get(id=form.cleaned_data['employee'])
         o = Order.objects.create(customer_measurement=m, deadline=form.cleaned_data['deadline'],
                                  employee=emp)
-        context = {'order': o, 'reg': True, 'vendor': me}
+        context = {'order': o, 'reg': True, 'vendor': me,'name':username}
     else:
         context = {'vendor': me}
     return render(request, 'billing.html', context)
@@ -172,12 +185,13 @@ def dashboard(request):
         return render(request, "home.html")
     else:
         m = request.user.vendor.vendor
+        username = request.user.name
         r = Role.objects.get(role='Staff')
         if user.role == r:
             od = Order.objects.filter(~Q(status='Rejected'), employee__vendor=request.user.vendor, employee=user)
             orders = len(od)
             return render(request, 'dashboard.html',
-                          {'staff': True, 'vendor': m, 'orders': orders, 'dashboard': True})
+                          {'staff': True, 'vendor': m,'name':username, 'orders': orders, 'dashboard': True})
         od = Order.objects.filter(employee__vendor=request.user.vendor)
         emp = MyUser.objects.filter(vendor=request.user.vendor)
         c = Customer.objects.filter(vendor=request.user.vendor)
@@ -188,12 +202,13 @@ def dashboard(request):
         orders = len(od)
         employee = len(emp)
         return render(request, "dashboard.html",
-                      {'earnings': total_earning, 'vendor': m, 'orders': orders, 'employees': employee, 'customer':len(c),
+                      {'earnings': total_earning, 'vendor': m,'name':username, 'orders': orders, 'employees': employee, 'customer':len(c),
                        'dashboard': True})
 
 
 def accepto(request):
     m = request.user.vendor
+    username = request.user.name
     order = Order.objects.get(id=request.POST.get('order'))
     if 'accept' in request.POST:
         order.status = 'Accepted'
@@ -203,9 +218,9 @@ def accepto(request):
         order.save()
     try:
         o = Order.objects.filter(employee=request.user, status='Assigned')
-        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m})
+        return render(request, 'acceptorder.html', {'order': o, 'staff': True, 'vendor': m,'name':username})
     except:
-        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m})
+        return render(request, 'acceptorder.html', {'staff': True, 'vendor': m,'name':username})
 
 
 def emp_change(request):
@@ -216,19 +231,20 @@ def emp_change(request):
     order.save()
     vendor = Vendor.objects.get(vendor=request.user.vendor)
     m = request.user.vendor
+    username = request.user.name
     r = Role.objects.get(role='Staff')
     n = MyUser.objects.filter(vendor=vendor)
     if request.user.role == r:
         try:
             o = Order.objects.filter(employee=request.user, status='Accepted')
-            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m})
+            return render(request, 'order.html', {'order': o, 'staff': True, 'vendor': m,'name':username})
         except:
-            return render(request, 'order.html', {'staff': True, 'vendor': m})
+            return render(request, 'order.html', {'staff': True, 'vendor': m,'name':username})
     try:
         od = Order.objects.filter(employee__vendor=m)
     except:
         od = None
-    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True}
+    context = {'order': od, 'emp': n, 'vendor': m.vendor, 'order_nav': True,'name':username}
     return render(request, "order.html", context)
 
 
@@ -251,16 +267,18 @@ def next_payment(request):
     if request.user.is_anonymous:
         return render(request, "home.html")
     m = request.user.vendor
+    username = request.user.name
     invoice = InvoiceDetail.objects.filter(invoice__order__employee__vendor=m).order_by('invoice__check_in')
-    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True})
+    return render(request, 'account.html', {'invoice': invoice, 'vendor': m.vendor, 'accounts': True,'name':username})
 
 def toogleStatus(request):
     m = request.user.vendor
+    username = request.user.name
     r = Role.objects.get(role='Staff')
     order = Order.objects.get(id=request.POST.get('order'))
     order.status = request.POST.get("status")
     order.save()
-    return render(request, 'order.html',{ 'staff': True, 'vendor': m})
+    return render(request, 'order.html',{ 'staff': True, 'vendor': m,'name':username})
 
 def login(request):
     return render(request, "home.html")

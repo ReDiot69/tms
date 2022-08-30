@@ -22,7 +22,8 @@ def reg_employ(request):
                               role=role, vendor=v)
 
     m = request.user.vendor.vendor
-    return render(request, 'employeelanding.html', {'vendor': m, 'reg_emp': True})
+    username = request.user.name
+    return render(request, 'employeelanding.html', {'vendor': m, 'reg_emp': True,'name':username})
 
 
 def employeelanding(request):
@@ -30,9 +31,7 @@ def employeelanding(request):
         return render(request, "home.html")
     user = request.user
     m = request.user.vendor.vendor
-    name=request.GET.get('name')
-    order = Order.objects.filter(employee__name=name)
-    print(order)
+    username = request.user.name
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
-    context = {'emp_detail': emp_detail, 'vendor': m,'order':order, 'employ': True}
+    context = {'emp_detail': emp_detail, 'vendor': m,'employ': True,'name':username}
     return render(request, 'employeelanding.html', context)

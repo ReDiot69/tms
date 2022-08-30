@@ -13,6 +13,11 @@
         border-right:none;
         border-color: darkgrey;
     }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>
 <div>
 {% if not invoice%}
@@ -52,7 +57,7 @@
                         <tr class="tborderTop">
                             <th scop>Gross Total</th>
                             <td></td>
-                            <td><input type="number" name="grosstotal" value="0" readonly  class="borderNone gross" id="total" min="0" ></td>
+                            <td><input type="number" name="grosstotal" value="0" class="borderNone gross noscroll" id="total" min="0" readonly></td>
                         </tr>
                         <tr>
                             <th scope="row">Discount Amount</th>
@@ -62,13 +67,13 @@
                         <tr>
                             <th scope="row">VAT</th>
                             <td></td>
-                            <td><input type="text" placeholder="13%" disabled></td>
+                            <td><input type="text" placeholder="13%" class="borderNone" readonly></td>
                             <!-- <td><label for="VAT">13%</label></td> -->
                         </tr>
                         <tr>
                             <th scope="row">Net Total</th>
                             <td></td>
-                            <td><input type="number" name="nettotal" value="0" class="borderNone " id="netTotal"  min="0" ></td>
+                            <td><input type="number" name="nettotal" value="0" class="borderNone " id="netTotal"  min="0" readonly ></td>
                         </tr>
                         <tr>
                             <th scope="row">Advance</th>
