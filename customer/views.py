@@ -117,7 +117,6 @@ def empOrderRecord(request):
         return render(request, "home.html")
     m = request.user.vendor.vendor
     username = request.user.name
-    print(request.POST.get('id'))
     order = Order.objects.filter(employee__id= request.POST.get('id'))
     context = {'vendor': m,'order':order,'name':username}
     return render(request, 'empOrderRecord.html', context)

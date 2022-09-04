@@ -33,5 +33,20 @@ def employeelanding(request):
     m = request.user.vendor.vendor
     username = request.user.name
     emp_detail = MyUser.objects.filter(vendor=user.vendor)
+    r = Role.objects.get(role='Staff')
+    if request.user.role == r:
+        context = {'emp_detail': emp_detail, 'vendor': m,'staff': True,'employ': True,'name':username}
+    else:
+        context = {'emp_detail': emp_detail, 'vendor': m,'employ': True,'name':username}
+    return render(request, 'employeelanding.html', context)
+
+def empDelete(request):
+    if request.user.is_anonymous:
+        return render(request, "home.html")
+    user = request.user
+    m = request.user.vendor.vendor
+    username = request.user.name
+    emp = MyUser.objects.filter(id=request.POST.get('id')).delete()
+    emp_detail = MyUser.objects.filter(vendor=user.vendor)
     context = {'emp_detail': emp_detail, 'vendor': m,'employ': True,'name':username}
     return render(request, 'employeelanding.html', context)
