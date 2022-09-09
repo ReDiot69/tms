@@ -111,6 +111,8 @@
 
                     {% if order_nav %}
                     <li class="navigation-list-item active">
+                    {% elif order %}
+                    <li class="navigation-list-item active">
                     {% else %}
                     <li class="navigation-list-item">
                     {% endif %}
@@ -128,19 +130,21 @@
                     {% if staff %}
                         {% if acceptorder %}
                         <li class="navigation-list-item active">
+                        {% elif accepto %}
+                        <li class="navigation-list-item active">
                         {% else %}
                         <li class="navigation-list-item">
                         {% endif %}
-                            <a class="navigation-link" href="acceptorder">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <i class="fa fa-address-book"></i>
-                                    </div>
-                                    <div class="col-10">
-                                        Acceptorder
-                                    </div>
+                        <a class="navigation-link" href="acceptorder">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa fa-address-book"></i>
                                 </div>
-                            </a>
+                                <div class="col-10">
+                                    Acceptorder
+                                </div>
+                            </div>
+                        </a>
                         </li>
                     {% endif %}
                     <!-- {% if not staff%} -->
